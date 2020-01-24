@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Services", "JewelryStoreAPI.Services\JewelryStoreAPI.Services.csproj", "{6557AFB1-500A-483F-B625-EC272C91C706}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Infrastructure", "JewelryStoreAPI.Infrastructure\JewelryStoreAPI.Infrastructure.csproj", "{EC2B45F7-5D43-415B-85FE-BA83695B57B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Core", "JewelryStoreAPI.Core\JewelryStoreAPI.Core.csproj", "{CB163ACA-907B-49D3-BBAB-A385EEA632A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI", "JewelryStoreAPI\JewelryStoreAPI.csproj", "{169B41CE-7D90-4A40-B462-B7E6E60E771D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Services", "JewelryStoreAPI.Services\JewelryStoreAPI.Services.csproj", "{029A4508-7F90-48A9-906B-9CE64D9F3502}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6557AFB1-500A-483F-B625-EC272C91C706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6557AFB1-500A-483F-B625-EC272C91C706}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6557AFB1-500A-483F-B625-EC272C91C706}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6557AFB1-500A-483F-B625-EC272C91C706}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{169B41CE-7D90-4A40-B462-B7E6E60E771D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{169B41CE-7D90-4A40-B462-B7E6E60E771D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{169B41CE-7D90-4A40-B462-B7E6E60E771D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
