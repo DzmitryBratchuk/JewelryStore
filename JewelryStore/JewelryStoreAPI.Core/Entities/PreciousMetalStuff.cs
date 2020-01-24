@@ -21,6 +21,7 @@ namespace JewelryStoreAPI.Core.Entities
         public string Brand { get; set; }
         public string Country { get; set; }
         public decimal Cost { get; set; }
+        public int Amount { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }
