@@ -6,6 +6,11 @@ namespace JewelryStoreAPI.Core.Entities
 {
     public class Product
     {
+        public Product()
+        {
+            ProductBaskets = new HashSet<ProductBasket>();
+        }
+
         public int Id { get; set; }
 
         public int? BijouterieId { get; set; }
@@ -15,5 +20,7 @@ namespace JewelryStoreAPI.Core.Entities
         public virtual Bijouterie Bijouterie { get; set; }
         public virtual PreciousMetalStuff PreciousMetalStuff { get; set; }
         public virtual Wristwatch Wristwatch { get; set; }
+
+        public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
     }
 }
