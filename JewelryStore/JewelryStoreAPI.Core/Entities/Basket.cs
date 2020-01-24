@@ -17,5 +17,6 @@ namespace JewelryStoreAPI.Core.Entities
 
         public virtual User User { get; set; }
         public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
+        public virtual Order Order { get; set; }
     }
 }
