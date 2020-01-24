@@ -21,5 +21,10 @@ namespace JewelryStoreAPI.Core
         public virtual DbSet<Basket> Baskets { get; set; }
         public virtual DbSet<ProductBasket> ProductBaskets { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductBasket>().HasKey(u => new { u.ProductId, u.BasketId });
+        }
     }
 }
