@@ -24,6 +24,7 @@ namespace JewelryStoreAPI.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(JewelryStoredbContext).Assembly);
             modelBuilder.Entity<ProductBasket>().HasKey(u => new { u.ProductId, u.BasketId });
         }
     }
