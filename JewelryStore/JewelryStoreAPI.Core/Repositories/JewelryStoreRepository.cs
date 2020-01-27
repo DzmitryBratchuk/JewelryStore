@@ -1,4 +1,5 @@
 ﻿using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,69 @@ namespace JewelryStoreAPI.Core.Repositories
     class JewelryStoreRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        public Task Create(TEntity entity, bool shouldSaveChanges = true)
+        private JewelryStoredbContext _db;
+
+        public JewelryStoreRepository(JewelryStoredbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public Task Delete(object id, bool shouldSaveChanges = true)
+        public async Task Create(TEntity entity, bool shouldSaveChanges = true)
         {
-            throw new NotImplementedException();
+            await _db.Set<TEntity>().AddAsync(entity);
+            if (shouldSaveChanges)
+                await _db.SaveChangesAsync();
         }
 
-        public void Dispose()
+        public async Task Delete(object id, bool shouldSaveChanges = true)
         {
-            throw new NotImplementedException();
+            TEntity entity = await _db.Set<TEntity>().FindAsync(id);
+            if (entity != null)
+                _db.Set<TEntity>().Remove(entity);
+            if (shouldSaveChanges)
+                await _db.SaveChangesAsync();
         }
 
-        public Task<IQueryable<TEntity>> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.Set<TEntity>().AsNoTracking();
         }
 
         public Task<TEntity> GetById(object id)
         {
-            throw new NotImplementedException();
+            return _db.Set<TEntity>().FindAsync(id).AsTask();
         }
 
-        public Task<int> SaveChanges()
+        public Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return _db.SaveChangesAsync();
         }
 
-        public Task Update(TEntity entity, bool shouldSaveChanges = true)
+        public async Task Update(TEntity entity, bool shouldSaveChanges = true)
         {
-            throw new NotImplementedException();
+            _db.Entry(entity).State = EntityState.Modified;
+            if (shouldSaveChanges)
+                await _db.SaveChangesAsync();
+        }
+
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _db.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
