@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI", "JewelryS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Services", "JewelryStoreAPI.Services\JewelryStoreAPI.Services.csproj", "{029A4508-7F90-48A9-906B-9CE64D9F3502}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelryStoreAPI.Domain", "Domain\JewelryStoreAPI.Domain.csproj", "{31518300-7E6A-40A0-B16E-17E8725D4B87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{029A4508-7F90-48A9-906B-9CE64D9F3502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

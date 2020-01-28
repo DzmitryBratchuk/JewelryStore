@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace JewelryStoreAPI.Core.Entities
+namespace JewelryStoreAPI.Domain.Entities
 {
     public class BijouterieType
     {
@@ -12,6 +10,7 @@ namespace JewelryStoreAPI.Core.Entities
         }
 
         public int Id { get; set; }
+
         public string BijouterieTypeName { get; set; }
 
         public virtual ICollection<Bijouterie> Bijouteries { get; set; }

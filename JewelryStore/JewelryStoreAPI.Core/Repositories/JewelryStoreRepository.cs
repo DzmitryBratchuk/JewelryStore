@@ -1,72 +1,70 @@
 ﻿using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Core.Repositories
 {
-    class JewelryStoreRepository<TEntity> : IRepository<TEntity>
+    public class JewelryStoreRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        private JewelryStoredbContext _db;
+        private readonly JewelryStoredbContext _context;
 
-        public JewelryStoreRepository(JewelryStoredbContext db)
+        private bool disposed = false;
+
+        public JewelryStoreRepository(JewelryStoredbContext context)
         {
-            _db = db;
+            _context = context;
         }
 
         public async Task Create(TEntity entity, bool shouldSaveChanges = true)
         {
-            await _db.Set<TEntity>().AddAsync(entity);
+            await _context.Set<TEntity>().AddAsync(entity);
             if (shouldSaveChanges)
-                await _db.SaveChangesAsync();
+                await _context.SaveChangesAsync();
         }
 
         public async Task Delete(object id, bool shouldSaveChanges = true)
         {
-            TEntity entity = await _db.Set<TEntity>().FindAsync(id);
+            TEntity entity = await _context.Set<TEntity>().FindAsync(id);
             if (entity != null)
-                _db.Set<TEntity>().Remove(entity);
+                _context.Set<TEntity>().Remove(entity);
             if (shouldSaveChanges)
-                await _db.SaveChangesAsync();
+                await _context.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> GetAll()
         {
-            return _db.Set<TEntity>().AsNoTracking();
+            return _context.Set<TEntity>().AsNoTracking();
         }
 
         public Task<TEntity> GetById(object id)
         {
-            return _db.Set<TEntity>().FindAsync(id).AsTask();
+            return _context.Set<TEntity>().FindAsync(id).AsTask();
         }
 
         public Task<int> SaveChangesAsync()
         {
-            return _db.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
         public async Task Update(TEntity entity, bool shouldSaveChanges = true)
         {
-            _db.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
             if (shouldSaveChanges)
-                await _db.SaveChangesAsync();
+                await _context.SaveChangesAsync();
         }
-
-        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!disposed)
             {
                 if (disposing)
                 {
-                    _db.Dispose();
+                    _context.Dispose();
                 }
-                disposedValue = true;
+                disposed = true;
             }
         }
 

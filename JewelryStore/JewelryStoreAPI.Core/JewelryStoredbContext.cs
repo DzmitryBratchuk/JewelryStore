@@ -1,8 +1,5 @@
-﻿using JewelryStoreAPI.Core.Entities;
+﻿using JewelryStoreAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace JewelryStoreAPI.Core
 {
@@ -15,8 +12,9 @@ namespace JewelryStoreAPI.Core
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Bijouterie> Bijouteries { get; set; }
-        public virtual DbSet<PreciousMetalStuff> PreciousMetalStuffs { get; set; }
-        public virtual DbSet<Wristwatch> Wristwatchs { get; set; }
+        public virtual DbSet<BijouterieType> BijouterieTypes { get; set; }
+        public virtual DbSet<PreciousMetalMaterial> PreciousMetalMaterials { get; set; }
+        public virtual DbSet<Watch> Watches { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Basket> Baskets { get; set; }
         public virtual DbSet<ProductBasket> ProductBaskets { get; set; }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace JewelryStoreAPI.Core.Entities
+namespace JewelryStoreAPI.Domain.Entities
 {
     public class Product
     {
@@ -14,12 +12,16 @@ namespace JewelryStoreAPI.Core.Entities
         public int Id { get; set; }
 
         public int? BijouterieId { get; set; }
-        public int? PreciousMetalStuffId { get; set; }
-        public int? WristwatchId { get; set; }
+
+        public int? PreciousMetalMaterialId { get; set; }
+
+        public int? WatchId { get; set; }
 
         public virtual Bijouterie Bijouterie { get; set; }
-        public virtual PreciousMetalStuff PreciousMetalStuff { get; set; }
-        public virtual Wristwatch Wristwatch { get; set; }
+
+        public virtual PreciousMetalMaterial PreciousMetalMaterial { get; set; }
+
+        public virtual Watch Watch { get; set; }
 
         public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
     }

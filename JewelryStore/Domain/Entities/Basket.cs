@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace JewelryStoreAPI.Core.Entities
+namespace JewelryStoreAPI.Domain.Entities
 {
     public class Basket
     {
@@ -16,7 +14,9 @@ namespace JewelryStoreAPI.Core.Entities
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
+
         public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
+
         public virtual Order Order { get; set; }
     }
 }
