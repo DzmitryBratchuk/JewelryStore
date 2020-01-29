@@ -8,9 +8,6 @@ namespace JewelryStoreAPI.Core.Configurations
     {
         public void Configure(EntityTypeBuilder<Bijouterie> builder)
         {
-            builder.Property(x => x.Name)
-                .IsRequired();
-
             builder.HasOne(d => d.BijouterieType)
                 .WithMany(p => p.Bijouteries)
                 .HasForeignKey(d => d.BijouterieTypeId)

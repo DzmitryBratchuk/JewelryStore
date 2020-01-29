@@ -11,17 +11,19 @@ namespace JewelryStoreAPI.Domain.Entities
 
         public int Id { get; set; }
 
-        public int? BijouterieId { get; set; }
+        public string Name { get; set; }
 
-        public int? PreciousMetalMaterialId { get; set; }
+        public decimal Cost { get; set; }
 
-        public int? WatchId { get; set; }
+        public int Amount { get; set; }
 
-        public virtual Bijouterie Bijouterie { get; set; }
+        public int BrandId { get; set; }
 
-        public virtual PreciousMetalMaterial PreciousMetalMaterial { get; set; }
+        public int CountryId { get; set; }
 
-        public virtual Watch Watch { get; set; }
+        public virtual Brand Brand { get; set; }
+
+        public virtual Country Country { get; set; }
 
         public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
     }

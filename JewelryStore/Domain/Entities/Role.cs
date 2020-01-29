@@ -1,9 +1,18 @@
-﻿namespace JewelryStoreAPI.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace JewelryStoreAPI.Domain.Entities
 {
-    public enum Role
+    public class Role
     {
-        Customer,
-        Admin,
-        Accountant
+        public Role()
+        {
+            Users = new HashSet<User>();
+        }
+
+        public int Id { get; set; }
+
+        public string RoleName { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

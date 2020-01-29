@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JewelryStoreAPI.Core.Configurations
 {
-    public class BijouterieTypeConfiguration : IEntityTypeConfiguration<BijouterieType>
+    public class MetalTypeConfiguration : IEntityTypeConfiguration<MetalType>
     {
-        public void Configure(EntityTypeBuilder<BijouterieType> builder)
+        public void Configure(EntityTypeBuilder<MetalType> builder)
         {
-            builder.HasIndex(x => x.BijouterieTypeName)
+            builder.HasIndex(x => x.MetalTypeName)
                 .IsUnique();
 
-            builder.Property(x => x.BijouterieTypeName)
+            builder.Property(x => x.MetalTypeName)
                 .IsRequired()
                 .HasMaxLength(30);
         }

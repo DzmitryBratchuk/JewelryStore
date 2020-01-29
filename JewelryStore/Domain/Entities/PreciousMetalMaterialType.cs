@@ -1,15 +1,18 @@
-﻿namespace JewelryStoreAPI.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace JewelryStoreAPI.Domain.Entities
 {
-    public enum PreciousMetalMaterialType
+    public class PreciousMetalMaterialType
     {
-        Bracelet,
-        Crown,
-        Earring,
-        Medallion,
-        Ring,
-        Plate,
-        Spoon,
-        Fork,
-        Coin
+        public PreciousMetalMaterialType()
+        {
+            PreciousMetalMaterials = new HashSet<PreciousMetalMaterial>();
+        }
+
+        public int Id { get; set; }
+
+        public string PreciousMetalMaterialTypeName { get; set; }
+
+        public virtual ICollection<PreciousMetalMaterial> PreciousMetalMaterials { get; set; }
     }
 }
