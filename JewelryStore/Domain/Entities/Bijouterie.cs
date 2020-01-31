@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace JewelryStoreAPI.Domain.Entities
+﻿namespace JewelryStoreAPI.Domain.Entities
 {
     public class Bijouterie : Product
     {

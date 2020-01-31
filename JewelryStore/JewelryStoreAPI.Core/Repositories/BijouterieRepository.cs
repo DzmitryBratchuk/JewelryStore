@@ -14,19 +14,55 @@ namespace JewelryStoreAPI.Core.Repositories
         public BijouterieRepository(JewelryStoredbContext context) : base(context)
         {
         }
+
+        public override async Task<IList<Bijouterie>> GetAll()
+        {
+            return await _context.Bijouteries
+                .Include(x => x.Brand)
+                .Include(x => x.Country)
+                .Include(x => x.BijouterieType)
+                .ToListAsync();
+        }
+
+        public override async Task<Bijouterie> GetById(object id)
+        {
+            return await _context.Bijouteries
+                .Where(x=>x.Id == Convert.ToInt32(id))
+                .Include(x => x.Brand)
+                .Include(x => x.Country)
+                .Include(x => x.BijouterieType)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IList<Bijouterie>> GetAllByBijouterieTypeId(int id)
         {
-            return await _context.Bijouteries.Where(x => x.BijouterieTypeId == id).ToListAsync();
+            return await _context.Bijouteries
+                .Where(x => x.BijouterieTypeId == id)
+                .Include(x => x.Brand)
+                .Include(x => x.Country)
+                .Include(x => x.BijouterieType)
+                .ToListAsync();
         }
 
         public async Task<IList<Bijouterie>> GetAllByBrandId(int id)
         {
-            return await _context.Bijouteries.Where(x => x.BrandId == id).ToListAsync();
+            return await _context.Bijouteries
+                .Where(x => x.BrandId == id)
+                .Include(x => x.Brand)
+                .Include(x => x.Country)
+                .Include(x => x.BijouterieType)
+                .ToListAsync();
         }
 
         public async Task<IList<Bijouterie>> GetAllByCountryId(int id)
         {
-            return await _context.Bijouteries.Where(x => x.CountryId == id).ToListAsync();
+            var x =  await _context.Bijouteries
+                .Where(x => x.Country.Id == id)
+                .Include(x => x.Brand)
+                .Include(x => x.Country)
+                .Include(x => x.BijouterieType)
+                .ToListAsync();
+            return x;
         }
     }
 }

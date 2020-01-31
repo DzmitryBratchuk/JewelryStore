@@ -1,10 +1,19 @@
+using AutoMapper;
+using FluentValidation.AspNetCore;
+using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
+using JewelryStoreAPI.Core.Repositories;
+using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Infrastructure.QueriesDTO;
+using JewelryStoreAPI.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace JewelryStoreAPI
 {
@@ -20,7 +29,9 @@ namespace JewelryStoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BijouterieQueryDTO>());
+
             services.AddDbContext<JewelryStoredbContext>(options =>
             {
                 if (!options.IsConfigured)
@@ -28,6 +39,16 @@ namespace JewelryStoreAPI
                     options.UseNpgsql(Configuration.GetConnectionString("JewelryStoreDatabase"), b => b.MigrationsAssembly("JewelryStoreAPI.Core"));
                 }
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "JewelryStore API", Version = "v1" });
+            });
+
+            services.AddAutoMapper(typeof(BijouterieQueryDTO));
+
+            services.AddTransient<IBijouterieRepository, BijouterieRepository>();
+            services.AddTransient<IBijouterieService, BijouterieService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +59,17 @@ namespace JewelryStoreAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomExceptionHandler();
+
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "JewelryStore API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
