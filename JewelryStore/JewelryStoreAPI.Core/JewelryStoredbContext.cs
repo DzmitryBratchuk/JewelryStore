@@ -14,12 +14,10 @@ namespace JewelryStoreAPI.Core
         public virtual DbSet<Bijouterie> Bijouteries { get; set; }
         public virtual DbSet<BijouterieType> BijouterieTypes { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
-        public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
-        public virtual DbSet<MetalType> MetalTypes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<PreciousMetalMaterial> PreciousMetalMaterials { get; set; }
-        public virtual DbSet<PreciousMetalMaterialType> PreciousMetalMaterialTypes { get; set; }
+        public virtual DbSet<PreciousItem> PreciousMetalMaterials { get; set; }
+        public virtual DbSet<PreciousItemType> PreciousMetalMaterialTypes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductBasket> ProductBaskets { get; set; }
         public virtual DbSet<Role> Roles { get; set; }

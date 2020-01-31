@@ -7,6 +7,7 @@ namespace JewelryStoreAPI.Domain.Entities
         public Product()
         {
             ProductBaskets = new HashSet<ProductBasket>();
+            ProductOrders = new HashSet<ProductOrder>();
         }
 
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace JewelryStoreAPI.Domain.Entities
         public virtual Country Country { get; set; }
 
         public virtual ICollection<ProductBasket> ProductBaskets { get; set; }
+
+        public virtual ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }

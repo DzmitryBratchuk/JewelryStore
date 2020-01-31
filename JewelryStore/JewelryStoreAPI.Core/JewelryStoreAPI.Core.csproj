@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\JewelryStoreAPI.Domain.csproj" />
     <ProjectReference Include="..\JewelryStoreAPI.Infrastructure\JewelryStoreAPI.Infrastructure.csproj" />
   </ItemGroup>
 

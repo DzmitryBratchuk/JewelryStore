@@ -11,7 +11,7 @@ namespace JewelryStoreAPI.Domain.Entities
 
         public int Id { get; set; }
 
-        public string CountryName { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

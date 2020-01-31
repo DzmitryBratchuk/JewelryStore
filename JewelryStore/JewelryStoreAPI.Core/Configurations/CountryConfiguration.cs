@@ -8,12 +8,11 @@ namespace JewelryStoreAPI.Core.Configurations
     {
         public void Configure(EntityTypeBuilder<Country> builder)
         {
-            builder.HasIndex(x => x.CountryName)
+            builder.HasIndex(x => x.Name)
                 .IsUnique();
 
-            builder.Property(x => x.CountryName)
-                .IsRequired()
-                .HasMaxLength(30);
+            builder.Property(x => x.Name)
+                .IsRequired();
         }
     }
 }

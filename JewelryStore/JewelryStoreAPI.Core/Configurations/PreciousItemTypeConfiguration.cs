@@ -7,9 +7,9 @@ using System.Text;
 
 namespace JewelryStoreAPI.Core.Configurations
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class PreciousItemTypeConfiguration : IEntityTypeConfiguration<PreciousItemType>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<PreciousItemType> builder)
         {
             builder.HasIndex(x => x.Name)
                 .IsUnique();

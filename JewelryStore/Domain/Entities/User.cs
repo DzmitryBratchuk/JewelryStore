@@ -7,6 +7,7 @@ namespace JewelryStoreAPI.Domain.Entities
         public User()
         {
             Baskets = new HashSet<Basket>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -20,5 +21,7 @@ namespace JewelryStoreAPI.Domain.Entities
         public virtual Role Role { get; set; }
 
         public virtual ICollection<Basket> Baskets { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

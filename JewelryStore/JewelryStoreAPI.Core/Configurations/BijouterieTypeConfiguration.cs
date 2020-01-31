@@ -8,12 +8,11 @@ namespace JewelryStoreAPI.Core.Configurations
     {
         public void Configure(EntityTypeBuilder<BijouterieType> builder)
         {
-            builder.HasIndex(x => x.BijouterieTypeName)
+            builder.HasIndex(x => x.Name)
                 .IsUnique();
 
-            builder.Property(x => x.BijouterieTypeName)
-                .IsRequired()
-                .HasMaxLength(30);
+            builder.Property(x => x.Name)
+                .IsRequired();
         }
     }
 }

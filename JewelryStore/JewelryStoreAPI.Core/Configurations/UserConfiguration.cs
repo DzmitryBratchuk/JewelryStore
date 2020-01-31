@@ -12,12 +12,10 @@ namespace JewelryStoreAPI.Core.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Property(x => x.FirstName)
-                .IsRequired()
-                .HasMaxLength(30);
+                .IsRequired();
 
             builder.Property(x => x.LastName)
-                .IsRequired()
-                .HasMaxLength(30);
+                .IsRequired();
 
             builder.HasOne(d => d.Role)
                 .WithMany(p => p.Users)

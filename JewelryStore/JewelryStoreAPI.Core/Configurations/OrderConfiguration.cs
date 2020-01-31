@@ -8,10 +8,10 @@ namespace JewelryStoreAPI.Core.Configurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.HasOne(d => d.Basket)
+            builder.HasOne(d => d.User)
                 .WithMany(p => p.Orders)
-                .HasForeignKey(d => d.BasketId)
-                .HasConstraintName("FK_Orders_To_Baskets")
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Orders_To_Users")
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         }

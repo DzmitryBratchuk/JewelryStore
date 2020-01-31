@@ -12,10 +12,10 @@ namespace JewelryStoreAPI.Core.Configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasDiscriminator<int>("JewelryType")
-                .HasValue<Product>(0)
-                .HasValue<Bijouterie>(1)
-                .HasValue<PreciousMetalMaterial>(2)
-                .HasValue<Watch>(3);
+                .HasValue<Product>((int)ProductType.Product)
+                .HasValue<Bijouterie>((int)ProductType.Bijouterie)
+                .HasValue<PreciousItem>((int)ProductType.PreciousItem)
+                .HasValue<Watch>((int)ProductType.Watch);
 
             builder.Property(x => x.Name)
                 .IsRequired();
