@@ -1,9 +1,7 @@
-﻿namespace JewelryStoreAPI.Infrastructure.CommandsDTO
+﻿namespace JewelryStoreAPI.Infrastructure.DTO.Bijouterie
 {
-
-    public class BijouterieCommandDTO
+    public class UpdateBijouterieDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int BrandId { get; set; }
         public int CountryId { get; set; }

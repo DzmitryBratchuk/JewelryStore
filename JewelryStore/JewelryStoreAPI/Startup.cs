@@ -1,11 +1,13 @@
+using Autofac;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
 using JewelryStoreAPI.Core.Repositories;
+using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Infrastructure.QueriesDTO;
+using JewelryStoreAPI.Presentations;
 using JewelryStoreAPI.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +32,7 @@ namespace JewelryStoreAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BijouterieQueryDTO>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetBijouterieDto>());
 
             services.AddDbContext<JewelryStoredbContext>(options =>
             {
@@ -45,10 +47,13 @@ namespace JewelryStoreAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JewelryStore API", Version = "v1" });
             });
 
-            services.AddAutoMapper(typeof(BijouterieQueryDTO));
+            services.AddAutoMapper(typeof(GetBijouterieDto), typeof(BijouterieModel));
+        }
 
-            services.AddTransient<IBijouterieRepository, BijouterieRepository>();
-            services.AddTransient<IBijouterieService, BijouterieService>();
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<BijouterieRepository>().As<IBijouterieRepository>();
+            builder.RegisterType<BijouterieService>().As<IBijouterieService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +77,8 @@ namespace JewelryStoreAPI
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

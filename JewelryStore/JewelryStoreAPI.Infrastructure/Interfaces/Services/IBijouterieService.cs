@@ -1,22 +1,18 @@
-﻿using JewelryStoreAPI.Infrastructure.CommandsDTO;
-using JewelryStoreAPI.Infrastructure.QueriesDTO;
-using System;
+﻿using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IBijouterieService
     {
-        Task<BijouterieQueryDTO> GetById(object id);
-        Task<IList<BijouterieQueryDTO>> GetAll();
-        Task<IList<BijouterieQueryDTO>> GetAllByCountryId(int countryId);
-        Task<IList<BijouterieQueryDTO>> GetAllByBrandId(int brandId);
-        Task<IList<BijouterieQueryDTO>> GetAllByBijouterieTypeId(int bijouterieTypeId);
-        Task Create(BijouterieCommandDTO bijouterieCommand);
-        Task Update(int id, BijouterieCommandDTO bijouterieCommand);
-        Task Delete(int id);
+        Task<GetBijouterieDto> GetById(object id);
+        Task<IList<GetBijouterieDto>> GetAll();
+        Task<IList<GetBijouterieDto>> GetAllByCountryId(int countryId);
+        Task<IList<GetBijouterieDto>> GetAllByBrandId(int brandId);
+        Task<IList<GetBijouterieDto>> GetAllByBijouterieTypeId(int bijouterieTypeId);
+        Task Create(CreateBijouterieDto createBijouterie);
+        Task Update(int id, UpdateBijouterieDto updateBijouterie);
+        Task Delete(RemoveBijouterieDto removeBijouterie);
     }
 }

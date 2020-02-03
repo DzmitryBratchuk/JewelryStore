@@ -1,6 +1,6 @@
-﻿namespace JewelryStoreAPI.Infrastructure.QueriesDTO
+﻿namespace JewelryStoreAPI.Presentations
 {
-    public class BijouterieQueryDTO
+    public class BijouterieModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
