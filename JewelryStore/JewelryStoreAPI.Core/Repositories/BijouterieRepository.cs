@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Core.Repositories
@@ -27,7 +26,7 @@ namespace JewelryStoreAPI.Core.Repositories
         public override async Task<Bijouterie> GetById(object id)
         {
             return await _context.Bijouteries
-                .Where(x=>x.Id == Convert.ToInt32(id))
+                .Where(x => x.Id == Convert.ToInt32(id))
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
                 .Include(x => x.BijouterieType)
@@ -56,13 +55,12 @@ namespace JewelryStoreAPI.Core.Repositories
 
         public async Task<IList<Bijouterie>> GetAllByCountryId(int id)
         {
-            var x =  await _context.Bijouteries
+            return await _context.Bijouteries
                 .Where(x => x.Country.Id == id)
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
                 .Include(x => x.BijouterieType)
                 .ToListAsync();
-            return x;
         }
     }
 }

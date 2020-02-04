@@ -6,6 +6,7 @@ namespace JewelryStoreAPI.Infrastructure.DTO.Bijouterie.Validators
     {
         public RemoveBijouterieDtoValidator()
         {
+            RuleFor(x => x.Id).GreaterThan(0);
         }
     }
 }

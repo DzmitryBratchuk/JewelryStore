@@ -1,5 +1,6 @@
 ﻿using JewelryStoreAPI.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -10,10 +11,12 @@ namespace JewelryStoreAPI.Common
     public class CustomExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
+            _logger = loggerFactory.CreateLogger<CustomExceptionHandlerMiddleware>();
         }
 
         public async Task Invoke(HttpContext context)
@@ -42,10 +45,16 @@ namespace JewelryStoreAPI.Common
                 case NotFoundException _:
                     code = HttpStatusCode.NotFound;
                     break;
+                case ValidationException validationException:
+                    code = HttpStatusCode.BadRequest;
+                    result = JsonConvert.SerializeObject(validationException.Failures);
+                    break;
             }
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
+
+            _logger.LogWarning($"Exception while processing {context.Request.Path}. Exception message: {exception.Message}");
 
             return context.Response.WriteAsync(result);
         }

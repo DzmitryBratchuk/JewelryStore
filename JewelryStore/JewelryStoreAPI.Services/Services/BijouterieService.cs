@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
+using JewelryStoreAPI.Infrastructure.DTO.Bijouterie.Validators;
 using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
@@ -62,6 +63,14 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Create(CreateBijouterieDto createBijouterie)
         {
+            var validator = new CreateBijouterieDtoValidator();
+            var result = validator.Validate(createBijouterie);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
             var entity = _mapper.Map<Bijouterie>(createBijouterie);
 
             await _repository.Create(entity);
@@ -72,6 +81,14 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Update(int id, UpdateBijouterieDto updateBijouterie)
         {
+            var validator = new UpdateBijouterieDtoValidator();
+            var result = validator.Validate(updateBijouterie);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
             var entity = await _repository.GetById(id);
 
             if (entity == null)
@@ -93,6 +110,14 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveBijouterieDto removeBijouterie)
         {
+            var validator = new RemoveBijouterieDtoValidator();
+            var result = validator.Validate(removeBijouterie);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
             var entity = await _repository.GetById(removeBijouterie.Id);
 
             if (entity == null)

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations;
+using JewelryStoreAPI.Presentations.Bijouterie;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,87 +22,85 @@ namespace JewelryStoreAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Bijouterie
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<BijouterieModel>> GetAll()
+        public async Task<IList<GetBijouterieModel>> GetAll()
         {
             var bijouteries = await _bijouterieService.GetAll();
 
-            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
         }
 
-        // GET: api/Bijouterie/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<BijouterieModel> GetById(int id)
+        public async Task<GetBijouterieModel> GetById(int id)
         {
             var bijouterie = await _bijouterieService.GetById(id);
 
-            return _mapper.Map<BijouterieModel>(bijouterie);
+            return _mapper.Map<GetBijouterieModel>(bijouterie);
         }
 
-        // GET: api/Bijouterie/GetAllByBijouterieTypeId/5
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<BijouterieModel>> GetAllByBijouterieTypeId(int id)
+        public async Task<IList<GetBijouterieModel>> GetAllByBijouterieTypeId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByBijouterieTypeId(id);
 
-            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
         }
 
-        // GET: api/Bijouterie/GetAllByBrandId/5
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<BijouterieModel>> GetAllByBrandId(int id)
+        public async Task<IList<GetBijouterieModel>> GetAllByBrandId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByBrandId(id);
 
-            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
         }
 
-        // GET: api/Bijouterie/GetAllByCountryId/5
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<BijouterieModel>> GetAllByCountryId(int id)
+        public async Task<IList<GetBijouterieModel>> GetAllByCountryId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByCountryId(id);
 
-            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
         }
 
-        // POST: api/Bijouterie
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] CreateBijouterieDto bijouterie)
+        public async Task<IActionResult> Post([FromBody] CreateBijouterieModel createBijouterie)
         {
+            var bijouterie = _mapper.Map<CreateBijouterieDto>(createBijouterie);
+
             await _bijouterieService.Create(bijouterie);
 
             return CreatedAtAction(nameof(GetById), new { id = bijouterie.Id }, bijouterie);
         }
 
-        // PUT: api/Bijouterie/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateBijouterieDto bijouterie)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateBijouterieModel updateBijouterie)
         {
+            var bijouterie = _mapper.Map<UpdateBijouterieDto>(updateBijouterie);
+
             await _bijouterieService.Update(id, bijouterie);
 
             return NoContent();
         }
 
-        // DELETE: api/Bijouterie
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete([FromBody] RemoveBijouterieDto bijouterie)
+        public async Task<IActionResult> Delete(int id)
         {
+            var bijouterie = new RemoveBijouterieDto() { Id = id };
+
             await _bijouterieService.Delete(bijouterie);
 
             return NoContent();

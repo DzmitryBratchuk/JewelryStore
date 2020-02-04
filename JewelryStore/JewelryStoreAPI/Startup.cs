@@ -7,7 +7,7 @@ using JewelryStoreAPI.Core.Repositories;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations;
+using JewelryStoreAPI.Presentations.Bijouterie;
 using JewelryStoreAPI.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace JewelryStoreAPI
@@ -47,7 +48,7 @@ namespace JewelryStoreAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JewelryStore API", Version = "v1" });
             });
 
-            services.AddAutoMapper(typeof(GetBijouterieDto), typeof(BijouterieModel));
+            services.AddAutoMapper(typeof(GetBijouterieDto), typeof(GetBijouterieModel));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -57,8 +58,10 @@ namespace JewelryStoreAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/JewelryStore_{Date}.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

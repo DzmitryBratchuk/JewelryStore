@@ -1,6 +1,6 @@
-﻿namespace JewelryStoreAPI.Presentations
+﻿namespace JewelryStoreAPI.Presentations.Bijouterie
 {
-    public class BijouterieModel
+    public class GetBijouterieModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
