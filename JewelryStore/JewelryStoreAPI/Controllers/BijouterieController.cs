@@ -73,11 +73,15 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateBijouterieModel createBijouterie)
         {
-            var bijouterie = _mapper.Map<CreateBijouterieDto>(createBijouterie);
+            var createBijouterieDto = _mapper.Map<CreateBijouterieDto>(createBijouterie);
 
-            await _bijouterieService.Create(bijouterie);
+            await _bijouterieService.Create(createBijouterieDto);
 
-            return CreatedAtAction(nameof(GetById), new { id = bijouterie.Id }, bijouterie);
+            var getBijouterieDto = await _bijouterieService.GetById(createBijouterieDto.Id);
+
+            var getBijouterieModel = _mapper.Map<GetBijouterieModel>(getBijouterieDto);
+
+            return CreatedAtAction(nameof(GetById), new { id = getBijouterieModel.Id }, getBijouterieModel);
         }
 
         [HttpPut("{id}")]
