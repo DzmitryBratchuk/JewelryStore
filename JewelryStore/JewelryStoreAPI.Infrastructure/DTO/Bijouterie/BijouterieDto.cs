@@ -1,6 +1,6 @@
 ﻿namespace JewelryStoreAPI.Infrastructure.DTO.Bijouterie
 {
-    public class GetBijouterieDto
+    public class BijouterieDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

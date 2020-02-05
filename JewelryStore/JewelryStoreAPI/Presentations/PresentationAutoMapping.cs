@@ -8,9 +8,7 @@ namespace JewelryStoreAPI.Presentations
     {
         public PresentationAutoMapping()
         {
-            CreateMap<GetBijouterieDto, GetBijouterieModel>();
-
-            CreateMap<CreateBijouterieDto, GetBijouterieModel>();
+            CreateMap<BijouterieDto, BijouterieModel>();
 
             CreateMap<CreateBijouterieModel, CreateBijouterieDto>();
 

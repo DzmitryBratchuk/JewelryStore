@@ -33,7 +33,7 @@ namespace JewelryStoreAPI.Core.Repositories
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetById(object id)
+        public virtual async Task<TEntity> GetById(int id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }

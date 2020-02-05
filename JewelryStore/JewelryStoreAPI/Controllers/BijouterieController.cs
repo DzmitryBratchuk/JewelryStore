@@ -24,48 +24,48 @@ namespace JewelryStoreAPI.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<GetBijouterieModel>> GetAll()
+        public async Task<IList<BijouterieModel>> GetAll()
         {
             var bijouteries = await _bijouterieService.GetAll();
 
-            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<GetBijouterieModel> GetById(int id)
+        public async Task<BijouterieModel> GetById(int id)
         {
             var bijouterie = await _bijouterieService.GetById(id);
 
-            return _mapper.Map<GetBijouterieModel>(bijouterie);
+            return _mapper.Map<BijouterieModel>(bijouterie);
         }
 
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<GetBijouterieModel>> GetAllByBijouterieTypeId(int id)
+        public async Task<IList<BijouterieModel>> GetAllByBijouterieTypeId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByBijouterieTypeId(id);
 
-            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<GetBijouterieModel>> GetAllByBrandId(int id)
+        public async Task<IList<BijouterieModel>> GetAllByBrandId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByBrandId(id);
 
-            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<GetBijouterieModel>> GetAllByCountryId(int id)
+        public async Task<IList<BijouterieModel>> GetAllByCountryId(int id)
         {
             var bijouteries = await _bijouterieService.GetAllByCountryId(id);
 
-            return _mapper.Map<IList<GetBijouterieModel>>(bijouteries);
+            return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
         [HttpPost]
@@ -77,11 +77,11 @@ namespace JewelryStoreAPI.Controllers
 
             await _bijouterieService.Create(createBijouterieDto);
 
-            var getBijouterieDto = await _bijouterieService.GetById(createBijouterieDto.Id);
+            var bijouterieDto = await _bijouterieService.GetById(createBijouterieDto.Id);
 
-            var getBijouterieModel = _mapper.Map<GetBijouterieModel>(getBijouterieDto);
+            var bijouterieModel = _mapper.Map<BijouterieModel>(bijouterieDto);
 
-            return CreatedAtAction(nameof(GetById), new { id = getBijouterieModel.Id }, getBijouterieModel);
+            return CreatedAtAction(nameof(GetById), new { id = bijouterieModel.Id }, bijouterieModel);
         }
 
         [HttpPut("{id}")]

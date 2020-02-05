@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace JewelryStoreAPI.Infrastructure.DTO.Bijouterie.Validators
+namespace JewelryStoreAPI.Presentations.Bijouterie.Validators
 {
-    public class UpdateBijouterieDtoValidator : AbstractValidator<UpdateBijouterieDto>
+    public class UpdateBijouterieModelValidator : AbstractValidator<UpdateBijouterieModel>
     {
-        public UpdateBijouterieDtoValidator()
+        public UpdateBijouterieModelValidator()
         {
             RuleFor(x => x.Name).MaximumLength(128).NotNull();
             RuleFor(x => x.BrandId).GreaterThan(0);

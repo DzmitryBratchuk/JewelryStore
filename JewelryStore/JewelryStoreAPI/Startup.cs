@@ -33,7 +33,7 @@ namespace JewelryStoreAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetBijouterieDto>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BijouterieModel>());
 
             services.AddDbContext<JewelryStoredbContext>(options =>
             {
@@ -48,7 +48,7 @@ namespace JewelryStoreAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JewelryStore API", Version = "v1" });
             });
 
-            services.AddAutoMapper(typeof(GetBijouterieDto), typeof(GetBijouterieModel));
+            services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

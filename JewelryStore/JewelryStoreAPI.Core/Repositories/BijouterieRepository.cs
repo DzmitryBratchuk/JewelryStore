@@ -23,10 +23,10 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public override async Task<Bijouterie> GetById(object id)
+        public override async Task<Bijouterie> GetById(int id)
         {
             return await _context.Bijouteries
-                .Where(x => x.Id == Convert.ToInt32(id))
+                .Where(x => x.Id == id)
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
                 .Include(x => x.BijouterieType)

@@ -8,7 +8,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
             where TEntity : class
     {
         Task<IList<TEntity>> GetAll();
-        Task<TEntity> GetById(object id);
+        Task<TEntity> GetById(int id);
         Task Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

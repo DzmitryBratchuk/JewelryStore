@@ -11,12 +11,12 @@ namespace JewelryStoreAPI.Common
     public class CustomExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
+        private readonly ILogger<CustomExceptionHandlerMiddleware> _logger;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
             _next = next;
-            _logger = loggerFactory.CreateLogger<CustomExceptionHandlerMiddleware>();
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
