@@ -43,14 +43,13 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("BijouterieTypeName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BijouterieTypeName")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("BijouterieTypes");
@@ -63,37 +62,16 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("BrandName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandName")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Brands");
-                });
-
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Color", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ColorName")
-                        .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorName")
-                        .IsUnique();
-
-                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Country", b =>
@@ -103,37 +81,16 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("CountryName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryName")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.MetalType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("MetalTypeName")
-                        .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MetalTypeName")
-                        .IsUnique();
-
-                    b.ToTable("MetalTypes");
                 });
 
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Order", b =>
@@ -143,37 +100,39 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("BasketId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTimeOffset>("OrderTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousMetalMaterialType", b =>
+            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousItemType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("PreciousMetalMaterialTypeName")
+                    b.Property<int>("MetalType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PreciousMetalMaterialTypeName")
+                    b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("PreciousMetalMaterialTypes");
+                    b.ToTable("PreciousItemTypes");
                 });
 
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Product", b =>
@@ -228,6 +187,21 @@ namespace JewelryStoreAPI.Core.Migrations
                     b.ToTable("ProductBaskets");
                 });
 
+            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.ProductOrder", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ProductOrders");
+                });
+
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -235,14 +209,13 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("RoleName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleName")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Roles");
@@ -257,13 +230,11 @@ namespace JewelryStoreAPI.Core.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("character varying(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("text");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
@@ -287,19 +258,14 @@ namespace JewelryStoreAPI.Core.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousMetalMaterial", b =>
+            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousItem", b =>
                 {
                     b.HasBaseType("JewelryStoreAPI.Domain.Entities.Product");
 
-                    b.Property<int>("MetalTypeId")
+                    b.Property<int>("PreciousItemTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PreciousMetalMaterialTypeId")
-                        .HasColumnType("integer");
-
-                    b.HasIndex("MetalTypeId");
-
-                    b.HasIndex("PreciousMetalMaterialTypeId");
+                    b.HasIndex("PreciousItemTypeId");
 
                     b.HasDiscriminator().HasValue(2);
                 });
@@ -308,23 +274,17 @@ namespace JewelryStoreAPI.Core.Migrations
                 {
                     b.HasBaseType("JewelryStoreAPI.Domain.Entities.Product");
 
-                    b.Property<int?>("CaseColorId")
+                    b.Property<int>("CaseColorId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DialColorId")
+                    b.Property<int>("DialColorId")
                         .HasColumnType("integer");
 
                     b.Property<int>("DiameterMM")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StrapColorId")
+                    b.Property<int>("StrapColorId")
                         .HasColumnType("integer");
-
-                    b.HasIndex("CaseColorId");
-
-                    b.HasIndex("DialColorId");
-
-                    b.HasIndex("StrapColorId");
 
                     b.HasDiscriminator().HasValue(3);
                 });
@@ -341,10 +301,10 @@ namespace JewelryStoreAPI.Core.Migrations
 
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.Basket", "Basket")
+                    b.HasOne("JewelryStoreAPI.Domain.Entities.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("BasketId")
-                        .HasConstraintName("FK_Orders_To_Baskets")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Orders_To_Users")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -381,6 +341,21 @@ namespace JewelryStoreAPI.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.ProductOrder", b =>
+                {
+                    b.HasOne("JewelryStoreAPI.Domain.Entities.Order", "Order")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JewelryStoreAPI.Domain.Entities.Product", "Product")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.User", b =>
                 {
                     b.HasOne("JewelryStoreAPI.Domain.Entities.Role", "Role")
@@ -401,42 +376,14 @@ namespace JewelryStoreAPI.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousMetalMaterial", b =>
+            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.PreciousItem", b =>
                 {
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.MetalType", "MetalType")
-                        .WithMany("PreciousMetalMaterials")
-                        .HasForeignKey("MetalTypeId")
-                        .HasConstraintName("FK_PreciousMetalMaterials_To_MetalTypeTypes")
+                    b.HasOne("JewelryStoreAPI.Domain.Entities.PreciousItemType", "PreciousItemType")
+                        .WithMany("PreciousItems")
+                        .HasForeignKey("PreciousItemTypeId")
+                        .HasConstraintName("FK_PreciousItems_To_PreciousItemTypes")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.PreciousMetalMaterialType", "PreciousMetalMaterialType")
-                        .WithMany("PreciousMetalMaterials")
-                        .HasForeignKey("PreciousMetalMaterialTypeId")
-                        .HasConstraintName("FK_PreciousMetalMaterials_To_PreciousMetalMaterialTypes")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("JewelryStoreAPI.Domain.Entities.Watch", b =>
-                {
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.Color", "CaseColor")
-                        .WithMany("WatchesWithCaseColors")
-                        .HasForeignKey("CaseColorId")
-                        .HasConstraintName("FK_WatchesWithCaseColors_To_CaseColors")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.Color", "DialColor")
-                        .WithMany("WatchesWithDialColors")
-                        .HasForeignKey("DialColorId")
-                        .HasConstraintName("FK_WatchesWithDialColors_To_DialColors")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("JewelryStoreAPI.Domain.Entities.Color", "StrapColor")
-                        .WithMany("WatchesWithStrapColors")
-                        .HasForeignKey("StrapColorId")
-                        .HasConstraintName("FK_WatchesWithStrapColors_To_StrapColors")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

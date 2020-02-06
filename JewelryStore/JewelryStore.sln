@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Infrastructure", "JewelryStoreAPI.Infrastructure\JewelryStoreAPI.Infrastructure.csproj", "{EC2B45F7-5D43-415B-85FE-BA83695B57B9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Core", "JewelryStoreAPI.Core\JewelryStoreAPI.Core.csproj", "{CB163ACA-907B-49D3-BBAB-A385EEA632A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI", "JewelryStoreAPI\JewelryStoreAPI.csproj", "{169B41CE-7D90-4A40-B462-B7E6E60E771D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Services", "JewelryStoreAPI.Services\JewelryStoreAPI.Services.csproj", "{029A4508-7F90-48A9-906B-9CE64D9F3502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelryStoreAPI.Domain", "Domain\JewelryStoreAPI.Domain.csproj", "{31518300-7E6A-40A0-B16E-17E8725D4B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Domain", "Domain\JewelryStoreAPI.Domain.csproj", "{31518300-7E6A-40A0-B16E-17E8725D4B87}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryStoreAPI.Infrastructure", "JewelryStoreAPI.Infrastructure\JewelryStoreAPI.Infrastructure.csproj", "{D538A0DA-CC7B-4DED-B139-955BFD49630A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC2B45F7-5D43-415B-85FE-BA83695B57B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB163ACA-907B-49D3-BBAB-A385EEA632A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB163ACA-907B-49D3-BBAB-A385EEA632A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB163ACA-907B-49D3-BBAB-A385EEA632A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31518300-7E6A-40A0-B16E-17E8725D4B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D538A0DA-CC7B-4DED-B139-955BFD49630A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D538A0DA-CC7B-4DED-B139-955BFD49630A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D538A0DA-CC7B-4DED-B139-955BFD49630A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D538A0DA-CC7B-4DED-B139-955BFD49630A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

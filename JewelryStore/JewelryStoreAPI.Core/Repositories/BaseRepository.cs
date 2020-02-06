@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Core.Repositories
@@ -29,12 +28,12 @@ namespace JewelryStoreAPI.Core.Repositories
             _context.Entry(entity).State = EntityState.Deleted;
         }
 
-        public async Task<IList<TEntity>> GetAll()
+        public virtual async Task<IList<TEntity>> GetAll()
         {
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> GetById(object id)
+        public virtual async Task<TEntity> GetById(int id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }
