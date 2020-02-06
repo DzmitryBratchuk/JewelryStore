@@ -16,6 +16,10 @@ namespace JewelryStoreAPI.Domain.Entities
 
         public string LastName { get; set; }
 
+        public string Login { get; set; }
+
+        public int PasswordHash { get; set; }
+
         public int RoleId { get; set; }
 
         public virtual Role Role { get; set; }

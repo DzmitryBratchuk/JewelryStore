@@ -129,7 +129,7 @@ namespace JewelryStoreAPI.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Name", "MetalType")
                         .IsUnique();
 
                     b.ToTable("PreciousItemTypes");
@@ -180,6 +180,9 @@ namespace JewelryStoreAPI.Core.Migrations
                     b.Property<int>("BasketId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("integer");
+
                     b.HasKey("ProductId", "BasketId");
 
                     b.HasIndex("BasketId");
@@ -193,6 +196,9 @@ namespace JewelryStoreAPI.Core.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductCount")
                         .HasColumnType("integer");
 
                     b.HasKey("ProductId", "OrderId");
@@ -236,10 +242,20 @@ namespace JewelryStoreAPI.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PasswordHash")
+                        .HasColumnType("integer");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Login")
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 

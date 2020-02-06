@@ -1,5 +1,6 @@
 ﻿using JewelryStoreAPI.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -44,6 +45,9 @@ namespace JewelryStoreAPI.Common
                     break;
                 case NotFoundException _:
                     code = HttpStatusCode.NotFound;
+                    break;
+                case DbUpdateException _:
+                    code = HttpStatusCode.BadRequest;
                     break;
                 case ValidationException validationException:
                     code = HttpStatusCode.BadRequest;

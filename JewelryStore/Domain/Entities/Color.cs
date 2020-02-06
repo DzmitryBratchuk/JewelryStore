@@ -2,6 +2,7 @@
 {
     public enum Color
     {
+        Undefined = 0,
         Black,
         White,
         Red,

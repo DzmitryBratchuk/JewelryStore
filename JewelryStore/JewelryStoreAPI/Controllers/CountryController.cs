@@ -1,0 +1,86 @@
+﻿using AutoMapper;
+using JewelryStoreAPI.Infrastructure.DTO.Country;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Presentations.Country;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace JewelryStoreAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CountryController : ControllerBase
+    {
+        private readonly ICountryService _countryService;
+        private readonly IMapper _mapper;
+
+        public CountryController(ICountryService countryService, IMapper mapper)
+        {
+            _countryService = countryService;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IList<CountryModel>> GetAll()
+        {
+            var countries = await _countryService.GetAll();
+
+            return _mapper.Map<IList<CountryModel>>(countries);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<CountryModel> GetById(int id)
+        {
+            var country = await _countryService.GetById(id);
+
+            return _mapper.Map<CountryModel>(country);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateCountryModel createCountry)
+        {
+            var createCountryDto = _mapper.Map<CreateCountryDto>(createCountry);
+
+            await _countryService.Create(createCountryDto);
+
+            var countryDto = await _countryService.GetById(createCountryDto.Id);
+
+            var countryModel = _mapper.Map<CountryModel>(countryDto);
+
+            return CreatedAtAction(nameof(GetById), new { id = countryModel.Id }, countryModel);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateCountryModel updateCountry)
+        {
+            var country = _mapper.Map<UpdateCountryDto>(updateCountry);
+
+            await _countryService.Update(id, country);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var country = new RemoveCountryDto() { Id = id };
+
+            await _countryService.Delete(country);
+
+            return NoContent();
+        }
+    }
+}

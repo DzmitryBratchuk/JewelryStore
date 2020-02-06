@@ -8,7 +8,9 @@ using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.Bijouterie;
+using JewelryStoreAPI.Services;
 using JewelryStoreAPI.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace JewelryStoreAPI
 {
@@ -32,6 +36,7 @@ namespace JewelryStoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BijouterieModel>());
 
@@ -49,12 +54,65 @@ namespace JewelryStoreAPI
             });
 
             services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
+
+            var jwtSettingsSection = Configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(jwtSettingsSection);
+
+            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true
+                };
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterType<BijouterieRepository>().As<IBijouterieRepository>();
             builder.RegisterType<BijouterieService>().As<IBijouterieService>();
+
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<UserService>().As<IUserService>();
+
+            builder.RegisterType<RoleRepository>().As<IRoleRepository>();
+            builder.RegisterType<RoleService>().As<IRoleService>();
+
+            builder.RegisterType<CountryRepository>().As<ICountryRepository>();
+            builder.RegisterType<CountryService>().As<ICountryService>();
+
+            builder.RegisterType<BrandRepository>().As<IBrandRepository>();
+            builder.RegisterType<BrandService>().As<IBrandService>();
+
+            builder.RegisterType<BijouterieTypeRepository>().As<IBijouterieTypeRepository>();
+            builder.RegisterType<BijouterieTypeService>().As<IBijouterieTypeService>();
+
+            builder.RegisterType<PreciousItemTypeRepository>().As<IPreciousItemTypeRepository>();
+            builder.RegisterType<PreciousItemTypeService>().As<IPreciousItemTypeService>();
+
+            builder.RegisterType<PreciousItemRepository>().As<IPreciousItemRepository>();
+            builder.RegisterType<PreciousItemService>().As<IPreciousItemService>();
+
+            builder.RegisterType<WatchRepository>().As<IWatchRepository>();
+            builder.RegisterType<WatchService>().As<IWatchService>();
+
+            builder.RegisterType<ProductBasketRepository>().As<IProductBasketRepository>();
+            builder.RegisterType<ProductBasketService>().As<IProductBasketService>();
+
+            builder.RegisterType<BasketRepository>().As<IBasketRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
