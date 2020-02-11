@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.Report;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Controllers
 {
+    [Authorize(Roles = "Accountant")]
     [Route("api/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase

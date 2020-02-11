@@ -3,6 +3,7 @@ using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.Order;
 using JewelryStoreAPI.Presentations.ProductOrder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase

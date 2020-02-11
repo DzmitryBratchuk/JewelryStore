@@ -8,7 +8,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
     {
         Task<IList<ProductBasketDto>> GetAllProductsInBasket(int userId);
         Task<ProductBasketDto> GetById(int userId, int productId);
-        Task<int> AddProductInBasket(int userId, AddProductInBasketDto addProductInBaske);
+        Task<int> AddProductInBasket(int userId, AddProductInBasketDto addProductInBasket);
         Task UpdateProductInBasket(int userId, UpdateProductBasketDto updateProductBasket);
         Task RemoveProductFromBasket(int userId, RemoveProductBasketDto removeProductBasket);
     }

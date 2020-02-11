@@ -2,6 +2,7 @@
 using JewelryStoreAPI.Infrastructure.DTO.Role;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.Role;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase

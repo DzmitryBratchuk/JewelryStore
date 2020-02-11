@@ -4,6 +4,7 @@ using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.PreciousItemType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -60,6 +61,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<PreciousItemTypeModel>>(preciousItemTypes);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -76,6 +78,7 @@ namespace JewelryStoreAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = preciousItemTypeModel.Id }, preciousItemTypeModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -89,6 +92,7 @@ namespace JewelryStoreAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
