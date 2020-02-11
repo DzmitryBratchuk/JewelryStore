@@ -29,34 +29,24 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<CountryDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Country), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<CountryDto>(entity);
         }
 
-        public async Task Create(CreateCountryDto createCountry)
+        public async Task<int> Create(CreateCountryDto createCountry)
         {
             var entity = _mapper.Map<Country>(createCountry);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createCountry.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateCountryDto updateCountry)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Country), id);
-            }
+            var entity = await GetEntityById(id);
 
             entity.Name = updateCountry.Name;
 
@@ -67,16 +57,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveCountryDto removeCountry)
         {
-            var entity = await _repository.GetById(removeCountry.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Country), removeCountry.Id);
-            }
+            var entity = await GetEntityById(removeCountry.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Country> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Country), id);
+            }
+
+            return entity;
         }
     }
 }

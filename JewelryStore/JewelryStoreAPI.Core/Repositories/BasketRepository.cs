@@ -1,7 +1,6 @@
 ﻿using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Core.Repositories
@@ -15,9 +14,15 @@ namespace JewelryStoreAPI.Core.Repositories
         public async Task<Basket> GetByUserLogin(string login)
         {
             return await _context.Baskets
-                .Where(x => x.User.Login == login)
                 .Include(x => x.User)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.User.Login == login);
+        }
+
+        public async Task<Basket> GetByUserId(int userId)
+        {
+            return await _context.Baskets
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => x.User.Id == userId);
         }
     }
 }

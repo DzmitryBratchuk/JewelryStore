@@ -24,10 +24,9 @@ namespace JewelryStoreAPI.Core.Repositories
         public override async Task<Watch> GetById(int id)
         {
             return await _context.Watches
-                .Where(x => x.Id == id)
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Watch>> GetAllByBrandId(int id)
@@ -48,10 +47,10 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Watch>> GetAllByDiameter(int diameter)
+        public async Task<IList<Watch>> GetAllByDiameter(int diameterInMillimeters)
         {
             return await _context.Watches
-                .Where(x => x.DiameterMM == diameter)
+                .Where(x => x.DiameterMM == diameterInMillimeters)
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
                 .ToListAsync();

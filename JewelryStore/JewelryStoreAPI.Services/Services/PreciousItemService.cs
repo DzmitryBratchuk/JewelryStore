@@ -29,12 +29,7 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<PreciousItemDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(PreciousItem), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<PreciousItemDto>(entity);
         }
@@ -60,31 +55,21 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task Create(CreatePreciousItemDto createPreciousItem)
+        public async Task<int> Create(CreatePreciousItemDto createPreciousItem)
         {
             var entity = _mapper.Map<PreciousItem>(createPreciousItem);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createPreciousItem.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdatePreciousItemDto updatePreciousItem)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await GetEntityById(id);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(PreciousItem), id);
-            }
-
-            entity.Name = updatePreciousItem.Name;
-            entity.Cost = updatePreciousItem.Cost;
-            entity.Amount = updatePreciousItem.Amount;
-            entity.BrandId = updatePreciousItem.BrandId;
-            entity.CountryId = updatePreciousItem.CountryId;
-            entity.PreciousItemTypeId = updatePreciousItem.PreciousItemTypeId;
+            _mapper.Map(updatePreciousItem, entity);
 
             _repository.Update(entity);
 
@@ -93,16 +78,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemovePreciousItemDto removePreciousItem)
         {
-            var entity = await _repository.GetById(removePreciousItem.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(PreciousItem), removePreciousItem.Id);
-            }
+            var entity = await GetEntityById(removePreciousItem.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<PreciousItem> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(PreciousItem), id);
+            }
+
+            return entity;
         }
     }
 }

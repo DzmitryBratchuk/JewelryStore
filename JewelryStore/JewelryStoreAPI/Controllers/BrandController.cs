@@ -48,9 +48,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBrandDto = _mapper.Map<CreateBrandDto>(createBrand);
 
-            await _brandService.Create(createBrandDto);
+            var id = await _brandService.Create(createBrandDto);
 
-            var brandDto = await _brandService.GetById(createBrandDto.Id);
+            var brandDto = await _brandService.GetById(id);
 
             var brandModel = _mapper.Map<BrandModel>(brandDto);
 

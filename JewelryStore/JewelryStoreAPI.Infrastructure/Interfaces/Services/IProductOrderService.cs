@@ -1,9 +1,14 @@
-﻿namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
+﻿using JewelryStoreAPI.Infrastructure.DTO.Order;
+using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IProductOrderService
     {
-        //Task<IList<ProductOrder>> GetUserStatisticsAllTime(int userId);
-        //Task<IList<ProductOrder>> GetUserStatisticsInTimeRange(int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo);
-        //Task<IList<ProductOrder>> GetAllProductStatisticsInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo);
+        Task<IList<ProductOrderDto>> GetAllProductsInOrder(int userId, int orderId);
+        Task<IList<OrderDto>> GetAllUserOrders(int userId);
+        Task<int> CreateOrder(int userId, CreateOrderDto createOrder);
     }
 }

@@ -10,7 +10,7 @@ namespace JewelryStoreAPI.Infrastructure.DTO.Watch
         public string CountryName { get; set; }
         public decimal Cost { get; set; }
         public int Amount { get; set; }
-        public int Diameter { get; set; }
+        public int DiameterInMillimeters { get; set; }
         public Color CaseColor { get; set; }
         public Color DialColor { get; set; }
         public Color StrapColor { get; set; }

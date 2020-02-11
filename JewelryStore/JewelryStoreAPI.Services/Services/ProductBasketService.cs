@@ -4,7 +4,6 @@ using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,32 +12,22 @@ namespace JewelryStoreAPI.Services.Services
     public class ProductBasketService : IProductBasketService
     {
         private readonly IProductBasketRepository _productBasketRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IBasketRepository _basketRepository;
         private readonly IMapper _mapper;
-        private readonly string _username;
 
-        public ProductBasketService(IProductBasketRepository productBasketRepository,
-            IHttpContextAccessor httpContextAccessor,
+        public ProductBasketService(
+            IProductBasketRepository productBasketRepository,
             IBasketRepository basketRepository,
             IMapper mapper)
         {
             _productBasketRepository = productBasketRepository;
-            _httpContextAccessor = httpContextAccessor;
             _basketRepository = basketRepository;
             _mapper = mapper;
-
-            _username = _httpContextAccessor.HttpContext.User.Identity.Name;
         }
 
-        public async Task<ProductBasketDto> GetById(int productId)
+        public async Task<ProductBasketDto> GetById(int userId, int productId)
         {
-            var basket = await _basketRepository.GetByUserLogin(_username);
-
-            if (basket == null)
-            {
-                throw new NotFoundException(nameof(Basket), _username);
-            }
+            var basket = await GetBasketEntity(userId);
 
             var entity = await _productBasketRepository.GetById(productId, basket.Id);
 
@@ -50,14 +39,9 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<ProductBasketDto>(entity);
         }
 
-        public async Task AddProductInBasket(AddProductInBasketDto addProductInBasket)
+        public async Task<int> AddProductInBasket(int userId, AddProductInBasketDto addProductInBasket)
         {
-            var basket = await _basketRepository.GetByUserLogin(_username);
-
-            if (basket == null)
-            {
-                throw new NotFoundException(nameof(Basket), _username);
-            }
+            var basket = await GetBasketEntity(userId);
 
             var entity = _mapper.Map<ProductBasket>(addProductInBasket);
             entity.BasketId = basket.Id;
@@ -65,37 +49,27 @@ namespace JewelryStoreAPI.Services.Services
             await _productBasketRepository.Create(entity);
             await _productBasketRepository.SaveChangesAsync();
 
-            addProductInBasket.ProductId = entity.ProductId;
+            return entity.ProductId;
         }
 
-        public async Task<IList<ProductBasketDto>> GetAllProductsInBasket()
+        public async Task<IList<ProductBasketDto>> GetAllProductsInBasket(int userId)
         {
-            var basket = await _basketRepository.GetByUserLogin(_username);
-
-            if (basket == null)
-            {
-                throw new NotFoundException(nameof(Basket), _username);
-            }
+            var basket = await GetBasketEntity(userId);
 
             var entities = await _productBasketRepository.GetAllByBasketId(basket.Id);
 
             return _mapper.Map<IList<ProductBasketDto>>(entities);
         }
 
-        public async Task UpdateProductInBasket(int productId, UpdateProductBasketDto updateProductBasket)
+        public async Task UpdateProductInBasket(int userId, UpdateProductBasketDto updateProductBasket)
         {
-            var basket = await _basketRepository.GetByUserLogin(_username);
+            var basket = await GetBasketEntity(userId);
 
-            if (basket == null)
-            {
-                throw new NotFoundException(nameof(Basket), _username);
-            }
-
-            var entity = await _productBasketRepository.GetById(productId, basket.Id);
+            var entity = await _productBasketRepository.GetById(updateProductBasket.ProductId, basket.Id);
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), productId);
+                throw new NotFoundException(nameof(ProductBasket), updateProductBasket.ProductId);
             }
 
             entity.ProductCount = updateProductBasket.ProductCount;
@@ -105,14 +79,9 @@ namespace JewelryStoreAPI.Services.Services
             await _productBasketRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveProductFromBasket(RemoveProductBasketDto removeProductBasket)
+        public async Task RemoveProductFromBasket(int userId, RemoveProductBasketDto removeProductBasket)
         {
-            var basket = await _basketRepository.GetByUserLogin(_username);
-
-            if (basket == null)
-            {
-                throw new NotFoundException(nameof(Basket), _username);
-            }
+            var basket = await GetBasketEntity(userId);
 
             var entity = await _productBasketRepository.GetById(removeProductBasket.ProductId, basket.Id);
 
@@ -124,6 +93,18 @@ namespace JewelryStoreAPI.Services.Services
             _productBasketRepository.Delete(entity);
 
             await _productBasketRepository.SaveChangesAsync();
+        }
+
+        private async Task<Basket> GetBasketEntity(int userId)
+        {
+            var basket = await _basketRepository.GetByUserId(userId);
+
+            if (basket == null)
+            {
+                throw new NotFoundException(nameof(Basket), userId);
+            }
+
+            return basket;
         }
     }
 }

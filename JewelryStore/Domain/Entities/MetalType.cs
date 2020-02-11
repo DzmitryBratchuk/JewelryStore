@@ -2,7 +2,6 @@
 {
     public enum MetalType
     {
-        Undefined = 0,
         Gold,
         Silver,
         Platinum

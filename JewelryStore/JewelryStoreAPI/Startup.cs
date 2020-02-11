@@ -4,11 +4,11 @@ using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
 using JewelryStoreAPI.Core.Repositories;
+using JewelryStoreAPI.Infrastructure.Common;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Presentations.Bijouterie;
-using JewelryStoreAPI.Services;
 using JewelryStoreAPI.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -113,6 +113,15 @@ namespace JewelryStoreAPI
             builder.RegisterType<ProductBasketService>().As<IProductBasketService>();
 
             builder.RegisterType<BasketRepository>().As<IBasketRepository>();
+
+            builder.RegisterType<ProductOrderRepository>().As<IProductOrderRepository>();
+            builder.RegisterType<ProductOrderService>().As<IProductOrderService>();
+
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+
+            builder.RegisterType<ReportService>().As<IReportService>();
+
+            builder.RegisterType<CryptoHash>().AsSelf();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

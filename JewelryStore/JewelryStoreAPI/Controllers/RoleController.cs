@@ -48,9 +48,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createRoleDto = _mapper.Map<CreateRoleDto>(createRole);
 
-            await _roleService.Create(createRoleDto);
+            var id = await _roleService.Create(createRoleDto);
 
-            var roleDto = await _roleService.GetById(createRoleDto.Id);
+            var roleDto = await _roleService.GetById(id);
 
             var roleModel = _mapper.Map<RoleModel>(roleDto);
 

@@ -29,34 +29,24 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<RoleDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Role), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<RoleDto>(entity);
         }
 
-        public async Task Create(CreateRoleDto createRole)
+        public async Task<int> Create(CreateRoleDto createRole)
         {
             var entity = _mapper.Map<Role>(createRole);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createRole.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateRoleDto updateRole)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Role), id);
-            }
+            var entity = await GetEntityById(id);
 
             entity.Name = updateRole.Name;
 
@@ -67,16 +57,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveRoleDto removeRole)
         {
-            var entity = await _repository.GetById(removeRole.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Role), removeRole.Id);
-            }
+            var entity = await GetEntityById(removeRole.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Role> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Role), id);
+            }
+
+            return entity;
         }
     }
 }

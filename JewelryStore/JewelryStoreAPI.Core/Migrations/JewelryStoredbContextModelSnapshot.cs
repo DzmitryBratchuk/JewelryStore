@@ -246,8 +246,12 @@ namespace JewelryStoreAPI.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PasswordHash")
-                        .HasColumnType("integer");
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("bytea");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
@@ -290,16 +294,16 @@ namespace JewelryStoreAPI.Core.Migrations
                 {
                     b.HasBaseType("JewelryStoreAPI.Domain.Entities.Product");
 
-                    b.Property<int>("CaseColorId")
+                    b.Property<int?>("CaseColorId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DialColorId")
+                    b.Property<int?>("DialColorId")
                         .HasColumnType("integer");
 
                     b.Property<int>("DiameterMM")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StrapColorId")
+                    b.Property<int?>("StrapColorId")
                         .HasColumnType("integer");
 
                     b.HasDiscriminator().HasValue(3);

@@ -25,11 +25,10 @@ namespace JewelryStoreAPI.Core.Repositories
         public override async Task<PreciousItem> GetById(int id)
         {
             return await _context.PreciousItems
-                .Where(x => x.Id == id)
                 .Include(x => x.Brand)
                 .Include(x => x.Country)
                 .Include(x => x.PreciousItemType)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<PreciousItem>> GetAllByBrandId(int id)

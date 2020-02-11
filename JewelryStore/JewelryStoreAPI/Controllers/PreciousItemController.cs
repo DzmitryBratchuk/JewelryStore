@@ -75,9 +75,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createPreciousItemDto = _mapper.Map<CreatePreciousItemDto>(createPreciousItem);
 
-            await _preciousItemService.Create(createPreciousItemDto);
+            var id = await _preciousItemService.Create(createPreciousItemDto);
 
-            var preciousItemDto = await _preciousItemService.GetById(createPreciousItemDto.Id);
+            var preciousItemDto = await _preciousItemService.GetById(id);
 
             var preciousItemModel = _mapper.Map<PreciousItemModel>(preciousItemDto);
 

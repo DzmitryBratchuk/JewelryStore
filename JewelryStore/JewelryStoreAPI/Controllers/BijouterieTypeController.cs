@@ -48,9 +48,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBijouterieTypeDto = _mapper.Map<CreateBijouterieTypeDto>(createBijouterieType);
 
-            await _bijouterieTypeService.Create(createBijouterieTypeDto);
+            var id = await _bijouterieTypeService.Create(createBijouterieTypeDto);
 
-            var bijouterieTypeDto = await _bijouterieTypeService.GetById(createBijouterieTypeDto.Id);
+            var bijouterieTypeDto = await _bijouterieTypeService.GetById(id);
 
             var bijouterieTypeModel = _mapper.Map<BijouterieTypeModel>(bijouterieTypeDto);
 

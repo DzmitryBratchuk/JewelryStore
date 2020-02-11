@@ -23,9 +23,8 @@ namespace JewelryStoreAPI.Core.Repositories
         public override async Task<User> GetById(int id)
         {
             return await _context.Users
-                .Where(x => x.Id == id)
                 .Include(x => x.Role)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<User>> GetAllByRoleId(int id)
@@ -39,9 +38,22 @@ namespace JewelryStoreAPI.Core.Repositories
         public async Task<User> GetByLogin(string login)
         {
             return await _context.Users
-                .Where(x => x.Login == login)
                 .Include(x => x.Role)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Login == login);
+        }
+
+        public async Task<User> GetByIdAndPassword(int id, byte[] passwordHash)
+        {
+            return await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.Id == id && x.PasswordHash.SequenceEqual(passwordHash));
+        }
+
+        public async Task<User> GetByLoginAndPassword(string login, byte[] passwordHash)
+        {
+            return await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.Login == login && x.PasswordHash.SequenceEqual(passwordHash));
         }
     }
 }

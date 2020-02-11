@@ -41,11 +41,11 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<WatchModel>(watch);
         }
 
-        [HttpGet("[action]/{diameter}")]
+        [HttpGet("[action]/{diameterInMillimeters}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<WatchModel>> GetAllByDiameter(int diameter)
+        public async Task<IList<WatchModel>> GetAllByDiameter(int diameterInMillimeters)
         {
-            var watches = await _watchService.GetAllByDiameter(diameter);
+            var watches = await _watchService.GetAllByDiameter(diameterInMillimeters);
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -75,9 +75,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
 
-            await _watchService.Create(createWatchDto);
+            var id = await _watchService.Create(createWatchDto);
 
-            var watchDto = await _watchService.GetById(createWatchDto.Id);
+            var watchDto = await _watchService.GetById(id);
 
             var watchModel = _mapper.Map<WatchModel>(watchDto);
 

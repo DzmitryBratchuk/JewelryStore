@@ -8,6 +8,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
     {
         Task<IList<Watch>> GetAllByCountryId(int id);
         Task<IList<Watch>> GetAllByBrandId(int id);
-        Task<IList<Watch>> GetAllByDiameter(int diameter);
+        Task<IList<Watch>> GetAllByDiameter(int diameterInMillimeters);
     }
 }

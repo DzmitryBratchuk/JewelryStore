@@ -29,12 +29,7 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<BijouterieDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<BijouterieDto>(entity);
         }
@@ -60,31 +55,21 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task Create(CreateBijouterieDto createBijouterie)
+        public async Task<int> Create(CreateBijouterieDto createBijouterie)
         {
             var entity = _mapper.Map<Bijouterie>(createBijouterie);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createBijouterie.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateBijouterieDto updateBijouterie)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await GetEntityById(id);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), id);
-            }
-
-            entity.Name = updateBijouterie.Name;
-            entity.Cost = updateBijouterie.Cost;
-            entity.Amount = updateBijouterie.Amount;
-            entity.BrandId = updateBijouterie.BrandId;
-            entity.CountryId = updateBijouterie.CountryId;
-            entity.BijouterieTypeId = updateBijouterie.BijouterieTypeId;
+            _mapper.Map(updateBijouterie, entity);
 
             _repository.Update(entity);
 
@@ -93,16 +78,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveBijouterieDto removeBijouterie)
         {
-            var entity = await _repository.GetById(removeBijouterie.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), removeBijouterie.Id);
-            }
+            var entity = await GetEntityById(removeBijouterie.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Bijouterie> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Bijouterie), id);
+            }
+
+            return entity;
         }
     }
 }

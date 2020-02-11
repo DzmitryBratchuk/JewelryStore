@@ -1,4 +1,4 @@
-﻿namespace JewelryStoreAPI.Services
+﻿namespace JewelryStoreAPI.Common
 {
     public class JwtSettings
     {

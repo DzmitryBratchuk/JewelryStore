@@ -3,9 +3,12 @@ using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.DTO.BijouterieType;
 using JewelryStoreAPI.Infrastructure.DTO.Brand;
 using JewelryStoreAPI.Infrastructure.DTO.Country;
+using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
+using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
+using JewelryStoreAPI.Infrastructure.DTO.Report;
 using JewelryStoreAPI.Infrastructure.DTO.Role;
 using JewelryStoreAPI.Infrastructure.DTO.User;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
@@ -13,9 +16,12 @@ using JewelryStoreAPI.Presentations.Bijouterie;
 using JewelryStoreAPI.Presentations.BijouterieType;
 using JewelryStoreAPI.Presentations.Brand;
 using JewelryStoreAPI.Presentations.Country;
+using JewelryStoreAPI.Presentations.Order;
 using JewelryStoreAPI.Presentations.PreciousItem;
 using JewelryStoreAPI.Presentations.PreciousItemType;
 using JewelryStoreAPI.Presentations.ProductBasket;
+using JewelryStoreAPI.Presentations.ProductOrder;
+using JewelryStoreAPI.Presentations.Report;
 using JewelryStoreAPI.Presentations.Role;
 using JewelryStoreAPI.Presentations.User;
 using JewelryStoreAPI.Presentations.Watch;
@@ -35,8 +41,6 @@ namespace JewelryStoreAPI.Presentations
             CreateMap<UserDto, UserModel>();
 
             CreateMap<AuthenticateModel, AuthenticateDto>();
-
-            CreateMap<TokenDto, TokenModel>();
 
             CreateMap<CreateUserModel, CreateUserDto>();
 
@@ -93,6 +97,20 @@ namespace JewelryStoreAPI.Presentations
             CreateMap<AddProductInBasketModel, AddProductInBasketDto>();
 
             CreateMap<UpdateProductBasketModel, UpdateProductBasketDto>();
+
+            CreateMap<ProductOrderDto, ProductOrderModel>();
+
+            CreateMap<CreateOrderModel, CreateOrderDto>();
+
+            CreateMap<OrderDto, OrderModel>();
+
+            CreateMap<ReportDto, ReportModel>();
+
+            CreateMap<ReportWatchDto, ReportModel>();
+
+            CreateMap<ReportPreciousItemDto, ReportModel>();
+
+            CreateMap<ReportBijouterieDto, ReportModel>();
         }
     }
 }

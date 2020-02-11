@@ -29,12 +29,7 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<WatchDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Watch), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<WatchDto>(entity);
         }
@@ -53,41 +48,28 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<IList<WatchDto>> GetAllByDiameter(int diameter)
+        public async Task<IList<WatchDto>> GetAllByDiameter(int diameterInMillimeters)
         {
-            var entities = await _repository.GetAllByDiameter(diameter);
+            var entities = await _repository.GetAllByDiameter(diameterInMillimeters);
 
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task Create(CreateWatchDto createWatch)
+        public async Task<int> Create(CreateWatchDto createWatch)
         {
             var entity = _mapper.Map<Watch>(createWatch);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createWatch.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateWatchDto updateWatch)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await GetEntityById(id);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Watch), id);
-            }
-
-            entity.Name = updateWatch.Name;
-            entity.Cost = updateWatch.Cost;
-            entity.Amount = updateWatch.Amount;
-            entity.BrandId = updateWatch.BrandId;
-            entity.CountryId = updateWatch.CountryId;
-            entity.DiameterMM = updateWatch.Diameter;
-            entity.CaseColorId = updateWatch.CaseColor;
-            entity.DialColorId = updateWatch.DialColor;
-            entity.StrapColorId = updateWatch.StrapColor;
+            _mapper.Map(updateWatch, entity);
 
             _repository.Update(entity);
 
@@ -96,16 +78,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveWatchDto removeWatch)
         {
-            var entity = await _repository.GetById(removeWatch.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Watch), removeWatch.Id);
-            }
+            var entity = await GetEntityById(removeWatch.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Watch> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Watch), id);
+            }
+
+            return entity;
         }
     }
 }

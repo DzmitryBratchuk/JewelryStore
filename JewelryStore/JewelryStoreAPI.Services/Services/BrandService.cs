@@ -29,34 +29,24 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<BrandDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Brand), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<BrandDto>(entity);
         }
 
-        public async Task Create(CreateBrandDto createBrand)
+        public async Task<int> Create(CreateBrandDto createBrand)
         {
             var entity = _mapper.Map<Brand>(createBrand);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createBrand.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateBrandDto updateBrand)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Brand), id);
-            }
+            var entity = await GetEntityById(id);
 
             entity.Name = updateBrand.Name;
 
@@ -67,16 +57,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveBrandDto removeBrand)
         {
-            var entity = await _repository.GetById(removeBrand.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Brand), removeBrand.Id);
-            }
+            var entity = await GetEntityById(removeBrand.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Brand> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Brand), id);
+            }
+
+            return entity;
         }
     }
 }

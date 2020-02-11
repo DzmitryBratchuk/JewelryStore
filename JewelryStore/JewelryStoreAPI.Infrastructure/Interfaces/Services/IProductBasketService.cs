@@ -6,10 +6,10 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IProductBasketService
     {
-        Task<IList<ProductBasketDto>> GetAllProductsInBasket();
-        Task<ProductBasketDto> GetById(int productId);
-        Task AddProductInBasket(AddProductInBasketDto addProductInBaske);
-        Task UpdateProductInBasket(int productId, UpdateProductBasketDto updateProductBasket);
-        Task RemoveProductFromBasket(RemoveProductBasketDto removeProductBasket);
+        Task<IList<ProductBasketDto>> GetAllProductsInBasket(int userId);
+        Task<ProductBasketDto> GetById(int userId, int productId);
+        Task<int> AddProductInBasket(int userId, AddProductInBasketDto addProductInBaske);
+        Task UpdateProductInBasket(int userId, UpdateProductBasketDto updateProductBasket);
+        Task RemoveProductFromBasket(int userId, RemoveProductBasketDto removeProductBasket);
     }
 }

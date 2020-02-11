@@ -1,6 +1,5 @@
 ﻿using JewelryStoreAPI.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -34,24 +33,27 @@ namespace JewelryStoreAPI.Common
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
+            HttpStatusCode code;
 
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
+            string result;
 
             switch (exception)
             {
                 case BadRequestException _:
                     code = HttpStatusCode.BadRequest;
+                    result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 case NotFoundException _:
                     code = HttpStatusCode.NotFound;
-                    break;
-                case DbUpdateException _:
-                    code = HttpStatusCode.BadRequest;
+                    result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 case ValidationException validationException:
                     code = HttpStatusCode.BadRequest;
                     result = JsonConvert.SerializeObject(validationException.Failures);
+                    break;
+                default:
+                    code = HttpStatusCode.Conflict;
+                    result = JsonConvert.SerializeObject(new { error = "Please check your input data and try again." });
                     break;
             }
 

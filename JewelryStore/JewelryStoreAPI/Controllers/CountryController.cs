@@ -48,9 +48,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createCountryDto = _mapper.Map<CreateCountryDto>(createCountry);
 
-            await _countryService.Create(createCountryDto);
+            var id = await _countryService.Create(createCountryDto);
 
-            var countryDto = await _countryService.GetById(createCountryDto.Id);
+            var countryDto = await _countryService.GetById(id);
 
             var countryModel = _mapper.Map<CountryModel>(countryDto);
 

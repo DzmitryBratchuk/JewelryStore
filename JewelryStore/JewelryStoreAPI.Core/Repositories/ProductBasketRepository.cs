@@ -16,10 +16,9 @@ namespace JewelryStoreAPI.Core.Repositories
         public async Task<ProductBasket> GetById(int productId, int basketId)
         {
             return await _context.ProductBaskets
-                .Where(x => x.ProductId == productId && x.BasketId == basketId)
                 .Include(x => x.Basket)
                 .Include(x => x.Product)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.ProductId == productId && x.BasketId == basketId);
         }
 
         public async Task<IList<ProductBasket>> GetAllByBasketId(int id)

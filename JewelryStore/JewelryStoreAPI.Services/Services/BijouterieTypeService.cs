@@ -29,34 +29,24 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<BijouterieTypeDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(BijouterieType), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<BijouterieTypeDto>(entity);
         }
 
-        public async Task Create(CreateBijouterieTypeDto createBijouterieType)
+        public async Task<int> Create(CreateBijouterieTypeDto createBijouterieType)
         {
             var entity = _mapper.Map<BijouterieType>(createBijouterieType);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createBijouterieType.Id = entity.Id;
+            return entity.Id;
         }
 
         public async Task Update(int id, UpdateBijouterieTypeDto updateBijouterieType)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(BijouterieType), id);
-            }
+            var entity = await GetEntityById(id);
 
             entity.Name = updateBijouterieType.Name;
 
@@ -67,16 +57,23 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task Delete(RemoveBijouterieTypeDto removeBijouterieType)
         {
-            var entity = await _repository.GetById(removeBijouterieType.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(BijouterieType), removeBijouterieType.Id);
-            }
+            var entity = await GetEntityById(removeBijouterieType.Id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<BijouterieType> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(BijouterieType), id);
+            }
+
+            return entity;
         }
     }
 }

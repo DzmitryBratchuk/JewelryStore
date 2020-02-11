@@ -8,5 +8,10 @@ namespace JewelryStoreAPI.Infrastructure.Exceptions
             : base($"Entity {name} with key {key} was not found.")
         {
         }
+
+        public NotFoundException(string message)
+            : base(message)
+        {
+        }
     }
 }
