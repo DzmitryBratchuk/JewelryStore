@@ -35,11 +35,12 @@ namespace JewelryStoreAPI.Services.Services
                 throw new NotFoundException($"Wrong login.");
             }
 
-            var passwordHash = _cryptoHash.ComputeHash(
-                Encoding.UTF8.GetBytes(authenticate.Password),
-                entity.PasswordSalt);
+            var passwordHash = BitConverter.ToString(
+                _cryptoHash.ComputeHash(
+                    Encoding.UTF8.GetBytes(authenticate.Password),
+                    Encoding.UTF8.GetBytes(entity.PasswordSalt)));
 
-            if (!passwordHash.SequenceEqual(entity.PasswordHash))
+            if (passwordHash != entity.PasswordHash)
             {
                 throw new NotFoundException($"Wrong password or login.");
             }
@@ -84,18 +85,20 @@ namespace JewelryStoreAPI.Services.Services
         {
             var entity = await GetEntityById(id);
 
-            var passwordHash = _cryptoHash.ComputeHash(
-                Encoding.UTF8.GetBytes(changeUserPassword.OldPassword),
-                entity.PasswordSalt);
+            var passwordHash = BitConverter.ToString(
+                _cryptoHash.ComputeHash(
+                    Encoding.UTF8.GetBytes(changeUserPassword.OldPassword),
+                    Encoding.UTF8.GetBytes(entity.PasswordSalt)));
 
-            if (!passwordHash.SequenceEqual(entity.PasswordHash))
+            if (passwordHash != entity.PasswordHash)
             {
                 throw new NotFoundException($"Wrong password or login.");
             }
 
-            entity.PasswordHash = _cryptoHash.ComputeHash(
-                Encoding.UTF8.GetBytes(changeUserPassword.NewPassword),
-                entity.PasswordSalt);
+            entity.PasswordHash = BitConverter.ToString(
+                _cryptoHash.ComputeHash(
+                    Encoding.UTF8.GetBytes(changeUserPassword.NewPassword),
+                    Encoding.UTF8.GetBytes(entity.PasswordSalt)));
 
             _repository.Update(entity);
 
@@ -117,10 +120,11 @@ namespace JewelryStoreAPI.Services.Services
         {
             var entity = _mapper.Map<User>(createUser);
 
-            entity.PasswordSalt = _cryptoHash.GetRandomSalt();
-            entity.PasswordHash = _cryptoHash.ComputeHash(
-                Encoding.UTF8.GetBytes(createUser.Password),
-                entity.PasswordSalt);
+            entity.PasswordSalt = BitConverter.ToString(_cryptoHash.GetRandomSalt());
+            entity.PasswordHash = BitConverter.ToString(
+                _cryptoHash.ComputeHash(
+                    Encoding.UTF8.GetBytes(createUser.Password),
+                    Encoding.UTF8.GetBytes(entity.PasswordSalt)));
 
             entity.Baskets.Add(new Basket());
 

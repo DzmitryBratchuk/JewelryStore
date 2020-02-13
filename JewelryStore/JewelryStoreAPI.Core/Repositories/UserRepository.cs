@@ -42,18 +42,18 @@ namespace JewelryStoreAPI.Core.Repositories
                 .FirstOrDefaultAsync(x => x.Login == login);
         }
 
-        public async Task<User> GetByIdAndPassword(int id, byte[] passwordHash)
+        public async Task<User> GetByIdAndPassword(int id, string passwordHash)
         {
             return await _context.Users
                 .Include(x => x.Role)
-                .FirstOrDefaultAsync(x => x.Id == id && x.PasswordHash.SequenceEqual(passwordHash));
+                .FirstOrDefaultAsync(x => x.Id == id && x.PasswordHash == passwordHash);
         }
 
-        public async Task<User> GetByLoginAndPassword(string login, byte[] passwordHash)
+        public async Task<User> GetByLoginAndPassword(string login, string passwordHash)
         {
             return await _context.Users
                 .Include(x => x.Role)
-                .FirstOrDefaultAsync(x => x.Login == login && x.PasswordHash.SequenceEqual(passwordHash));
+                .FirstOrDefaultAsync(x => x.Login == login && x.PasswordHash == passwordHash);
         }
     }
 }
