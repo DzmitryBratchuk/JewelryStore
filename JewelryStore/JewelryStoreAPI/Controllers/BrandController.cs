@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Brand;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Brand;
+using JewelryStoreAPI.Models.Brand;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,9 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBrandDto = _mapper.Map<CreateBrandDto>(createBrand);
 
-            var id = await _brandService.Create(createBrandDto);
-
-            var brandDto = await _brandService.GetById(id);
+            var brandDto = await _brandService.Create(createBrandDto);
 
             var brandModel = _mapper.Map<BrandModel>(brandDto);
 
@@ -74,13 +72,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveBrandModel removeBrand)
         {
-            var brand = new RemoveBrandDto() { Id = id };
+            var brand = _mapper.Map<RemoveBrandDto>(removeBrand);
 
             await _brandService.Delete(brand);
 

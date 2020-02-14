@@ -55,14 +55,16 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<int> Create(CreateWatchDto createWatch)
+        public async Task<WatchDto> Create(CreateWatchDto createWatch)
         {
             var entity = _mapper.Map<Watch>(createWatch);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            var createdEntity = await GetEntityById(entity.Id);
+
+            return _mapper.Map<WatchDto>(createdEntity);
         }
 
         public async Task Update(int id, UpdateWatchDto updateWatch)

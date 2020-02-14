@@ -8,6 +8,7 @@ using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +19,14 @@ namespace JewelryStoreAPI.Services.Services
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly CryptoHash _cryptoHash;
+        private readonly ClaimsPrincipal _claimsPrincipal;
 
-        public UserService(IUserRepository repository, IMapper mapper, CryptoHash cryptoHash)
+        public UserService(IUserRepository repository, IMapper mapper, CryptoHash cryptoHash, ClaimsPrincipal claimsPrincipal)
         {
             _repository = repository;
             _mapper = mapper;
             _cryptoHash = cryptoHash;
+            _claimsPrincipal = claimsPrincipal;
         }
 
         public async Task<UserDto> Authenticate(AuthenticateDto authenticate)
@@ -81,9 +84,11 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<UserDto>>(entities);
         }
 
-        public async Task ChangePassword(int id, ChangeUserPasswordDto changeUserPassword)
+        public async Task ChangePassword(ChangeUserPasswordDto changeUserPassword)
         {
-            var entity = await GetEntityById(id);
+            var userId = GetUserId();
+
+            var entity = await GetEntityById(userId);
 
             var passwordHash = BitConverter.ToString(
                 _cryptoHash.ComputeHash(
@@ -105,9 +110,11 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task ChangeRole(int id, ChangeUserRoleDto changeUserRole)
+        public async Task ChangeRole(ChangeUserRoleDto changeUserRole)
         {
-            var entity = await GetEntityById(id);
+            var userId = GetUserId();
+
+            var entity = await GetEntityById(userId);
 
             entity.RoleId = changeUserRole.RoleId;
 
@@ -116,7 +123,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<int> Create(CreateUserDto createUser)
+        public async Task<UserDto> Create(CreateUserDto createUser)
         {
             var entity = _mapper.Map<User>(createUser);
 
@@ -131,12 +138,16 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            var createdEntity = await GetEntityById(entity.Id);
+
+            return _mapper.Map<UserDto>(createdEntity);
         }
 
-        public async Task Update(int id, UpdateUserDto updateUser)
+        public async Task Update(UpdateUserDto updateUser)
         {
-            var entity = await GetEntityById(id);
+            var userId = GetUserId();
+
+            var entity = await GetEntityById(userId);
 
             entity.FirstName = updateUser.FirstName;
             entity.LastName = updateUser.LastName;
@@ -165,6 +176,11 @@ namespace JewelryStoreAPI.Services.Services
             }
 
             return entity;
+        }
+
+        private int GetUserId()
+        {
+            return Convert.ToInt32(_claimsPrincipal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

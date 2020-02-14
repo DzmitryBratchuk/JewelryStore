@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.PreciousItem;
+using JewelryStoreAPI.Models.PreciousItem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<PreciousItemModel>(preciousItem);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByPreciousItemTypeId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByPreciousItemTypeId(int id)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByBrandId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByCountryId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByCountryId(int id)
         {
@@ -77,9 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createPreciousItemDto = _mapper.Map<CreatePreciousItemDto>(createPreciousItem);
 
-            var id = await _preciousItemService.Create(createPreciousItemDto);
-
-            var preciousItemDto = await _preciousItemService.GetById(id);
+            var preciousItemDto = await _preciousItemService.Create(createPreciousItemDto);
 
             var preciousItemModel = _mapper.Map<PreciousItemModel>(preciousItemDto);
 
@@ -101,13 +99,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemovePreciousItemModel removePreciousItem)
         {
-            var preciousItem = new RemovePreciousItemDto() { Id = id };
+            var preciousItem = _mapper.Map<RemovePreciousItemDto>(removePreciousItem);
 
             await _preciousItemService.Delete(preciousItem);
 

@@ -2,7 +2,7 @@
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Infrastructure.DTO.User;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.User;
+using JewelryStoreAPI.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +43,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<UserModel>>(users);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByRoleId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<UserModel>> GetAllByRoleId(int id)
         {
@@ -53,7 +52,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<UserModel>>(users);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetById/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetById(int id)
@@ -63,7 +62,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<UserModel>(user);
         }
 
-        [HttpGet("[action]/{login}")]
+        [HttpGet("GetByLogin/{login}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetByLogin(string login)
@@ -74,7 +73,7 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("[action]")]
+        [HttpPost("Authenticate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,9 +100,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createUserDto = _mapper.Map<CreateUserDto>(createUser);
 
-            var id = await _userService.Create(createUserDto);
-
-            var userDto = await _userService.GetById(id);
+            var userDto = await _userService.Create(createUserDto);
 
             var userModel = _mapper.Map<UserModel>(userDto);
 
@@ -111,55 +108,53 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize]
-        [HttpPut("[action]")]
+        [HttpPut("Update")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromBody] UpdateUserModel updateUser)
         {
-            string userId = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
-
             var user = _mapper.Map<UpdateUserDto>(updateUser);
 
-            await _userService.Update(Convert.ToInt32(userId), user);
+            await _userService.Update(user);
 
             return NoContent();
         }
 
         [Authorize]
-        [HttpPut("[action]/{id}")]
+        [HttpPut("ChangePassword/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangeUserPasswordModel changeUserPassword)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangeUserPasswordModel changeUserPassword)
         {
             var user = _mapper.Map<ChangeUserPasswordDto>(changeUserPassword);
 
-            await _userService.ChangePassword(id, user);
+            await _userService.ChangePassword(user);
 
             return NoContent();
         }
 
-        [HttpPut("[action]/{id}")]
+        [HttpPut("ChangeRole/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ChangeRole(int id, [FromBody] ChangeUserRoleModel changeUserRole)
+        public async Task<IActionResult> ChangeRole([FromBody] ChangeUserRoleModel changeUserRole)
         {
             var user = _mapper.Map<ChangeUserRoleDto>(changeUserRole);
 
-            await _userService.ChangeRole(id, user);
+            await _userService.ChangeRole(user);
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveUserModel removeUser)
         {
-            var user = new RemoveUserDto() { Id = id };
+            var user = _mapper.Map<RemoveUserDto>(removeUser);
 
             await _userService.Delete(user);
 

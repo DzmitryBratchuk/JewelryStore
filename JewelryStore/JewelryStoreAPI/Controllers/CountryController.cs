@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Country;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Country;
+using JewelryStoreAPI.Models.Country;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,9 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createCountryDto = _mapper.Map<CreateCountryDto>(createCountry);
 
-            var id = await _countryService.Create(createCountryDto);
-
-            var countryDto = await _countryService.GetById(id);
+            var countryDto = await _countryService.Create(createCountryDto);
 
             var countryModel = _mapper.Map<CountryModel>(countryDto);
 
@@ -74,13 +72,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveCountryModel removeCountry)
         {
-            var country = new RemoveCountryDto() { Id = id };
+            var country = _mapper.Map<RemoveCountryDto>(removeCountry);
 
             await _countryService.Delete(country);
 

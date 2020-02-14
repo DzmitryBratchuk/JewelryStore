@@ -55,14 +55,16 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task<int> Create(CreateBijouterieDto createBijouterie)
+        public async Task<BijouterieDto> Create(CreateBijouterieDto createBijouterie)
         {
             var entity = _mapper.Map<Bijouterie>(createBijouterie);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            var createdEntity = await GetEntityById(entity.Id);
+
+            return _mapper.Map<BijouterieDto>(createdEntity);
         }
 
         public async Task Update(int id, UpdateBijouterieDto updateBijouterie)

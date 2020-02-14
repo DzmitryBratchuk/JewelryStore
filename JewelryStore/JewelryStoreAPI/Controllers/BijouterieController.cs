@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Bijouterie;
+using JewelryStoreAPI.Models.Bijouterie;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<BijouterieModel>(bijouterie);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByBijouterieTypeId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBijouterieTypeId(int id)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByBrandId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByCountryId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByCountryId(int id)
         {
@@ -77,9 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBijouterieDto = _mapper.Map<CreateBijouterieDto>(createBijouterie);
 
-            var id = await _bijouterieService.Create(createBijouterieDto);
-
-            var bijouterieDto = await _bijouterieService.GetById(id);
+            var bijouterieDto = await _bijouterieService.Create(createBijouterieDto);
 
             var bijouterieModel = _mapper.Map<BijouterieModel>(bijouterieDto);
 
@@ -101,13 +99,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveBijouterieModel removeBijouterie)
         {
-            var bijouterie = new RemoveBijouterieDto() { Id = id };
+            var bijouterie = _mapper.Map<RemoveBijouterieDto>(removeBijouterie);
 
             await _bijouterieService.Delete(bijouterie);
 

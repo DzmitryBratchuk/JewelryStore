@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Report;
+using JewelryStoreAPI.Models.Report;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace JewelryStoreAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("[action]/{dateFrom}&{dateTo}")]
+        [HttpGet("GetAllProductStatisticsInTimeRange/{dateFrom}&{dateTo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetAllProductStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
@@ -33,7 +33,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("[action]/{userId}&{dateFrom}&{dateTo}")]
+        [HttpGet("GetUserStatisticsInTimeRange/{userId}&{dateFrom}&{dateTo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetUserStatisticsInTimeRange(
             int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
@@ -43,7 +43,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("[action]/{userId}")]
+        [HttpGet("GetUserStatisticsAllTime/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetUserStatisticsAllTime(int userId)
         {
@@ -52,7 +52,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("[action]/{dateFrom}&{dateTo}")]
+        [HttpGet("GetWatchStatisticsInTimeRange/{dateFrom}&{dateTo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetWatchStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
@@ -62,7 +62,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("[action]/{dateFrom}&{dateTo}")]
+        [HttpGet("GetBijouterieStatisticsInTimeRange/{dateFrom}&{dateTo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetBijouterieStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
@@ -72,7 +72,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("[action]/{dateFrom}&{dateTo}")]
+        [HttpGet("GetPreciousItemStatisticsInTimeRange/{dateFrom}&{dateTo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetPreciousItemStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)

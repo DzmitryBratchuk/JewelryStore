@@ -8,7 +8,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
     {
         Task<CountryDto> GetById(int id);
         Task<IList<CountryDto>> GetAll();
-        Task<int> Create(CreateCountryDto createCountry);
+        Task<CountryDto> Create(CreateCountryDto createCountry);
         Task Update(int id, UpdateCountryDto updateCountry);
         Task Delete(RemoveCountryDto removeCountry);
     }

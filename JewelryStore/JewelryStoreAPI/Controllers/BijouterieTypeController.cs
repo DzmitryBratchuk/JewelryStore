@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.BijouterieType;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.BijouterieType;
+using JewelryStoreAPI.Models.BijouterieType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,9 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBijouterieTypeDto = _mapper.Map<CreateBijouterieTypeDto>(createBijouterieType);
 
-            var id = await _bijouterieTypeService.Create(createBijouterieTypeDto);
-
-            var bijouterieTypeDto = await _bijouterieTypeService.GetById(id);
+            var bijouterieTypeDto = await _bijouterieTypeService.Create(createBijouterieTypeDto);
 
             var bijouterieTypeModel = _mapper.Map<BijouterieTypeModel>(bijouterieTypeDto);
 
@@ -74,13 +72,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveBijouterieTypeModel removeBijouterieType)
         {
-            var bijouterieType = new RemoveBijouterieTypeDto() { Id = id };
+            var bijouterieType = _mapper.Map<RemoveBijouterieTypeDto>(removeBijouterieType);
 
             await _bijouterieTypeService.Delete(bijouterieType);
 

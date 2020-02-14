@@ -34,14 +34,14 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<CountryDto>(entity);
         }
 
-        public async Task<int> Create(CreateCountryDto createCountry)
+        public async Task<CountryDto> Create(CreateCountryDto createCountry)
         {
             var entity = _mapper.Map<Country>(createCountry);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            return _mapper.Map<CountryDto>(entity);
         }
 
         public async Task Update(int id, UpdateCountryDto updateCountry)

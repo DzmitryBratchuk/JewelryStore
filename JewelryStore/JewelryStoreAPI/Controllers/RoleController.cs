@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Role;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Role;
+using JewelryStoreAPI.Models.Role;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,9 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createRoleDto = _mapper.Map<CreateRoleDto>(createRole);
 
-            var id = await _roleService.Create(createRoleDto);
-
-            var roleDto = await _roleService.GetById(id);
+            var roleDto = await _roleService.Create(createRoleDto);
 
             var roleModel = _mapper.Map<RoleModel>(roleDto);
 
@@ -72,13 +70,13 @@ namespace JewelryStoreAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveRoleModel removeRole)
         {
-            var role = new RemoveRoleDto() { Id = id };
+            var role = _mapper.Map<RemoveRoleDto>(removeRole);
 
             await _roleService.Delete(role);
 

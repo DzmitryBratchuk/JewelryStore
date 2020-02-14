@@ -8,7 +8,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
     {
         Task<RoleDto> GetById(int id);
         Task<IList<RoleDto>> GetAll();
-        Task<int> Create(CreateRoleDto createRole);
+        Task<RoleDto> Create(CreateRoleDto createRole);
         Task Update(int id, UpdateRoleDto updateRole);
         Task Delete(RemoveRoleDto removeRole);
     }

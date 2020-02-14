@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Watch;
+using JewelryStoreAPI.Models.Watch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<WatchModel>(watch);
         }
 
-        [HttpGet("[action]/{diameterInMillimeters}")]
+        [HttpGet("GetAllByDiameter/{diameterInMillimeters}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByDiameter(int diameterInMillimeters)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<WatchModel>>(watches);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByBrandId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<WatchModel>>(watches);
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("GetAllByCountryId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByCountryId(int id)
         {
@@ -77,9 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
 
-            var id = await _watchService.Create(createWatchDto);
-
-            var watchDto = await _watchService.GetById(id);
+            var watchDto = await _watchService.Create(createWatchDto);
 
             var watchModel = _mapper.Map<WatchModel>(watchDto);
 
@@ -101,13 +99,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveWatchModel removeWatch)
         {
-            var watch = new RemoveWatchDto() { Id = id };
+            var watch = _mapper.Map<RemoveWatchDto>(removeWatch);
 
             await _watchService.Delete(watch);
 

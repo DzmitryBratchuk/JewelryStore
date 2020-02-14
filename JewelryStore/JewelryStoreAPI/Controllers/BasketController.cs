@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.ProductBasket;
+using JewelryStoreAPI.Models.ProductBasket;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace JewelryStoreAPI.Controllers
@@ -31,9 +28,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductBasketModel>> GetAllProductsInBasket()
         {
-            var userId = GetUserId();
-
-            var productBaskets = await _productBasketService.GetAllProductsInBasket(userId);
+            var productBaskets = await _productBasketService.GetAllProductsInBasket();
 
             return _mapper.Map<IList<ProductBasketModel>>(productBaskets);
         }
@@ -43,9 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ProductBasketModel> GetById(int id)
         {
-            var userId = GetUserId();
-
-            var productBasketDto = await _productBasketService.GetById(userId, id);
+            var productBasketDto = await _productBasketService.GetById(id);
 
             return _mapper.Map<ProductBasketModel>(productBasketDto);
         }
@@ -55,13 +48,9 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddProductInBasket([FromBody] AddProductInBasketModel addProductInBasket)
         {
-            var userId = GetUserId();
-
             var addProductInBasketDto = _mapper.Map<AddProductInBasketDto>(addProductInBasket);
 
-            var productId = await _productBasketService.AddProductInBasket(userId, addProductInBasketDto);
-
-            var productBasketDto = await _productBasketService.GetById(userId, productId);
+            var productBasketDto = await _productBasketService.AddProductInBasket(addProductInBasketDto);
 
             var productBasketModel = _mapper.Map<ProductBasketModel>(productBasketDto);
 
@@ -74,36 +63,26 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateProductBasketModel updateProductBasket)
         {
-            var userId = GetUserId();
-
             var productBasket = _mapper.Map<UpdateProductBasketDto>(updateProductBasket);
 
             productBasket.ProductId = id;
 
-            await _productBasketService.UpdateProductInBasket(userId, productBasket);
+            await _productBasketService.UpdateProductInBasket(productBasket);
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemoveProductBasketModel removeProductBasket)
         {
-            var userId = GetUserId();
+            var productBasket = _mapper.Map<RemoveProductBasketDto>(removeProductBasket);
 
-            var productBasket = new RemoveProductBasketDto() { ProductId = id };
-
-            await _productBasketService.RemoveProductFromBasket(userId, productBasket);
+            await _productBasketService.RemoveProductFromBasket(productBasket);
 
             return NoContent();
-        }
-
-        private int GetUserId()
-        {
-            return Convert.ToInt32(HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier)
-                .FirstOrDefault()?.Value);
         }
     }
 }

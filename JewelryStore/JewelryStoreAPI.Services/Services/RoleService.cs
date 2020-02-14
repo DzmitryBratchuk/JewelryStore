@@ -34,14 +34,14 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<RoleDto>(entity);
         }
 
-        public async Task<int> Create(CreateRoleDto createRole)
+        public async Task<RoleDto> Create(CreateRoleDto createRole)
         {
             var entity = _mapper.Map<Role>(createRole);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            return _mapper.Map<RoleDto>(entity);
         }
 
         public async Task Update(int id, UpdateRoleDto updateRole)

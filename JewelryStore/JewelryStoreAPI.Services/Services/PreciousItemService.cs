@@ -55,14 +55,16 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task<int> Create(CreatePreciousItemDto createPreciousItem)
+        public async Task<PreciousItemDto> Create(CreatePreciousItemDto createPreciousItem)
         {
             var entity = _mapper.Map<PreciousItem>(createPreciousItem);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            var createdEntity = await GetEntityById(entity.Id);
+
+            return _mapper.Map<PreciousItemDto>(createdEntity);
         }
 
         public async Task Update(int id, UpdatePreciousItemDto updatePreciousItem)

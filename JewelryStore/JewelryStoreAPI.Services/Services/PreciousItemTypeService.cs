@@ -41,14 +41,14 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<PreciousItemTypeDto>>(entities);
         }
 
-        public async Task<int> Create(CreatePreciousItemTypeDto createPreciousItemType)
+        public async Task<PreciousItemTypeDto> Create(CreatePreciousItemTypeDto createPreciousItemType)
         {
             var entity = _mapper.Map<PreciousItemType>(createPreciousItemType);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            return entity.Id;
+            return _mapper.Map<PreciousItemTypeDto>(entity);
         }
 
         public async Task Update(int id, UpdatePreciousItemTypeDto updatePreciousItemType)

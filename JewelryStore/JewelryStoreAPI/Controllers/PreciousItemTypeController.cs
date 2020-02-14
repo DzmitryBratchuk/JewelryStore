@@ -3,7 +3,7 @@ using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.PreciousItemType;
+using JewelryStoreAPI.Models.PreciousItemType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<PreciousItemTypeModel>(preciousItemType);
         }
 
-        [HttpGet("[action]/{metalTypeName}")]
+        [HttpGet("GetAllByMetalTypeName/{metalTypeName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(string metalTypeName)
         {
@@ -69,9 +69,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createPreciousItemTypeDto = _mapper.Map<CreatePreciousItemTypeDto>(createPreciousItemType);
 
-            var id = await _preciousItemTypeService.Create(createPreciousItemTypeDto);
-
-            var preciousItemTypeDto = await _preciousItemTypeService.GetById(id);
+            var preciousItemTypeDto = await _preciousItemTypeService.Create(createPreciousItemTypeDto);
 
             var preciousItemTypeModel = _mapper.Map<PreciousItemTypeModel>(preciousItemTypeDto);
 
@@ -93,13 +91,13 @@ namespace JewelryStoreAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] RemovePreciousItemTypeModel removePreciousItemType)
         {
-            var preciousItemType = new RemovePreciousItemTypeDto() { Id = id };
+            var preciousItemType = _mapper.Map<RemovePreciousItemTypeDto>(removePreciousItemType);
 
             await _preciousItemTypeService.Delete(preciousItemType);
 

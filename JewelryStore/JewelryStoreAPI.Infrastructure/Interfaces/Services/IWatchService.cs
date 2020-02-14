@@ -11,7 +11,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<WatchDto>> GetAllByCountryId(int countryId);
         Task<IList<WatchDto>> GetAllByBrandId(int brandId);
         Task<IList<WatchDto>> GetAllByDiameter(int diameterInMillimeters);
-        Task<int> Create(CreateWatchDto createWatch);
+        Task<WatchDto> Create(CreateWatchDto createWatch);
         Task Update(int id, UpdateWatchDto updateWatch);
         Task Delete(RemoveWatchDto removeWatch);
     }
