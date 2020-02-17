@@ -55,9 +55,9 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(RemoveBrandDto removeBrand)
+        public async Task Delete(int id)
         {
-            var entity = await GetEntityById(removeBrand.Id);
+            var entity = await GetEntityById(id);
 
             _repository.Delete(entity);
 

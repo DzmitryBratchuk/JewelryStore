@@ -157,9 +157,9 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(RemoveUserDto removeUser)
+        public async Task Delete(int id)
         {
-            var entity = await GetEntityById(removeUser.Id);
+            var entity = await GetEntityById(id);
 
             _repository.Delete(entity);
 

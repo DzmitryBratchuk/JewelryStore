@@ -12,6 +12,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<PreciousItemTypeDto>> GetAll();
         Task<PreciousItemTypeDto> Create(CreatePreciousItemTypeDto createPreciousItemType);
         Task Update(int id, UpdatePreciousItemTypeDto updatePreciousItemType);
-        Task Delete(RemovePreciousItemTypeDto removePreciousItemType);
+        Task Delete(int id);
     }
 }

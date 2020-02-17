@@ -78,9 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveProductBasketModel removeProductBasket)
         {
-            var productBasket = _mapper.Map<RemoveProductBasketDto>(removeProductBasket);
-
-            await _productBasketService.RemoveProductFromBasket(productBasket);
+            await _productBasketService.RemoveProductFromBasket(removeProductBasket.Id);
 
             return NoContent();
         }

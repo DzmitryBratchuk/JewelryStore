@@ -13,6 +13,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<WatchDto>> GetAllByDiameter(int diameterInMillimeters);
         Task<WatchDto> Create(CreateWatchDto createWatch);
         Task Update(int id, UpdateWatchDto updateWatch);
-        Task Delete(RemoveWatchDto removeWatch);
+        Task Delete(int id);
     }
 }

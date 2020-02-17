@@ -78,9 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveCountryModel removeCountry)
         {
-            var country = _mapper.Map<RemoveCountryDto>(removeCountry);
-
-            await _countryService.Delete(country);
+            await _countryService.Delete(removeCountry.Id);
 
             return NoContent();
         }

@@ -76,9 +76,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveRoleModel removeRole)
         {
-            var role = _mapper.Map<RemoveRoleDto>(removeRole);
-
-            await _roleService.Delete(role);
+            await _roleService.Delete(removeRole.Id);
 
             return NoContent();
         }

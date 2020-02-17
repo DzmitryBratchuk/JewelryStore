@@ -10,6 +10,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<ProductBasketDto> GetById(int productId);
         Task<ProductBasketDto> AddProductInBasket(AddProductInBasketDto addProductInBasket);
         Task UpdateProductInBasket(UpdateProductBasketDto updateProductBasket);
-        Task RemoveProductFromBasket(RemoveProductBasketDto removeProductBasket);
+        Task RemoveProductFromBasket(int productId);
     }
 }

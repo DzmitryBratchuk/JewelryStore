@@ -10,6 +10,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<BrandDto>> GetAll();
         Task<BrandDto> Create(CreateBrandDto createBrand);
         Task Update(int id, UpdateBrandDto updateBrand);
-        Task Delete(RemoveBrandDto removeBrand);
+        Task Delete(int id);
     }
 }

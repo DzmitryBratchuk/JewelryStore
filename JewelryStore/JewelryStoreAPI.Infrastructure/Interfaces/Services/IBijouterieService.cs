@@ -13,6 +13,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<BijouterieDto>> GetAllByBijouterieTypeId(int bijouterieTypeId);
         Task<BijouterieDto> Create(CreateBijouterieDto createBijouterie);
         Task Update(int id, UpdateBijouterieDto updateBijouterie);
-        Task Delete(RemoveBijouterieDto removeBijouterie);
+        Task Delete(int id);
     }
 }

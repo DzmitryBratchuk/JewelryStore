@@ -1,17 +1,21 @@
-﻿using System;
-
-namespace JewelryStoreAPI.Infrastructure.Exceptions
+﻿namespace JewelryStoreAPI.Infrastructure.Exceptions
 {
-    public class NotFoundException : Exception
+    public class NotFoundException : BaseJewelryStoreException
     {
-        public NotFoundException(string name, object key)
-            : base($"Entity {name} with key {key} was not found.")
+        public NotFoundException(string name, int key)
+            : this($"{name} with key {key} was not found.")
+        {
+        }
+
+        public NotFoundException(string name, string key)
+            : this($"{name} with key {key} was not found.")
         {
         }
 
         public NotFoundException(string message)
             : base(message)
         {
+            StatusCode = System.Net.HttpStatusCode.NotFound;
         }
     }
 }

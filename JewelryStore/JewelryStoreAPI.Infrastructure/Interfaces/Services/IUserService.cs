@@ -15,6 +15,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task ChangeRole(ChangeUserRoleDto changeUserRole);
         Task<UserDto> Create(CreateUserDto createUser);
         Task Update(UpdateUserDto updateUser);
-        Task Delete(RemoveUserDto removeUser);
+        Task Delete(int id);
     }
 }

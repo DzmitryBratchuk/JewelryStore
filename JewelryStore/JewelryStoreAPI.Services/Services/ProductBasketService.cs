@@ -87,15 +87,15 @@ namespace JewelryStoreAPI.Services.Services
             await _productBasketRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveProductFromBasket(RemoveProductBasketDto removeProductBasket)
+        public async Task RemoveProductFromBasket(int productId)
         {
             var basket = await GetBasketEntity();
 
-            var entity = await _productBasketRepository.GetById(removeProductBasket.ProductId, basket.Id);
+            var entity = await _productBasketRepository.GetById(productId, basket.Id);
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), removeProductBasket.ProductId);
+                throw new NotFoundException(nameof(ProductBasket), productId);
             }
 
             _productBasketRepository.Delete(entity);

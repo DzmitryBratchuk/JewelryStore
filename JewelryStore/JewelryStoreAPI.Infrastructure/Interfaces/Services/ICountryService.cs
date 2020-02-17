@@ -10,6 +10,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<CountryDto>> GetAll();
         Task<CountryDto> Create(CreateCountryDto createCountry);
         Task Update(int id, UpdateCountryDto updateCountry);
-        Task Delete(RemoveCountryDto removeCountry);
+        Task Delete(int id);
     }
 }

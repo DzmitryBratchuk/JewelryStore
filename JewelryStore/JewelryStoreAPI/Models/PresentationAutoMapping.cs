@@ -6,6 +6,7 @@ using JewelryStoreAPI.Infrastructure.DTO.Country;
 using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
+using JewelryStoreAPI.Infrastructure.DTO.Product;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
 using JewelryStoreAPI.Infrastructure.DTO.Report;
@@ -19,6 +20,7 @@ using JewelryStoreAPI.Models.Country;
 using JewelryStoreAPI.Models.Order;
 using JewelryStoreAPI.Models.PreciousItem;
 using JewelryStoreAPI.Models.PreciousItemType;
+using JewelryStoreAPI.Models.Product;
 using JewelryStoreAPI.Models.ProductBasket;
 using JewelryStoreAPI.Models.ProductOrder;
 using JewelryStoreAPI.Models.Report;
@@ -38,8 +40,6 @@ namespace JewelryStoreAPI.Presentations
 
             CreateMap<UpdateBijouterieModel, UpdateBijouterieDto>();
 
-            CreateMap<RemoveBijouterieModel, RemoveBijouterieDto>();
-
             CreateMap<UserDto, UserModel>();
 
             CreateMap<AuthenticateModel, AuthenticateDto>();
@@ -47,8 +47,6 @@ namespace JewelryStoreAPI.Presentations
             CreateMap<CreateUserModel, CreateUserDto>();
 
             CreateMap<UpdateUserModel, UpdateUserDto>();
-
-            CreateMap<RemoveUserModel, RemoveUserDto>();
 
             CreateMap<ChangeUserPasswordModel, ChangeUserPasswordDto>();
 
@@ -60,15 +58,11 @@ namespace JewelryStoreAPI.Presentations
 
             CreateMap<UpdateRoleModel, UpdateRoleDto>();
 
-            CreateMap<RemoveRoleModel, RemoveRoleDto>();
-
             CreateMap<CountryDto, CountryModel>();
 
             CreateMap<CreateCountryModel, CreateCountryDto>();
 
             CreateMap<UpdateCountryModel, UpdateCountryDto>();
-
-            CreateMap<RemoveCountryModel, RemoveCountryDto>();
 
             CreateMap<BrandDto, BrandModel>();
 
@@ -76,15 +70,11 @@ namespace JewelryStoreAPI.Presentations
 
             CreateMap<UpdateBrandModel, UpdateBrandDto>();
 
-            CreateMap<RemoveBrandModel, RemoveBrandDto>();
-
             CreateMap<BijouterieTypeDto, BijouterieTypeModel>();
 
             CreateMap<CreateBijouterieTypeModel, CreateBijouterieTypeDto>();
 
             CreateMap<UpdateBijouterieTypeModel, UpdateBijouterieTypeDto>();
-
-            CreateMap<RemoveBijouterieTypeModel, RemoveBijouterieTypeDto>();
 
             CreateMap<PreciousItemTypeDto, PreciousItemTypeModel>();
 
@@ -92,15 +82,11 @@ namespace JewelryStoreAPI.Presentations
 
             CreateMap<UpdatePreciousItemTypeModel, UpdatePreciousItemTypeDto>();
 
-            CreateMap<RemovePreciousItemTypeModel, RemovePreciousItemTypeDto>();
-
             CreateMap<PreciousItemDto, PreciousItemModel>();
 
             CreateMap<CreatePreciousItemModel, CreatePreciousItemDto>();
 
             CreateMap<UpdatePreciousItemModel, UpdatePreciousItemDto>();
-
-            CreateMap<RemovePreciousItemModel, RemovePreciousItemDto>();
 
             CreateMap<WatchDto, WatchModel>();
 
@@ -108,15 +94,11 @@ namespace JewelryStoreAPI.Presentations
 
             CreateMap<UpdateWatchModel, UpdateWatchDto>();
 
-            CreateMap<RemoveWatchModel, RemoveWatchDto>();
-
             CreateMap<ProductBasketDto, ProductBasketModel>();
 
             CreateMap<AddProductInBasketModel, AddProductInBasketDto>();
 
             CreateMap<UpdateProductBasketModel, UpdateProductBasketDto>();
-
-            CreateMap<RemoveProductBasketModel, RemoveProductBasketDto>();
 
             CreateMap<ProductOrderDto, ProductOrderModel>();
 
@@ -131,6 +113,8 @@ namespace JewelryStoreAPI.Presentations
             CreateMap<ReportPreciousItemDto, ReportModel>();
 
             CreateMap<ReportBijouterieDto, ReportModel>();
+
+            CreateMap<ProductDto, ProductModel>();
         }
     }
 }

@@ -105,9 +105,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveWatchModel removeWatch)
         {
-            var watch = _mapper.Map<RemoveWatchDto>(removeWatch);
-
-            await _watchService.Delete(watch);
+            await _watchService.Delete(removeWatch.Id);
 
             return NoContent();
         }

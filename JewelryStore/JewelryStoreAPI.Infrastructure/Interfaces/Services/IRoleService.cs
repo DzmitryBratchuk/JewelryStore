@@ -10,6 +10,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
         Task<IList<RoleDto>> GetAll();
         Task<RoleDto> Create(CreateRoleDto createRole);
         Task Update(int id, UpdateRoleDto updateRole);
-        Task Delete(RemoveRoleDto removeRole);
+        Task Delete(int id);
     }
 }

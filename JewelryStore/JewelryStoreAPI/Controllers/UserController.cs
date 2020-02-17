@@ -154,9 +154,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveUserModel removeUser)
         {
-            var user = _mapper.Map<RemoveUserDto>(removeUser);
-
-            await _userService.Delete(user);
+            await _userService.Delete(removeUser.Id);
 
             return NoContent();
         }

@@ -7,6 +7,7 @@ using JewelryStoreAPI.Infrastructure.DTO.Country;
 using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
+using JewelryStoreAPI.Infrastructure.DTO.Product;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
 using JewelryStoreAPI.Infrastructure.DTO.Report;
@@ -126,6 +127,11 @@ namespace JewelryStoreAPI.Infrastructure
             CreateMap<IList<Order>, ReportBijouterieDto>()
                 .ForMember(d => d.TotalCost, opt => opt.MapFrom(s => s.Sum(x => x.ProductOrders != null ? x.ProductOrders.Where(w => w.Product is Bijouterie).Sum(p => p.Product.Cost * p.ProductCount) : default)))
                 .ForMember(d => d.TotalProductCount, opt => opt.MapFrom(s => s.Sum(x => x.ProductOrders != null ? x.ProductOrders.Where(w => w.Product is Bijouterie).Sum(p => p.ProductCount) : default)));
+
+            CreateMap<Product, ProductDto>()
+                .ForMember(d => d.TypeName, opt => opt.MapFrom(s => s.GetType().BaseType.Name))
+                .ForMember(d => d.BrandName, opt => opt.MapFrom(s => s.Brand != null ? s.Brand.Name : null))
+                .ForMember(d => d.CountryName, opt => opt.MapFrom(s => s.Country != null ? s.Country.Name : null));
         }
     }
 }

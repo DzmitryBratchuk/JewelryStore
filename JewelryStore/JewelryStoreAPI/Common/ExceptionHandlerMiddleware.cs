@@ -39,17 +39,9 @@ namespace JewelryStoreAPI.Common
 
             switch (exception)
             {
-                case BadRequestException _:
-                    code = HttpStatusCode.BadRequest;
+                case BaseJewelryStoreException baseJewelryStoreException:
+                    code = baseJewelryStoreException.StatusCode;
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
-                    break;
-                case NotFoundException _:
-                    code = HttpStatusCode.NotFound;
-                    result = JsonConvert.SerializeObject(new { error = exception.Message });
-                    break;
-                case ValidationException validationException:
-                    code = HttpStatusCode.BadRequest;
-                    result = JsonConvert.SerializeObject(validationException.Failures);
                     break;
                 default:
                     code = HttpStatusCode.Conflict;
