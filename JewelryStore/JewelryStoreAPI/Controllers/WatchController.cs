@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<WatchModel>(watch);
         }
 
-        [HttpGet("GetAllByDiameter/{diameterInMillimeters}")]
+        [HttpGet("Diameter/{diameterInMillimeters}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByDiameter(int diameterInMillimeters)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<WatchModel>>(watches);
         }
 
-        [HttpGet("GetAllByBrandId/{id}")]
+        [HttpGet("Brand/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<WatchModel>>(watches);
         }
 
-        [HttpGet("GetAllByCountryId/{id}")]
+        [HttpGet("Country/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByCountryId(int id)
         {

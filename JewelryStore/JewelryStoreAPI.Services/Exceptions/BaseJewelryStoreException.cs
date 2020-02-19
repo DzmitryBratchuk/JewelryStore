@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace JewelryStoreAPI.Infrastructure.Exceptions
+namespace JewelryStoreAPI.Services.Exceptions
 {
     public class BaseJewelryStoreException : Exception
     {

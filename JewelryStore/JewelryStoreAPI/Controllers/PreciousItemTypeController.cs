@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
-using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Models.PreciousItemType;
+using JewelryStoreAPI.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,15 +45,15 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<PreciousItemTypeModel>(preciousItemType);
         }
 
-        [HttpGet("GetAllByMetalTypeName/{metalTypeName}")]
+        [HttpGet("MetalType/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(string metalTypeName)
+        public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(string name)
         {
-            var result = Enum.TryParse(metalTypeName, out MetalType metalType);
+            var result = Enum.TryParse(name, out MetalType metalType);
 
             if (!result)
             {
-                throw new BadRequestException($" '{nameof(MetalType)}' has a range of values which does not include '{metalTypeName}'");
+                throw new BadRequestException($" '{nameof(MetalType)}' has a range of values which does not include '{name}'");
             }
 
             var preciousItemTypes = await _preciousItemTypeService.GetAllByMetalType(metalType);

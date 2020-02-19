@@ -43,7 +43,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<UserModel>>(users);
         }
 
-        [HttpGet("GetAllByRoleId/{id}")]
+        [HttpGet("Role/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<UserModel>> GetAllByRoleId(int id)
         {
@@ -52,7 +52,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<UserModel>>(users);
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetById(int id)
@@ -62,7 +62,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<UserModel>(user);
         }
 
-        [HttpGet("GetByLogin/{login}")]
+        [HttpGet("Login/{login}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetByLogin(string login)

@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<BijouterieModel>(bijouterie);
         }
 
-        [HttpGet("GetAllByBijouterieTypeId/{id}")]
+        [HttpGet("BijouterieType/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBijouterieTypeId(int id)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
-        [HttpGet("GetAllByBrandId/{id}")]
+        [HttpGet("Brand/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
 
-        [HttpGet("GetAllByCountryId/{id}")]
+        [HttpGet("Country/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByCountryId(int id)
         {

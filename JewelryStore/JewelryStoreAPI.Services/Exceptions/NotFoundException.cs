@@ -1,4 +1,4 @@
-﻿namespace JewelryStoreAPI.Infrastructure.Exceptions
+﻿namespace JewelryStoreAPI.Services.Exceptions
 {
     public class NotFoundException : BaseJewelryStoreException
     {
@@ -15,7 +15,6 @@
         public NotFoundException(string message)
             : base(message)
         {
-            StatusCode = System.Net.HttpStatusCode.NotFound;
         }
     }
 }

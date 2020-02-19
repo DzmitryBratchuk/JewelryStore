@@ -2,9 +2,9 @@
 using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
-using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

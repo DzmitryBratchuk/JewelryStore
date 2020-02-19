@@ -21,7 +21,7 @@ namespace JewelryStoreAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetAllByName/{name}")]
+        [HttpGet("{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByName(string name)
         {
@@ -30,7 +30,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<ProductModel>>(products);
         }
 
-        [HttpGet("GetAllByBrandName/{name}")]
+        [HttpGet("Brand/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByBrandName(string name)
         {
@@ -39,7 +39,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<ProductModel>>(products);
         }
 
-        [HttpGet("GetAllByCountryName/{name}")]
+        [HttpGet("Country/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByCountryName(string name)
         {

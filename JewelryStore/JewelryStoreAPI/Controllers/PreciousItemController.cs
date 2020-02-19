@@ -42,7 +42,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<PreciousItemModel>(preciousItem);
         }
 
-        [HttpGet("GetAllByPreciousItemTypeId/{id}")]
+        [HttpGet("PreciousItemType/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByPreciousItemTypeId(int id)
         {
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
 
-        [HttpGet("GetAllByBrandId/{id}")]
+        [HttpGet("Brand/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByBrandId(int id)
         {
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
 
-        [HttpGet("GetAllByCountryId/{id}")]
+        [HttpGet("Country/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByCountryId(int id)
         {

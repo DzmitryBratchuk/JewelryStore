@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
-using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Services.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-﻿using JewelryStoreAPI.Infrastructure.Exceptions;
+﻿using JewelryStoreAPI.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -39,13 +39,13 @@ namespace JewelryStoreAPI.Common
 
             switch (exception)
             {
-                case BaseJewelryStoreException baseJewelryStoreException:
-                    code = baseJewelryStoreException.StatusCode;
+                case BaseJewelryStoreException _:
+                    code = HttpStatusCode.NotFound;
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 default:
                     code = HttpStatusCode.Conflict;
-                    result = JsonConvert.SerializeObject(new { error = "Please check your input data and try again." });
+                    result = JsonConvert.SerializeObject(new { error = "Unhandaled exception. Please try later." });
                     break;
             }
 
