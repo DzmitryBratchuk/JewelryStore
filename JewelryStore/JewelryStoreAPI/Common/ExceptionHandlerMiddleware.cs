@@ -1,4 +1,5 @@
-﻿using JewelryStoreAPI.Services.Exceptions;
+﻿using JewelryStoreAPI.Core.Exceptions;
+using JewelryStoreAPI.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -39,8 +40,12 @@ namespace JewelryStoreAPI.Common
 
             switch (exception)
             {
-                case BaseJewelryStoreException _:
+                case BaseBusinessJewelryStoreException _:
                     code = HttpStatusCode.NotFound;
+                    result = JsonConvert.SerializeObject(new { error = exception.Message });
+                    break;
+                case BasePersistenceJewelryStoreException _:
+                    code = HttpStatusCode.Conflict;
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 default:

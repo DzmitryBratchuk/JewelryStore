@@ -1,5 +1,4 @@
 using Autofac;
-using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
@@ -61,14 +60,10 @@ namespace JewelryStoreAPI
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.Register(x => new PersistenceLayerErrorHandler());
-
             var repositoryAssembly = Assembly.GetAssembly(typeof(BijouterieRepository));
             builder.RegisterAssemblyTypes(repositoryAssembly)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
-                .EnableClassInterceptors()
-                .InterceptedBy(typeof(PersistenceLayerErrorHandler))
                 .InstancePerLifetimeScope();
 
             var serviceAssembly = Assembly.GetAssembly(typeof(BijouterieService));
@@ -94,6 +89,10 @@ namespace JewelryStoreAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseCustomExceptionHandler();

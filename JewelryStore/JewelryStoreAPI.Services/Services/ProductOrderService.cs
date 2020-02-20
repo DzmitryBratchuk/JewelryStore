@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace JewelryStoreAPI.Services.Services
 {
@@ -55,14 +56,11 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<IList<ProductOrderDto>> CreateOrder(CreateOrderDto createOrder)
         {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             var productsInBasket = (await _productBasketRepository.GetAllByUserId(GetUserId())).ToList();
 
-            bool isValid = IsValidProductsInBasket(productsInBasket, createOrder);
-
-            if (!isValid)
-            {
-                throw new NotFoundException($"Not enough products in store.");
-            }
+            ValidateProductsInBasketAndStore(productsInBasket, createOrder);
 
             var productsInOrder = AddProductsInOrder(createOrder);
 
@@ -78,10 +76,14 @@ namespace JewelryStoreAPI.Services.Services
             await _orderRepository.Create(entity);
             await _orderRepository.SaveChangesAsync();
 
-            return _mapper.Map<IList<ProductOrderDto>>(productsInOrder);
+            var result = _mapper.Map<IList<ProductOrderDto>>(productsInOrder);
+
+            scope.Complete();
+
+            return result;
         }
 
-        private bool IsValidProductsInBasket(List<ProductBasket> productsInBasket, CreateOrderDto createOrder)
+        private void ValidateProductsInBasketAndStore(List<ProductBasket> productsInBasket, CreateOrderDto createOrder)
         {
             var desiredProductsToOrder = createOrder.ProductIds
                 .GroupBy(x => x)
@@ -91,12 +93,16 @@ namespace JewelryStoreAPI.Services.Services
             {
                 var productFromBasket = GetProductFromBasket(productsInBasket, product.ProductId);
 
+                if (product.Count > productFromBasket.ProductCount)
+                {
+                    throw new NotFoundException($"Not enough products in basket.");
+                }
+
                 if (product.Count > productFromBasket.Product.Amount)
                 {
-                    return false;
+                    throw new NotFoundException($"Not enough products in store.");
                 }
             }
-            return true;
         }
 
         private ProductBasket GetProductFromBasket(List<ProductBasket> productsInBasket, int productId)

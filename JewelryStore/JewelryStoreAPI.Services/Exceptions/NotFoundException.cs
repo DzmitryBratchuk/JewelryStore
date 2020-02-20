@@ -1,6 +1,6 @@
 ﻿namespace JewelryStoreAPI.Services.Exceptions
 {
-    public class NotFoundException : BaseJewelryStoreException
+    public class NotFoundException : BaseBusinessJewelryStoreException
     {
         public NotFoundException(string name, int key)
             : this($"{name} with key {key} was not found.")
