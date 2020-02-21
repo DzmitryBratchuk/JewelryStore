@@ -47,16 +47,9 @@ namespace JewelryStoreAPI.Controllers
 
         [HttpGet("MetalType/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(string name)
+        public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(MetalType name)
         {
-            var result = Enum.TryParse(name, out MetalType metalType);
-
-            if (!result)
-            {
-                throw new BadRequestException($" '{nameof(MetalType)}' has a range of values which does not include '{name}'");
-            }
-
-            var preciousItemTypes = await _preciousItemTypeService.GetAllByMetalType(metalType);
+            var preciousItemTypes = await _preciousItemTypeService.GetAllByMetalType(name);
 
             return _mapper.Map<IList<PreciousItemTypeModel>>(preciousItemTypes);
         }

@@ -23,20 +23,20 @@ namespace JewelryStoreAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("ProductStatisticsInTimeRange/{dateFrom}&{dateTo}")]
+        [HttpGet("ProductStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetAllProductStatisticsInTimeRange(
-            DateTimeOffset dateFrom, DateTimeOffset dateTo)
+            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
         {
             var report = await _reportService.GetAllProductStatisticsInTimeRange(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("UserStatisticsInTimeRange/{userId}&{dateFrom}&{dateTo}")]
+        [HttpGet("UserStatisticsInTimeRange/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetUserStatisticsInTimeRange(
-            int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
+            int userId, [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
         {
             var report = await _reportService.GetUserStatisticsInTimeRange(userId, dateFrom, dateTo);
 
@@ -52,30 +52,30 @@ namespace JewelryStoreAPI.Controllers
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("WatchStatisticsInTimeRange/{dateFrom}&{dateTo}")]
+        [HttpGet("WatchStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetWatchStatisticsInTimeRange(
-            DateTimeOffset dateFrom, DateTimeOffset dateTo)
+            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
         {
             var report = await _reportService.GetWatchStatisticsInTimeRange(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("BijouterieStatisticsInTimeRange/{dateFrom}&{dateTo}")]
+        [HttpGet("BijouterieStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetBijouterieStatisticsInTimeRange(
-            DateTimeOffset dateFrom, DateTimeOffset dateTo)
+            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
         {
             var report = await _reportService.GetBijouterieStatisticsInTimeRange(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
 
-        [HttpGet("PreciousItemStatisticsInTimeRange/{dateFrom}&{dateTo}")]
+        [HttpGet("PreciousItemStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetPreciousItemStatisticsInTimeRange(
-            DateTimeOffset dateFrom, DateTimeOffset dateTo)
+            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
         {
             var report = await _reportService.GetPreciousItemStatisticsInTimeRange(dateFrom, dateTo);
 

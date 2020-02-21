@@ -40,8 +40,8 @@ namespace JewelryStoreAPI.Common
 
             switch (exception)
             {
-                case BaseBusinessJewelryStoreException _:
-                    code = HttpStatusCode.NotFound;
+                case BaseBusinessJewelryStoreException baseBusinessJewelryStoreException:
+                    code = (HttpStatusCode)baseBusinessJewelryStoreException.ErrorCode;
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 case BasePersistenceJewelryStoreException _:
@@ -49,7 +49,7 @@ namespace JewelryStoreAPI.Common
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 default:
-                    code = HttpStatusCode.Conflict;
+                    code = HttpStatusCode.UnprocessableEntity;
                     result = JsonConvert.SerializeObject(new { error = "Unhandaled exception. Please try later." });
                     break;
             }

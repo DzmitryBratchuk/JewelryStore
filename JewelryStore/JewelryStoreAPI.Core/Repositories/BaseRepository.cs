@@ -45,9 +45,9 @@ namespace JewelryStoreAPI.Core.Repositories
             {
                 return await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                throw new BasePersistenceJewelryStoreException("Please check your input data and try again.", ex);
+                throw new EntityValidationException("Please check your input data and try again.", ex);
             }
         }
 

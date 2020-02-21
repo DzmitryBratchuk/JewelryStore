@@ -95,12 +95,12 @@ namespace JewelryStoreAPI.Services.Services
 
                 if (product.Count > productFromBasket.ProductCount)
                 {
-                    throw new NotFoundException($"Not enough products in basket.");
+                    throw new ConflictException($"Not enough products in basket.");
                 }
 
                 if (product.Count > productFromBasket.Product.Amount)
                 {
-                    throw new NotFoundException($"Not enough products in store.");
+                    throw new ConflictException($"Not enough products in store.");
                 }
             }
         }
