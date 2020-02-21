@@ -3,11 +3,9 @@ using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Models.PreciousItemType;
-using JewelryStoreAPI.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -26,7 +26,7 @@ namespace JewelryStoreAPI.Controllers
         [HttpGet("ProductStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetAllProductStatisticsInTimeRange(
-            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
+            DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             var report = await _reportService.GetAllProductStatisticsInTimeRange(dateFrom, dateTo);
 
@@ -36,7 +36,7 @@ namespace JewelryStoreAPI.Controllers
         [HttpGet("UserStatisticsInTimeRange/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetUserStatisticsInTimeRange(
-            int userId, [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
+            int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             var report = await _reportService.GetUserStatisticsInTimeRange(userId, dateFrom, dateTo);
 
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Controllers
         [HttpGet("WatchStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetWatchStatisticsInTimeRange(
-            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
+            DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             var report = await _reportService.GetWatchStatisticsInTimeRange(dateFrom, dateTo);
 
@@ -65,7 +65,7 @@ namespace JewelryStoreAPI.Controllers
         [HttpGet("BijouterieStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetBijouterieStatisticsInTimeRange(
-            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
+            DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             var report = await _reportService.GetBijouterieStatisticsInTimeRange(dateFrom, dateTo);
 
@@ -75,7 +75,7 @@ namespace JewelryStoreAPI.Controllers
         [HttpGet("PreciousItemStatisticsInTimeRange")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetPreciousItemStatisticsInTimeRange(
-            [FromQuery]DateTimeOffset dateFrom, [FromQuery]DateTimeOffset dateTo)
+            DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             var report = await _reportService.GetPreciousItemStatisticsInTimeRange(dateFrom, dateTo);
 

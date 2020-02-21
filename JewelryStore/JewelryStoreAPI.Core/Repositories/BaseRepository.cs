@@ -47,7 +47,7 @@ namespace JewelryStoreAPI.Core.Repositories
             }
             catch (DbUpdateException ex)
             {
-                throw new EntityValidationException("Please check your input data and try again.", ex);
+                throw new EntityValidationException("Unable to save data, see InnerException.", ex);
             }
         }
 

@@ -95,12 +95,12 @@ namespace JewelryStoreAPI.Services.Services
 
                 if (product.Count > productFromBasket.ProductCount)
                 {
-                    throw new ConflictException($"Not enough products in basket.");
+                    throw new BaseBusinessJewelryStoreException($"Not enough products in basket.", ErrorCode.Conflict);
                 }
 
                 if (product.Count > productFromBasket.Product.Amount)
                 {
-                    throw new ConflictException($"Not enough products in store.");
+                    throw new BaseBusinessJewelryStoreException($"Not enough products in store.", ErrorCode.Conflict);
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (productFromBasket == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), productId);
+                throw new BaseBusinessJewelryStoreException(nameof(ProductBasket), productId, ErrorCode.NotFound);
             }
 
             return productFromBasket;

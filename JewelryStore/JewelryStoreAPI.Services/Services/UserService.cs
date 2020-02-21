@@ -35,7 +35,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException($"Wrong login.");
+                throw new BaseBusinessJewelryStoreException($"Wrong login.", ErrorCode.NotFound);
             }
 
             var passwordHash = BitConverter.ToString(
@@ -45,7 +45,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (passwordHash != entity.PasswordHash)
             {
-                throw new NotFoundException($"Wrong password or login.");
+                throw new BaseBusinessJewelryStoreException($"Wrong password or login.", ErrorCode.NotFound);
             }
 
             return _mapper.Map<UserDto>(entity);
@@ -64,7 +64,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(User), login);
+                throw new BaseBusinessJewelryStoreException(nameof(User), login, ErrorCode.NotFound);
             }
 
             return _mapper.Map<UserDto>(entity);
@@ -97,7 +97,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (passwordHash != entity.PasswordHash)
             {
-                throw new NotFoundException($"Wrong password or login.");
+                throw new BaseBusinessJewelryStoreException($"Wrong password or login.", ErrorCode.NotFound);
             }
 
             entity.PasswordHash = BitConverter.ToString(
@@ -172,7 +172,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(User), id);
+                throw new BaseBusinessJewelryStoreException(nameof(User), id, ErrorCode.NotFound);
             }
 
             return entity;

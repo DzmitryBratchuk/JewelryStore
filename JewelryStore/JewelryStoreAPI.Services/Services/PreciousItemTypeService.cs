@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(PreciousItemType), id);
+                throw new BaseBusinessJewelryStoreException(nameof(PreciousItemType), id, ErrorCode.NotFound);
             }
 
             return entity;

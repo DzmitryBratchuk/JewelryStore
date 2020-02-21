@@ -21,8 +21,7 @@ namespace JewelryStoreAPI
                 {
                     var builtConfig = config.Build();
 
-                    config.AddAzureKeyVault(
-                        $"https://{builtConfig["Azure:KeyVault"]}.vault.azure.net/");
+                    config.AddAzureKeyVault($"{builtConfig["AzureKeyVaultUri"]}");
                 }
             })
             .ConfigureWebHostDefaults(webBuilder =>

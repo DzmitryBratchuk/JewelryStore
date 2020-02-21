@@ -39,7 +39,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), productId);
+                throw new BaseBusinessJewelryStoreException(nameof(ProductBasket), productId, ErrorCode.NotFound);
             }
 
             return _mapper.Map<ProductBasketDto>(entity);
@@ -77,7 +77,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), updateProductBasket.ProductId);
+                throw new BaseBusinessJewelryStoreException(nameof(ProductBasket), updateProductBasket.ProductId, ErrorCode.NotFound);
             }
 
             entity.ProductCount = updateProductBasket.ProductCount;
@@ -95,7 +95,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(ProductBasket), productId);
+                throw new BaseBusinessJewelryStoreException(nameof(ProductBasket), productId, ErrorCode.NotFound);
             }
 
             _productBasketRepository.Delete(entity);
@@ -111,7 +111,7 @@ namespace JewelryStoreAPI.Services.Services
 
             if (basket == null)
             {
-                throw new NotFoundException(nameof(Basket), userId);
+                throw new BaseBusinessJewelryStoreException(nameof(Basket), userId, ErrorCode.NotFound);
             }
 
             return basket;

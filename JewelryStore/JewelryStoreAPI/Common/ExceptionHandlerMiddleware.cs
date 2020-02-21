@@ -41,12 +41,13 @@ namespace JewelryStoreAPI.Common
             switch (exception)
             {
                 case BaseBusinessJewelryStoreException baseBusinessJewelryStoreException:
-                    code = (HttpStatusCode)baseBusinessJewelryStoreException.ErrorCode;
+                    Enum.TryParse(baseBusinessJewelryStoreException.ErrorCode.ToString(), out HttpStatusCode statusCode);
+                    code = statusCode;
                     result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
                 case BasePersistenceJewelryStoreException _:
                     code = HttpStatusCode.Conflict;
-                    result = JsonConvert.SerializeObject(new { error = exception.Message });
+                    result = JsonConvert.SerializeObject(new { error = "Please check your input data and try again." });
                     break;
                 default:
                     code = HttpStatusCode.UnprocessableEntity;
