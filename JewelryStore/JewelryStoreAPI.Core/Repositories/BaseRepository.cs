@@ -1,4 +1,5 @@
-﻿using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
+﻿using JewelryStoreAPI.Core.Exceptions;
+using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,14 @@ namespace JewelryStoreAPI.Core.Repositories
 
         public async Task<int> SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            try
+            {
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new EntityValidationException("Unable to save data, see InnerException.", ex);
+            }
         }
 
         public void Update(TEntity entity)

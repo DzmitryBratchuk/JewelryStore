@@ -4,19 +4,23 @@ using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
 using JewelryStoreAPI.Core.Repositories;
+using JewelryStoreAPI.Infrastructure.Common;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
-using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
-using JewelryStoreAPI.Infrastructure.Interfaces.Services;
-using JewelryStoreAPI.Presentations.Bijouterie;
+using JewelryStoreAPI.Models.Bijouterie;
 using JewelryStoreAPI.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Text;
 
 namespace JewelryStoreAPI
 {
@@ -39,7 +43,8 @@ namespace JewelryStoreAPI
             {
                 if (!options.IsConfigured)
                 {
-                    options.UseNpgsql(Configuration.GetConnectionString("JewelryStoreDatabase"), b => b.MigrationsAssembly("JewelryStoreAPI.Core"));
+                    options.UseLazyLoadingProxies()
+                        .UseNpgsql(Configuration.GetConnectionString("JewelryStoreDatabase"), b => b.MigrationsAssembly("JewelryStoreAPI.Core"));
                 }
             });
 
@@ -49,12 +54,31 @@ namespace JewelryStoreAPI
             });
 
             services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
+
+            AddAuthentication(services);
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<BijouterieRepository>().As<IBijouterieRepository>();
-            builder.RegisterType<BijouterieService>().As<IBijouterieService>();
+            var repositoryAssembly = Assembly.GetAssembly(typeof(BijouterieRepository));
+            builder.RegisterAssemblyTypes(repositoryAssembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            var serviceAssembly = Assembly.GetAssembly(typeof(BijouterieService));
+            builder.RegisterAssemblyTypes(serviceAssembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.Register(x => x.Resolve<IHttpContextAccessor>().HttpContext.User)
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CryptoHash>()
+                .AsSelf()
+                .SingleInstance();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +89,10 @@ namespace JewelryStoreAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseCustomExceptionHandler();
@@ -89,6 +117,34 @@ namespace JewelryStoreAPI
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void AddAuthentication(IServiceCollection services)
+        {
+            var jwtSettingsSection = Configuration.GetSection("JwtSettings");
+
+            services.Configure<JwtSettings>(jwtSettingsSection);
+
+            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true
+                    };
+                });
         }
     }
 }

@@ -6,6 +6,8 @@
 
         public int BasketId { get; set; }
 
+        public int ProductCount { get; set; }
+
         public virtual Product Product { get; set; }
 
         public virtual Basket Basket { get; set; }

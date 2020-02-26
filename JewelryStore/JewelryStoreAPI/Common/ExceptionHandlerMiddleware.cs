@@ -1,4 +1,5 @@
-﻿using JewelryStoreAPI.Infrastructure.Exceptions;
+﻿using JewelryStoreAPI.Core.Exceptions;
+using JewelryStoreAPI.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -33,21 +34,24 @@ namespace JewelryStoreAPI.Common
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
+            HttpStatusCode code;
 
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
+            string result;
 
             switch (exception)
             {
-                case BadRequestException _:
-                    code = HttpStatusCode.BadRequest;
+                case BaseBusinessJewelryStoreException baseBusinessJewelryStoreException:
+                    Enum.TryParse(baseBusinessJewelryStoreException.ErrorCode.ToString(), out HttpStatusCode statusCode);
+                    code = statusCode;
+                    result = JsonConvert.SerializeObject(new { error = exception.Message });
                     break;
-                case NotFoundException _:
-                    code = HttpStatusCode.NotFound;
+                case BasePersistenceJewelryStoreException _:
+                    code = HttpStatusCode.Conflict;
+                    result = JsonConvert.SerializeObject(new { error = "Please check your input data and try again." });
                     break;
-                case ValidationException validationException:
-                    code = HttpStatusCode.BadRequest;
-                    result = JsonConvert.SerializeObject(validationException.Failures);
+                default:
+                    code = HttpStatusCode.UnprocessableEntity;
+                    result = JsonConvert.SerializeObject(new { error = "Unhandaled exception. Please try later." });
                     break;
             }
 

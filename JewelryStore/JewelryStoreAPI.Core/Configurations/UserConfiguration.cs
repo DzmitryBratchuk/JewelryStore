@@ -1,9 +1,6 @@
 ﻿using JewelryStoreAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace JewelryStoreAPI.Core.Configurations
 {
@@ -15,6 +12,15 @@ namespace JewelryStoreAPI.Core.Configurations
                 .IsRequired();
 
             builder.Property(x => x.LastName)
+                .IsRequired();
+
+            builder.HasIndex(x => x.Login)
+                .IsUnique();
+
+            builder.Property(x => x.Login)
+                .IsRequired();
+
+            builder.Property(x => x.PasswordHash)
                 .IsRequired();
 
             builder.HasOne(d => d.Role)

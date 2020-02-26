@@ -1,7 +1,6 @@
 ﻿using JewelryStoreAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace JewelryStoreAPI.Core.Configurations
 {

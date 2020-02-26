@@ -1,0 +1,12 @@
+﻿namespace JewelryStoreAPI.Infrastructure.DTO.ProductOrder
+{
+    public class ProductOrderDto
+    {
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductBrand { get; set; }
+        public string ProductCountry { get; set; }
+        public int ProductCount { get; set; }
+        public decimal ProductCost { get; set; }
+    }
+}

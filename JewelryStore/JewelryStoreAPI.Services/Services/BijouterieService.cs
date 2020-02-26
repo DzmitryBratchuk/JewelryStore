@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using JewelryStoreAPI.Domain.Entities;
 using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
-using JewelryStoreAPI.Infrastructure.Exceptions;
 using JewelryStoreAPI.Infrastructure.Interfaces.Repositories;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Services.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,12 +29,7 @@ namespace JewelryStoreAPI.Services.Services
 
         public async Task<BijouterieDto> GetById(int id)
         {
-            var entity = await _repository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), id);
-            }
+            var entity = await GetEntityById(id);
 
             return _mapper.Map<BijouterieDto>(entity);
         }
@@ -60,49 +55,48 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task Create(CreateBijouterieDto createBijouterie)
+        public async Task<BijouterieDto> Create(CreateBijouterieDto createBijouterie)
         {
             var entity = _mapper.Map<Bijouterie>(createBijouterie);
 
             await _repository.Create(entity);
             await _repository.SaveChangesAsync();
 
-            createBijouterie.Id = entity.Id;
+            var createdEntity = await GetEntityById(entity.Id);
+
+            return _mapper.Map<BijouterieDto>(createdEntity);
         }
 
         public async Task Update(int id, UpdateBijouterieDto updateBijouterie)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await GetEntityById(id);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), id);
-            }
-
-            entity.Name = updateBijouterie.Name;
-            entity.Cost = updateBijouterie.Cost;
-            entity.Amount = updateBijouterie.Amount;
-            entity.BrandId = updateBijouterie.BrandId;
-            entity.CountryId = updateBijouterie.CountryId;
-            entity.BijouterieTypeId = updateBijouterie.BijouterieTypeId;
+            _mapper.Map(updateBijouterie, entity);
 
             _repository.Update(entity);
 
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(RemoveBijouterieDto removeBijouterie)
+        public async Task Delete(int id)
         {
-            var entity = await _repository.GetById(removeBijouterie.Id);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Bijouterie), removeBijouterie.Id);
-            }
+            var entity = await GetEntityById(id);
 
             _repository.Delete(entity);
 
             await _repository.SaveChangesAsync();
+        }
+
+        private async Task<Bijouterie> GetEntityById(int id)
+        {
+            var entity = await _repository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new BaseBusinessJewelryStoreException(nameof(Bijouterie), id, ErrorCode.NotFound);
+            }
+
+            return entity;
         }
     }
 }

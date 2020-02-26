@@ -1,9 +1,6 @@
 ﻿using JewelryStoreAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace JewelryStoreAPI.Core.Configurations
 {
@@ -11,10 +8,13 @@ namespace JewelryStoreAPI.Core.Configurations
     {
         public void Configure(EntityTypeBuilder<PreciousItemType> builder)
         {
-            builder.HasIndex(x => x.Name)
+            builder.HasIndex(x => new { x.Name, x.MetalType })
                 .IsUnique();
 
             builder.Property(x => x.Name)
+                .IsRequired();
+
+            builder.Property(x => x.MetalType)
                 .IsRequired();
         }
     }

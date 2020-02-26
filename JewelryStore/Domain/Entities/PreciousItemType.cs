@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Domain.Entities
 
         public string Name { get; set; }
 
-        public MetalType MetalType { get; set; }
+        public MetalType? MetalType { get; set; }
 
         public virtual ICollection<PreciousItem> PreciousItems { get; set; }
     }
