@@ -7,7 +7,7 @@ namespace JewelryStoreAPI.Validators.Order
     {
         public CreateOrderModelValidator()
         {
-            RuleFor(x => x.ProductIds).NotEmpty();
+            RuleFor(x => x.ProductIds).NotEmpty().ForEach(x => x.GreaterThan(0));
         }
     }
 }
