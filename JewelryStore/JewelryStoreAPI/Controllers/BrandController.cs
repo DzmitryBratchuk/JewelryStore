@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BrandModel>> GetAll()
         {
-            var brands = await _brandService.GetAll();
+            var brands = await _brandService.GetAllAsync();
 
             return _mapper.Map<IList<BrandModel>>(brands);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<BrandModel> GetById(int id)
         {
-            var brand = await _brandService.GetById(id);
+            var brand = await _brandService.GetByIdAsync(id);
 
             return _mapper.Map<BrandModel>(brand);
         }
@@ -50,7 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBrandDto = _mapper.Map<CreateBrandDto>(createBrand);
 
-            var brandDto = await _brandService.Create(createBrandDto);
+            var brandDto = await _brandService.CreateAsync(createBrandDto);
 
             var brandModel = _mapper.Map<BrandModel>(brandDto);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var brand = _mapper.Map<UpdateBrandDto>(updateBrand);
 
-            await _brandService.Update(id, brand);
+            await _brandService.UpdateAsync(id, brand);
 
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveBrandModel removeBrand)
         {
-            await _brandService.Delete(removeBrand.Id);
+            await _brandService.DeleteAsync(removeBrand.Id);
 
             return NoContent();
         }

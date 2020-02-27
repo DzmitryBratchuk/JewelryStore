@@ -36,29 +36,29 @@ namespace JewelryStoreAPI.Services.Services
             _claimsPrincipal = claimsPrincipal;
         }
 
-        public async Task<IList<ProductOrderDto>> GetAllProductsInOrder(int orderId)
+        public async Task<IList<ProductOrderDto>> GetAllProductsInOrderAsync(int orderId)
         {
             var userId = GetUserId();
 
-            var entities = await _productOrderRepository.GetAllByOrderId(userId, orderId);
+            var entities = await _productOrderRepository.GetAllByOrderIdAsync(userId, orderId);
 
             return _mapper.Map<IList<ProductOrderDto>>(entities);
         }
 
-        public async Task<IList<OrderDto>> GetAllUserOrders()
+        public async Task<IList<OrderDto>> GetAllUserOrdersAsync()
         {
             var userId = GetUserId();
 
-            var orders = await _orderRepository.GetAllByUserId(userId);
+            var orders = await _orderRepository.GetAllByUserIdAsync(userId);
 
             return _mapper.Map<IList<OrderDto>>(orders);
         }
 
-        public async Task<IList<ProductOrderDto>> CreateOrder(CreateOrderDto createOrder)
+        public async Task<IList<ProductOrderDto>> CreateOrderAsync(CreateOrderDto createOrder)
         {
             using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-            var productsInBasket = (await _productBasketRepository.GetAllByUserId(GetUserId())).ToList();
+            var productsInBasket = (await _productBasketRepository.GetAllByUserIdAsync(GetUserId())).ToList();
 
             ValidateProductsInBasketAndStore(productsInBasket, createOrder);
 
@@ -73,7 +73,7 @@ namespace JewelryStoreAPI.Services.Services
 
             ReduceProductsInBasketAndStore(productsInBasket, productsInOrder);
 
-            await _orderRepository.Create(entity);
+            await _orderRepository.CreateAsync(entity);
             await _orderRepository.SaveChangesAsync();
 
             var result = _mapper.Map<IList<ProductOrderDto>>(productsInOrder);

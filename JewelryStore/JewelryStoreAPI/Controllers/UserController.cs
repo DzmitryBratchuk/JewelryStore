@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<UserModel>> GetAll()
         {
-            var users = await _userService.GetAll();
+            var users = await _userService.GetAllAsync();
 
             return _mapper.Map<IList<UserModel>>(users);
         }
@@ -47,7 +47,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<UserModel>> GetAllByRoleId(int id)
         {
-            var users = await _userService.GetAllByRoleId(id);
+            var users = await _userService.GetAllByRoleIdAsync(id);
 
             return _mapper.Map<IList<UserModel>>(users);
         }
@@ -57,7 +57,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetById(int id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
 
             return _mapper.Map<UserModel>(user);
         }
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<UserModel> GetByLogin(string login)
         {
-            var user = await _userService.GetByLogin(login);
+            var user = await _userService.GetByLoginAsync(login);
 
             return _mapper.Map<UserModel>(user);
         }
@@ -81,7 +81,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var authenticateDto = _mapper.Map<AuthenticateDto>(authenticate);
 
-            var userDto = await _userService.Authenticate(authenticateDto);
+            var userDto = await _userService.AuthenticateAsync(authenticateDto);
 
             TokenModel token = new TokenModel()
             {
@@ -100,7 +100,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createUserDto = _mapper.Map<CreateUserDto>(createUser);
 
-            var userDto = await _userService.Create(createUserDto);
+            var userDto = await _userService.CreateAsync(createUserDto);
 
             var userModel = _mapper.Map<UserModel>(userDto);
 
@@ -116,7 +116,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var user = _mapper.Map<UpdateUserDto>(updateUser);
 
-            await _userService.Update(user);
+            await _userService.UpdateAsync(user);
 
             return NoContent();
         }
@@ -130,7 +130,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var user = _mapper.Map<ChangeUserPasswordDto>(changeUserPassword);
 
-            await _userService.ChangePassword(user);
+            await _userService.ChangePasswordAsync(user);
 
             return NoContent();
         }
@@ -143,7 +143,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var user = _mapper.Map<ChangeUserRoleDto>(changeUserRole);
 
-            await _userService.ChangeRole(user);
+            await _userService.ChangeRoleAsync(user);
 
             return NoContent();
         }
@@ -154,7 +154,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveUserModel removeUser)
         {
-            await _userService.Delete(removeUser.Id);
+            await _userService.DeleteAsync(removeUser.Id);
 
             return NoContent();
         }

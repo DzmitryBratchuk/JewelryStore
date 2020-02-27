@@ -28,7 +28,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductBasketModel>> GetAllProductsInBasket()
         {
-            var productBaskets = await _productBasketService.GetAllProductsInBasket();
+            var productBaskets = await _productBasketService.GetAllProductsInBasketAsync();
 
             return _mapper.Map<IList<ProductBasketModel>>(productBaskets);
         }
@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ProductBasketModel> GetById(int id)
         {
-            var productBasketDto = await _productBasketService.GetById(id);
+            var productBasketDto = await _productBasketService.GetByIdAsync(id);
 
             return _mapper.Map<ProductBasketModel>(productBasketDto);
         }
@@ -50,7 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var addProductInBasketDto = _mapper.Map<AddProductInBasketDto>(addProductInBasket);
 
-            var productBasketDto = await _productBasketService.AddProductInBasket(addProductInBasketDto);
+            var productBasketDto = await _productBasketService.AddProductInBasketAsync(addProductInBasketDto);
 
             var productBasketModel = _mapper.Map<ProductBasketModel>(productBasketDto);
 
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Controllers
 
             productBasket.ProductId = id;
 
-            await _productBasketService.UpdateProductInBasket(productBasket);
+            await _productBasketService.UpdateProductInBasketAsync(productBasket);
 
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveProductBasketModel removeProductBasket)
         {
-            await _productBasketService.RemoveProductFromBasket(removeProductBasket.Id);
+            await _productBasketService.RemoveProductFromBasketAsync(removeProductBasket.Id);
 
             return NoContent();
         }

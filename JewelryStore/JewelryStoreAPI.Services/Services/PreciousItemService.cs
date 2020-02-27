@@ -20,46 +20,46 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<PreciousItemDto>> GetAll()
+        public async Task<IList<PreciousItemDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task<PreciousItemDto> GetById(int id)
+        public async Task<PreciousItemDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<PreciousItemDto>(entity);
         }
 
-        public async Task<IList<PreciousItemDto>> GetAllByBrandId(int brandId)
+        public async Task<IList<PreciousItemDto>> GetAllByBrandIdAsync(int brandId)
         {
-            var entities = await _repository.GetAllByBrandId(brandId);
+            var entities = await _repository.GetAllByBrandIdAsync(brandId);
 
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task<IList<PreciousItemDto>> GetAllByCountryId(int countryId)
+        public async Task<IList<PreciousItemDto>> GetAllByCountryIdAsync(int countryId)
         {
-            var entities = await _repository.GetAllByCountryId(countryId);
+            var entities = await _repository.GetAllByCountryIdAsync(countryId);
 
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task<IList<PreciousItemDto>> GetAllByPreciousItemTypeId(int preciousItemTypeId)
+        public async Task<IList<PreciousItemDto>> GetAllByPreciousItemTypeIdAsync(int preciousItemTypeId)
         {
-            var entities = await _repository.GetAllByPreciousItemTypeId(preciousItemTypeId);
+            var entities = await _repository.GetAllByPreciousItemTypeIdAsync(preciousItemTypeId);
 
             return _mapper.Map<IList<PreciousItemDto>>(entities);
         }
 
-        public async Task<PreciousItemDto> Create(CreatePreciousItemDto createPreciousItem)
+        public async Task<PreciousItemDto> CreateAsync(CreatePreciousItemDto createPreciousItem)
         {
             var entity = _mapper.Map<PreciousItem>(createPreciousItem);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             var createdEntity = await GetEntityById(entity.Id);
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<PreciousItemDto>(createdEntity);
         }
 
-        public async Task Update(int id, UpdatePreciousItemDto updatePreciousItem)
+        public async Task UpdateAsync(int id, UpdatePreciousItemDto updatePreciousItem)
         {
             var entity = await GetEntityById(id);
 
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -89,7 +89,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<PreciousItem> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

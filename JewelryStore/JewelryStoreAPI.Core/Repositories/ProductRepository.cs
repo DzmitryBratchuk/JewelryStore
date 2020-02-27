@@ -13,21 +13,21 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public async Task<IList<Product>> GetAllByName(string name)
+        public async Task<IList<Product>> GetAllByNameAsync(string name)
         {
             return await _context.Products
                 .Where(x => x.Name.StartsWith(name))
                 .ToListAsync();
         }
 
-        public async Task<IList<Product>> GetAllByBrandName(string brandName)
+        public async Task<IList<Product>> GetAllByBrandNameAsync(string brandName)
         {
             return await _context.Products
                 .Where(x => x.Brand.Name.StartsWith(brandName))
                 .ToListAsync();
         }
 
-        public async Task<IList<Product>> GetAllByCountryName(string countryName)
+        public async Task<IList<Product>> GetAllByCountryNameAsync(string countryName)
         {
             return await _context.Products
                 .Where(x => x.Country.Name.StartsWith(countryName))

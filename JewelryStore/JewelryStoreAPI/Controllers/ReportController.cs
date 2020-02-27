@@ -28,7 +28,7 @@ namespace JewelryStoreAPI.Controllers
         public async Task<ReportModel> GetAllProductStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var report = await _reportService.GetAllProductStatisticsInTimeRange(dateFrom, dateTo);
+            var report = await _reportService.GetAllProductStatisticsInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         public async Task<ReportModel> GetUserStatisticsInTimeRange(
             int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var report = await _reportService.GetUserStatisticsInTimeRange(userId, dateFrom, dateTo);
+            var report = await _reportService.GetUserStatisticsInTimeRangeAsync(userId, dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
@@ -47,7 +47,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ReportModel> GetUserStatisticsAllTime(int userId)
         {
-            var report = await _reportService.GetUserStatisticsAllTime(userId);
+            var report = await _reportService.GetUserStatisticsAllTimeAsync(userId);
 
             return _mapper.Map<ReportModel>(report);
         }
@@ -57,7 +57,7 @@ namespace JewelryStoreAPI.Controllers
         public async Task<ReportModel> GetWatchStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var report = await _reportService.GetWatchStatisticsInTimeRange(dateFrom, dateTo);
+            var report = await _reportService.GetWatchStatisticsInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Controllers
         public async Task<ReportModel> GetBijouterieStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var report = await _reportService.GetBijouterieStatisticsInTimeRange(dateFrom, dateTo);
+            var report = await _reportService.GetBijouterieStatisticsInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }
@@ -77,7 +77,7 @@ namespace JewelryStoreAPI.Controllers
         public async Task<ReportModel> GetPreciousItemStatisticsInTimeRange(
             DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var report = await _reportService.GetPreciousItemStatisticsInTimeRange(dateFrom, dateTo);
+            var report = await _reportService.GetPreciousItemStatisticsInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportModel>(report);
         }

@@ -20,46 +20,46 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<BijouterieDto>> GetAll()
+        public async Task<IList<BijouterieDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task<BijouterieDto> GetById(int id)
+        public async Task<BijouterieDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<BijouterieDto>(entity);
         }
 
-        public async Task<IList<BijouterieDto>> GetAllByBijouterieTypeId(int id)
+        public async Task<IList<BijouterieDto>> GetAllByBijouterieTypeIdAsync(int id)
         {
-            var entities = await _repository.GetAllByBijouterieTypeId(id);
+            var entities = await _repository.GetAllByBijouterieTypeIdAsync(id);
 
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task<IList<BijouterieDto>> GetAllByBrandId(int id)
+        public async Task<IList<BijouterieDto>> GetAllByBrandIdAsync(int id)
         {
-            var entities = await _repository.GetAllByBrandId(id);
+            var entities = await _repository.GetAllByBrandIdAsync(id);
 
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task<IList<BijouterieDto>> GetAllByCountryId(int id)
+        public async Task<IList<BijouterieDto>> GetAllByCountryIdAsync(int id)
         {
-            var entities = await _repository.GetAllByCountryId(id);
+            var entities = await _repository.GetAllByCountryIdAsync(id);
 
             return _mapper.Map<IList<BijouterieDto>>(entities);
         }
 
-        public async Task<BijouterieDto> Create(CreateBijouterieDto createBijouterie)
+        public async Task<BijouterieDto> CreateAsync(CreateBijouterieDto createBijouterie)
         {
             var entity = _mapper.Map<Bijouterie>(createBijouterie);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             var createdEntity = await GetEntityById(entity.Id);
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<BijouterieDto>(createdEntity);
         }
 
-        public async Task Update(int id, UpdateBijouterieDto updateBijouterie)
+        public async Task UpdateAsync(int id, UpdateBijouterieDto updateBijouterie)
         {
             var entity = await GetEntityById(id);
 
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -89,7 +89,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<Bijouterie> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

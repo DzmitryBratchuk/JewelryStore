@@ -6,15 +6,15 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<UserDto> Authenticate(AuthenticateDto authenticate);
-        Task<UserDto> GetById(int id);
-        Task<UserDto> GetByLogin(string login);
-        Task<IList<UserDto>> GetAll();
-        Task<IList<UserDto>> GetAllByRoleId(int roleId);
-        Task ChangePassword(ChangeUserPasswordDto changeUserPassword);
-        Task ChangeRole(ChangeUserRoleDto changeUserRole);
-        Task<UserDto> Create(CreateUserDto createUser);
-        Task Update(UpdateUserDto updateUser);
-        Task Delete(int id);
+        Task<UserDto> AuthenticateAsync(AuthenticateDto authenticate);
+        Task<UserDto> GetByIdAsync(int id);
+        Task<UserDto> GetByLoginAsync(string login);
+        Task<IList<UserDto>> GetAllAsync();
+        Task<IList<UserDto>> GetAllByRoleIdAsync(int roleId);
+        Task ChangePasswordAsync(ChangeUserPasswordDto changeUserPassword);
+        Task ChangeRoleAsync(ChangeUserRoleDto changeUserRole);
+        Task<UserDto> CreateAsync(CreateUserDto createUser);
+        Task UpdateAsync(UpdateUserDto updateUser);
+        Task DeleteAsync(int id);
     }
 }

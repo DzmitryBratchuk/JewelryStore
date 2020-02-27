@@ -11,14 +11,14 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public async Task<Basket> GetByUserLogin(string login)
+        public async Task<Basket> GetByUserLoginAsync(string login)
         {
             return await _context.Baskets
                 .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.User.Login == login);
         }
 
-        public async Task<Basket> GetByUserId(int userId)
+        public async Task<Basket> GetByUserIdAsync(int userId)
         {
             return await _context.Baskets
                 .Include(x => x.User)

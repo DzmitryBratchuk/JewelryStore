@@ -6,8 +6,8 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
 {
     public interface IWatchRepository : IBaseRepository<Watch>
     {
-        Task<IList<Watch>> GetAllByCountryId(int id);
-        Task<IList<Watch>> GetAllByBrandId(int id);
-        Task<IList<Watch>> GetAllByDiameter(int diameterInMillimeters);
+        Task<IList<Watch>> GetAllByCountryIdAsync(int id);
+        Task<IList<Watch>> GetAllByBrandIdAsync(int id);
+        Task<IList<Watch>> GetAllByDiameterAsync(int diameterInMillimeters);
     }
 }

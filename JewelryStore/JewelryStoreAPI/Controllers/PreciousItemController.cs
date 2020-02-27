@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAll()
         {
-            var preciousItems = await _preciousItemService.GetAll();
+            var preciousItems = await _preciousItemService.GetAllAsync();
 
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<PreciousItemModel> GetById(int id)
         {
-            var preciousItem = await _preciousItemService.GetById(id);
+            var preciousItem = await _preciousItemService.GetByIdAsync(id);
 
             return _mapper.Map<PreciousItemModel>(preciousItem);
         }
@@ -46,7 +46,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByPreciousItemTypeId(int id)
         {
-            var preciousItems = await _preciousItemService.GetAllByPreciousItemTypeId(id);
+            var preciousItems = await _preciousItemService.GetAllByPreciousItemTypeIdAsync(id);
 
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByBrandId(int id)
         {
-            var preciousItems = await _preciousItemService.GetAllByBrandId(id);
+            var preciousItems = await _preciousItemService.GetAllByBrandIdAsync(id);
 
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
@@ -64,7 +64,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemModel>> GetAllByCountryId(int id)
         {
-            var preciousItems = await _preciousItemService.GetAllByCountryId(id);
+            var preciousItems = await _preciousItemService.GetAllByCountryIdAsync(id);
 
             return _mapper.Map<IList<PreciousItemModel>>(preciousItems);
         }
@@ -77,7 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createPreciousItemDto = _mapper.Map<CreatePreciousItemDto>(createPreciousItem);
 
-            var preciousItemDto = await _preciousItemService.Create(createPreciousItemDto);
+            var preciousItemDto = await _preciousItemService.CreateAsync(createPreciousItemDto);
 
             var preciousItemModel = _mapper.Map<PreciousItemModel>(preciousItemDto);
 
@@ -93,7 +93,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var preciousItem = _mapper.Map<UpdatePreciousItemDto>(updatePreciousItem);
 
-            await _preciousItemService.Update(id, preciousItem);
+            await _preciousItemService.UpdateAsync(id, preciousItem);
 
             return NoContent();
         }
@@ -105,7 +105,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemovePreciousItemModel removePreciousItem)
         {
-            await _preciousItemService.Delete(removePreciousItem.Id);
+            await _preciousItemService.DeleteAsync(removePreciousItem.Id);
 
             return NoContent();
         }

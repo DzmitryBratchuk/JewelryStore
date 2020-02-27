@@ -20,38 +20,38 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<PreciousItemTypeDto>> GetAll()
+        public async Task<IList<PreciousItemTypeDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<PreciousItemTypeDto>>(entities);
         }
 
-        public async Task<PreciousItemTypeDto> GetById(int id)
+        public async Task<PreciousItemTypeDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<PreciousItemTypeDto>(entity);
         }
 
-        public async Task<IList<PreciousItemTypeDto>> GetAllByMetalType(MetalType metalType)
+        public async Task<IList<PreciousItemTypeDto>> GetAllByMetalTypeAsync(MetalType metalType)
         {
-            var entities = await _repository.GetAllByMetalType(metalType);
+            var entities = await _repository.GetAllByMetalTypeAsync(metalType);
 
             return _mapper.Map<IList<PreciousItemTypeDto>>(entities);
         }
 
-        public async Task<PreciousItemTypeDto> Create(CreatePreciousItemTypeDto createPreciousItemType)
+        public async Task<PreciousItemTypeDto> CreateAsync(CreatePreciousItemTypeDto createPreciousItemType)
         {
             var entity = _mapper.Map<PreciousItemType>(createPreciousItemType);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             return _mapper.Map<PreciousItemTypeDto>(entity);
         }
 
-        public async Task Update(int id, UpdatePreciousItemTypeDto updatePreciousItemType)
+        public async Task UpdateAsync(int id, UpdatePreciousItemTypeDto updatePreciousItemType)
         {
             var entity = await GetEntityById(id);
 
@@ -63,7 +63,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -74,7 +74,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<PreciousItemType> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

@@ -14,7 +14,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public override async Task<IList<Order>> GetAll()
+        public override async Task<IList<Order>> GetAllAsync()
         {
             return await _context.Orders
                 .Include(x => x.User)
@@ -22,7 +22,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Order>> GetAllInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<IList<Order>> GetAllInTimeRangeAsync(DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             return await _context.Orders
                 .Where(x => x.OrderTime >= dateFrom && x.OrderTime <= dateTo)
@@ -31,7 +31,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Order>> GetAllByUserId(int userId)
+        public async Task<IList<Order>> GetAllByUserIdAsync(int userId)
         {
             return await _context.Orders
                 .Where(x => x.UserId == userId)
@@ -40,7 +40,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Order>> GetAllByUserIdInTimeRange(int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<IList<Order>> GetAllByUserIdInTimeRangeAsync(int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
             return await _context.Orders
                 .Where(x => x.UserId == userId
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Order>> GetAllByUserLogin(string login)
+        public async Task<IList<Order>> GetAllByUserLoginAsync(string login)
         {
             return await _context.Orders
                 .Where(x => x.User.Login == login)
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Order> GetById(int orderId, string userLogin)
+        public async Task<Order> GetByIdAsync(int orderId, string userLogin)
         {
             return await _context.Orders
                 .Include(x => x.User)

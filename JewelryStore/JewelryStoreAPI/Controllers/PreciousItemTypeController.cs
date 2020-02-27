@@ -28,7 +28,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemTypeModel>> GetAll()
         {
-            var preciousItemTypes = await _preciousItemTypeService.GetAll();
+            var preciousItemTypes = await _preciousItemTypeService.GetAllAsync();
 
             return _mapper.Map<IList<PreciousItemTypeModel>>(preciousItemTypes);
         }
@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<PreciousItemTypeModel> GetById(int id)
         {
-            var preciousItemType = await _preciousItemTypeService.GetById(id);
+            var preciousItemType = await _preciousItemTypeService.GetByIdAsync(id);
 
             return _mapper.Map<PreciousItemTypeModel>(preciousItemType);
         }
@@ -47,7 +47,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<PreciousItemTypeModel>> GetAllByMetalTypeName(MetalType name)
         {
-            var preciousItemTypes = await _preciousItemTypeService.GetAllByMetalType(name);
+            var preciousItemTypes = await _preciousItemTypeService.GetAllByMetalTypeAsync(name);
 
             return _mapper.Map<IList<PreciousItemTypeModel>>(preciousItemTypes);
         }
@@ -60,7 +60,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createPreciousItemTypeDto = _mapper.Map<CreatePreciousItemTypeDto>(createPreciousItemType);
 
-            var preciousItemTypeDto = await _preciousItemTypeService.Create(createPreciousItemTypeDto);
+            var preciousItemTypeDto = await _preciousItemTypeService.CreateAsync(createPreciousItemTypeDto);
 
             var preciousItemTypeModel = _mapper.Map<PreciousItemTypeModel>(preciousItemTypeDto);
 
@@ -76,7 +76,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var preciousItemType = _mapper.Map<UpdatePreciousItemTypeDto>(updatePreciousItemType);
 
-            await _preciousItemTypeService.Update(id, preciousItemType);
+            await _preciousItemTypeService.UpdateAsync(id, preciousItemType);
 
             return NoContent();
         }
@@ -88,7 +88,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemovePreciousItemTypeModel removePreciousItemType)
         {
-            await _preciousItemTypeService.Delete(removePreciousItemType.Id);
+            await _preciousItemTypeService.DeleteAsync(removePreciousItemType.Id);
 
             return NoContent();
         }

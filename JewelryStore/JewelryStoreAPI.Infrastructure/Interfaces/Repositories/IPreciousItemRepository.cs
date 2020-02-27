@@ -6,8 +6,8 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
 {
     public interface IPreciousItemRepository : IBaseRepository<PreciousItem>
     {
-        Task<IList<PreciousItem>> GetAllByCountryId(int id);
-        Task<IList<PreciousItem>> GetAllByBrandId(int id);
-        Task<IList<PreciousItem>> GetAllByPreciousItemTypeId(int id);
+        Task<IList<PreciousItem>> GetAllByCountryIdAsync(int id);
+        Task<IList<PreciousItem>> GetAllByBrandIdAsync(int id);
+        Task<IList<PreciousItem>> GetAllByPreciousItemTypeIdAsync(int id);
     }
 }

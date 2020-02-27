@@ -6,10 +6,10 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IRoleService
     {
-        Task<RoleDto> GetById(int id);
-        Task<IList<RoleDto>> GetAll();
-        Task<RoleDto> Create(CreateRoleDto createRole);
-        Task Update(int id, UpdateRoleDto updateRole);
-        Task Delete(int id);
+        Task<RoleDto> GetByIdAsync(int id);
+        Task<IList<RoleDto>> GetAllAsync();
+        Task<RoleDto> CreateAsync(CreateRoleDto createRole);
+        Task UpdateAsync(int id, UpdateRoleDto updateRole);
+        Task DeleteAsync(int id);
     }
 }

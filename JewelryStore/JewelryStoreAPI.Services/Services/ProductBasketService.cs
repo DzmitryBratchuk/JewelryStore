@@ -31,11 +31,11 @@ namespace JewelryStoreAPI.Services.Services
             _claimsPrincipal = claimsPrincipal;
         }
 
-        public async Task<ProductBasketDto> GetById(int productId)
+        public async Task<ProductBasketDto> GetByIdAsync(int productId)
         {
             var basket = await GetBasketEntity();
 
-            var entity = await _productBasketRepository.GetById(productId, basket.Id);
+            var entity = await _productBasketRepository.GetByIdAsync(productId, basket.Id);
 
             if (entity == null)
             {
@@ -45,35 +45,35 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<ProductBasketDto>(entity);
         }
 
-        public async Task<ProductBasketDto> AddProductInBasket(AddProductInBasketDto addProductInBasket)
+        public async Task<ProductBasketDto> AddProductInBasketAsync(AddProductInBasketDto addProductInBasket)
         {
             var basket = await GetBasketEntity();
 
             var entity = _mapper.Map<ProductBasket>(addProductInBasket);
             entity.BasketId = basket.Id;
 
-            await _productBasketRepository.Create(entity);
+            await _productBasketRepository.CreateAsync(entity);
             await _productBasketRepository.SaveChangesAsync();
 
-            var addedEntity = await _productBasketRepository.GetById(entity.ProductId, basket.Id);
+            var addedEntity = await _productBasketRepository.GetByIdAsync(entity.ProductId, basket.Id);
 
             return _mapper.Map<ProductBasketDto>(addedEntity);
         }
 
-        public async Task<IList<ProductBasketDto>> GetAllProductsInBasket()
+        public async Task<IList<ProductBasketDto>> GetAllProductsInBasketAsync()
         {
             var basket = await GetBasketEntity();
 
-            var entities = await _productBasketRepository.GetAllByBasketId(basket.Id);
+            var entities = await _productBasketRepository.GetAllByBasketIdAsync(basket.Id);
 
             return _mapper.Map<IList<ProductBasketDto>>(entities);
         }
 
-        public async Task UpdateProductInBasket(UpdateProductBasketDto updateProductBasket)
+        public async Task UpdateProductInBasketAsync(UpdateProductBasketDto updateProductBasket)
         {
             var basket = await GetBasketEntity();
 
-            var entity = await _productBasketRepository.GetById(updateProductBasket.ProductId, basket.Id);
+            var entity = await _productBasketRepository.GetByIdAsync(updateProductBasket.ProductId, basket.Id);
 
             if (entity == null)
             {
@@ -87,11 +87,11 @@ namespace JewelryStoreAPI.Services.Services
             await _productBasketRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveProductFromBasket(int productId)
+        public async Task RemoveProductFromBasketAsync(int productId)
         {
             var basket = await GetBasketEntity();
 
-            var entity = await _productBasketRepository.GetById(productId, basket.Id);
+            var entity = await _productBasketRepository.GetByIdAsync(productId, basket.Id);
 
             if (entity == null)
             {
@@ -107,7 +107,7 @@ namespace JewelryStoreAPI.Services.Services
         {
             var userId = GetUserId();
 
-            var basket = await _basketRepository.GetByUserId(userId);
+            var basket = await _basketRepository.GetByUserIdAsync(userId);
 
             if (basket == null)
             {

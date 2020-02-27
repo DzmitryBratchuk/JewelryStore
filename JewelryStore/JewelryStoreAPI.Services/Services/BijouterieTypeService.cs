@@ -20,31 +20,31 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<BijouterieTypeDto>> GetAll()
+        public async Task<IList<BijouterieTypeDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<BijouterieTypeDto>>(entities);
         }
 
-        public async Task<BijouterieTypeDto> GetById(int id)
+        public async Task<BijouterieTypeDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<BijouterieTypeDto>(entity);
         }
 
-        public async Task<BijouterieTypeDto> Create(CreateBijouterieTypeDto createBijouterieType)
+        public async Task<BijouterieTypeDto> CreateAsync(CreateBijouterieTypeDto createBijouterieType)
         {
             var entity = _mapper.Map<BijouterieType>(createBijouterieType);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             return _mapper.Map<BijouterieTypeDto>(entity);
         }
 
-        public async Task Update(int id, UpdateBijouterieTypeDto updateBijouterieType)
+        public async Task UpdateAsync(int id, UpdateBijouterieTypeDto updateBijouterieType)
         {
             var entity = await GetEntityById(id);
 
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<BijouterieType> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

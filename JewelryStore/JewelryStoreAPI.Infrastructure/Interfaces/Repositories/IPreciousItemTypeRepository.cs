@@ -6,6 +6,6 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
 {
     public interface IPreciousItemTypeRepository : IBaseRepository<PreciousItemType>
     {
-        Task<IList<PreciousItemType>> GetAllByMetalType(MetalType metalType);
+        Task<IList<PreciousItemType>> GetAllByMetalTypeAsync(MetalType metalType);
     }
 }

@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public async Task<IList<PreciousItemType>> GetAllByMetalType(MetalType metalType)
+        public async Task<IList<PreciousItemType>> GetAllByMetalTypeAsync(MetalType metalType)
         {
             return await _context.PreciousItemTypes
                 .Where(x => x.MetalType == metalType)

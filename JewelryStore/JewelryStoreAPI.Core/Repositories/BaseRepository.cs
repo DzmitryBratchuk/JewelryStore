@@ -19,7 +19,7 @@ namespace JewelryStoreAPI.Core.Repositories
             _context = context;
         }
 
-        public async Task Create(TEntity entity)
+        public async Task CreateAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
         }
@@ -29,12 +29,12 @@ namespace JewelryStoreAPI.Core.Repositories
             _context.Entry(entity).State = EntityState.Deleted;
         }
 
-        public virtual async Task<IList<TEntity>> GetAll()
+        public virtual async Task<IList<TEntity>> GetAllAsync()
         {
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetById(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }

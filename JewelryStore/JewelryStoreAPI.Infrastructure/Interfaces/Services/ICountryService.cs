@@ -6,10 +6,10 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface ICountryService
     {
-        Task<CountryDto> GetById(int id);
-        Task<IList<CountryDto>> GetAll();
-        Task<CountryDto> Create(CreateCountryDto createCountry);
-        Task Update(int id, UpdateCountryDto updateCountry);
-        Task Delete(int id);
+        Task<CountryDto> GetByIdAsync(int id);
+        Task<IList<CountryDto>> GetAllAsync();
+        Task<CountryDto> CreateAsync(CreateCountryDto createCountry);
+        Task UpdateAsync(int id, UpdateCountryDto updateCountry);
+        Task DeleteAsync(int id);
     }
 }
