@@ -1,5 +1,6 @@
 using Autofac;
 using AutoMapper;
+using Confluent.Kafka;
 using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
@@ -56,6 +57,7 @@ namespace JewelryStoreAPI
             services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
 
             AddAuthentication(services);
+            AddKafka(services);
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -145,6 +147,27 @@ namespace JewelryStoreAPI
                         ValidateLifetime = true
                     };
                 });
+        }
+
+        private void AddKafka(IServiceCollection services)
+        {
+            var kafkaSettingsSection = Configuration.GetSection("KafkaSettings");
+
+            services.Configure<KafkaSettings>(kafkaSettingsSection);
+
+            var kafkaSettings = kafkaSettingsSection.Get<KafkaSettings>();
+
+            services.AddSingleton(c => new ProducerBuilder<Null, string>(
+                new ProducerConfig() { BootstrapServers = kafkaSettings.ServerUrl }).Build()
+            );
+
+            services.AddSingleton(c =>
+            {
+                var consumer = new ConsumerBuilder<Ignore, string>(
+                    new ConsumerConfig() { BootstrapServers = kafkaSettings.ServerUrl, GroupId = kafkaSettings.GroupId }).Build();
+                consumer.Subscribe(kafkaSettings.Topics.CreateWatch);
+                return consumer;
+            });
         }
     }
 }

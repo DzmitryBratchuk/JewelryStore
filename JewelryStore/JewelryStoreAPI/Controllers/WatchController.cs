@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services.Kafka;
 using JewelryStoreAPI.Models.Watch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,12 +18,20 @@ namespace JewelryStoreAPI.Controllers
     public class WatchController : ControllerBase
     {
         private readonly IWatchService _watchService;
+        private readonly IKafkaProducerService _kafkaProducerService;
         private readonly IMapper _mapper;
+        private readonly KafkaSettings _kafkaSettings;
 
-        public WatchController(IWatchService watchService, IMapper mapper)
+        public WatchController(
+            IWatchService watchService,
+            IKafkaProducerService kafkaProducerService,
+            IMapper mapper,
+            IOptions<KafkaSettings> kafkaSettings)
         {
             _watchService = watchService;
+            _kafkaProducerService = kafkaProducerService;
             _mapper = mapper;
+            _kafkaSettings = kafkaSettings.Value;
         }
 
         [HttpGet]
@@ -77,11 +88,9 @@ namespace JewelryStoreAPI.Controllers
         {
             var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
 
-            var watchDto = await _watchService.Create(createWatchDto);
+            await _kafkaProducerService.Produce(createWatchDto, _kafkaSettings.Topics.CreateWatch);
 
-            var watchModel = _mapper.Map<WatchModel>(watchDto);
-
-            return CreatedAtAction(nameof(GetById), new { id = watchModel.Id }, watchModel);
+            return Created("Id", "Watch creation is in progress");
         }
 
         [Authorize(Roles = "Admin")]
