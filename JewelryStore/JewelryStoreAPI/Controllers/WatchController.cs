@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using JewelryStoreAPI.Common;
+using JewelryStoreAPI.Infrastructure.DTO.Kafka.Watch;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services.Kafka;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services.Redis;
 using JewelryStoreAPI.Models.Watch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,27 +18,27 @@ namespace JewelryStoreAPI.Controllers
     public class WatchController : ControllerBase
     {
         private readonly IWatchService _watchService;
-        private readonly IKafkaProducerService _kafkaProducerService;
+        private readonly IWatchProducerService _watchProducerService;
+        private readonly IWatchCacheService _watchCacheService;
         private readonly IMapper _mapper;
-        private readonly KafkaSettings _kafkaSettings;
 
         public WatchController(
             IWatchService watchService,
-            IKafkaProducerService kafkaProducerService,
-            IMapper mapper,
-            IOptions<KafkaSettings> kafkaSettings)
+            IWatchProducerService watchProducerService,
+            IWatchCacheService watchCacheService,
+            IMapper mapper)
         {
             _watchService = watchService;
-            _kafkaProducerService = kafkaProducerService;
+            _watchProducerService = watchProducerService;
+            _watchCacheService = watchCacheService;
             _mapper = mapper;
-            _kafkaSettings = kafkaSettings.Value;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAll()
         {
-            var watches = await _watchService.GetAll();
+            var watches = await _watchCacheService.GetAllAsync();
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -86,9 +86,9 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateWatchModel createWatch)
         {
-            var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
+            var produceWatchDto = _mapper.Map<ProduceWatchDto>(createWatch);
 
-            await _kafkaProducerService.Produce(createWatchDto, _kafkaSettings.Topics.CreateWatch);
+            await _watchProducerService.ProduceAsync(produceWatchDto);
 
             return Created("Id", "Watch creation is in progress");
         }

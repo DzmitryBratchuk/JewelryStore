@@ -1,4 +1,4 @@
-﻿namespace JewelryStoreAPI.Common
+﻿namespace JewelryStoreAPI.Infrastructure.Common
 {
     public class Topics
     {

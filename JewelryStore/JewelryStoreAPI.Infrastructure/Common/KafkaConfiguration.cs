@@ -1,6 +1,6 @@
-﻿namespace JewelryStoreAPI.Common
+﻿namespace JewelryStoreAPI.Infrastructure.Common
 {
-    public class KafkaSettings
+    public class KafkaConfiguration
     {
         public string ServerUrl { get; set; }
 

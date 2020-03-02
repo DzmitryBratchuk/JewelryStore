@@ -14,12 +14,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Reflection;
 using System.Text;
 
@@ -58,6 +60,7 @@ namespace JewelryStoreAPI
 
             AddAuthentication(services);
             AddKafka(services);
+            AddRedisCache(services);
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -151,22 +154,32 @@ namespace JewelryStoreAPI
 
         private void AddKafka(IServiceCollection services)
         {
-            var kafkaSettingsSection = Configuration.GetSection("KafkaSettings");
+            var kafkaConfigurationSection = Configuration.GetSection("KafkaConfiguration");
 
-            services.Configure<KafkaSettings>(kafkaSettingsSection);
+            services.Configure<KafkaConfiguration>(kafkaConfigurationSection);
 
-            var kafkaSettings = kafkaSettingsSection.Get<KafkaSettings>();
+            var kafkaConfiguration = kafkaConfigurationSection.Get<KafkaConfiguration>();
 
             services.AddSingleton(c => new ProducerBuilder<Null, string>(
-                new ProducerConfig() { BootstrapServers = kafkaSettings.ServerUrl }).Build()
+                new ProducerConfig() { BootstrapServers = kafkaConfiguration.ServerUrl }).Build()
             );
 
-            services.AddSingleton(c =>
+            services.AddSingleton(c => new ConsumerBuilder<Ignore, string>(
+                new ConsumerConfig() { BootstrapServers = kafkaConfiguration.ServerUrl, GroupId = kafkaConfiguration.GroupId }).Build()
+            );
+        }
+
+        private void AddRedisCache(IServiceCollection services)
+        {
+            var redisConfigurationSection = Configuration.GetSection("RedisConfiguration");
+
+            services.Configure<RedisConfiguration>(redisConfigurationSection);
+
+            var redisConfiguration = redisConfigurationSection.Get<RedisConfiguration>();
+
+            services.AddStackExchangeRedisCache(options =>
             {
-                var consumer = new ConsumerBuilder<Ignore, string>(
-                    new ConsumerConfig() { BootstrapServers = kafkaSettings.ServerUrl, GroupId = kafkaSettings.GroupId }).Build();
-                consumer.Subscribe(kafkaSettings.Topics.CreateWatch);
-                return consumer;
+                options.Configuration = redisConfiguration.ServerUrl;
             });
         }
     }
