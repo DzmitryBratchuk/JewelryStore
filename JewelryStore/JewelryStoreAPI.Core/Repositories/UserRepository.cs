@@ -13,21 +13,21 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public override async Task<IList<User>> GetAll()
+        public override async Task<IList<User>> GetAllAsync()
         {
             return await _context.Users
                 .Include(x => x.Role)
                 .ToListAsync();
         }
 
-        public override async Task<User> GetById(int id)
+        public override async Task<User> GetByIdAsync(int id)
         {
             return await _context.Users
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<User>> GetAllByRoleId(int id)
+        public async Task<IList<User>> GetAllByRoleIdAsync(int id)
         {
             return await _context.Users
                 .Where(x => x.RoleId == id)
@@ -35,21 +35,21 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<User> GetByLogin(string login)
+        public async Task<User> GetByLoginAsync(string login)
         {
             return await _context.Users
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Login == login);
         }
 
-        public async Task<User> GetByIdAndPassword(int id, string passwordHash)
+        public async Task<User> GetByIdAndPasswordAsync(int id, string passwordHash)
         {
             return await _context.Users
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Id == id && x.PasswordHash == passwordHash);
         }
 
-        public async Task<User> GetByLoginAndPassword(string login, string passwordHash)
+        public async Task<User> GetByLoginAndPasswordAsync(string login, string passwordHash)
         {
             return await _context.Users
                 .Include(x => x.Role)

@@ -20,44 +20,44 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<ReportDto> GetAllProductStatisticsInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<ReportDto> GetAllProductStatisticsInTimeRangeAsync(DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var orders = await _orderRepository.GetAllInTimeRange(dateFrom, dateTo);
+            var orders = await _orderRepository.GetAllInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportDto>(orders);
         }
 
-        public async Task<ReportWatchDto> GetWatchStatisticsInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<ReportWatchDto> GetWatchStatisticsInTimeRangeAsync(DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var orders = await _orderRepository.GetAllInTimeRange(dateFrom, dateTo);
+            var orders = await _orderRepository.GetAllInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportWatchDto>(orders);
         }
 
-        public async Task<ReportBijouterieDto> GetBijouterieStatisticsInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<ReportBijouterieDto> GetBijouterieStatisticsInTimeRangeAsync(DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var orders = await _orderRepository.GetAllInTimeRange(dateFrom, dateTo);
+            var orders = await _orderRepository.GetAllInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportBijouterieDto>(orders);
         }
 
-        public async Task<ReportPreciousItemDto> GetPreciousItemStatisticsInTimeRange(DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<ReportPreciousItemDto> GetPreciousItemStatisticsInTimeRangeAsync(DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var orders = await _orderRepository.GetAllInTimeRange(dateFrom, dateTo);
+            var orders = await _orderRepository.GetAllInTimeRangeAsync(dateFrom, dateTo);
 
             return _mapper.Map<ReportPreciousItemDto>(orders);
         }
 
-        public async Task<ReportDto> GetUserStatisticsAllTime(int userId)
+        public async Task<ReportDto> GetUserStatisticsAllTimeAsync(int userId)
         {
-            var orders = await _orderRepository.GetAllByUserId(userId);
+            var orders = await _orderRepository.GetAllByUserIdAsync(userId);
 
             return _mapper.Map<ReportDto>(orders);
         }
 
-        public async Task<ReportDto> GetUserStatisticsInTimeRange(int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
+        public async Task<ReportDto> GetUserStatisticsInTimeRangeAsync(int userId, DateTimeOffset dateFrom, DateTimeOffset dateTo)
         {
-            var orders = await _orderRepository.GetAllByUserIdInTimeRange(userId, dateFrom, dateTo);
+            var orders = await _orderRepository.GetAllByUserIdInTimeRangeAsync(userId, dateFrom, dateTo);
 
             return _mapper.Map<ReportDto>(orders);
         }

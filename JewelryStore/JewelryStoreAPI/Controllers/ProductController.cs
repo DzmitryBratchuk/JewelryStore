@@ -25,7 +25,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByName(string name)
         {
-            var products = await _productService.GetAllByName(name);
+            var products = await _productService.GetAllByNameAsync(name);
 
             return _mapper.Map<IList<ProductModel>>(products);
         }
@@ -34,7 +34,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByBrandName(string name)
         {
-            var products = await _productService.GetAllByBrandName(name);
+            var products = await _productService.GetAllByBrandNameAsync(name);
 
             return _mapper.Map<IList<ProductModel>>(products);
         }
@@ -43,7 +43,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<ProductModel>> GetAllByCountryName(string name)
         {
-            var products = await _productService.GetAllByCountryName(name);
+            var products = await _productService.GetAllByCountryNameAsync(name);
 
             return _mapper.Map<IList<ProductModel>>(products);
         }

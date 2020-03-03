@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAll()
         {
-            var bijouteries = await _bijouterieService.GetAll();
+            var bijouteries = await _bijouterieService.GetAllAsync();
 
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<BijouterieModel> GetById(int id)
         {
-            var bijouterie = await _bijouterieService.GetById(id);
+            var bijouterie = await _bijouterieService.GetByIdAsync(id);
 
             return _mapper.Map<BijouterieModel>(bijouterie);
         }
@@ -46,7 +46,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBijouterieTypeId(int id)
         {
-            var bijouteries = await _bijouterieService.GetAllByBijouterieTypeId(id);
+            var bijouteries = await _bijouterieService.GetAllByBijouterieTypeIdAsync(id);
 
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByBrandId(int id)
         {
-            var bijouteries = await _bijouterieService.GetAllByBrandId(id);
+            var bijouteries = await _bijouterieService.GetAllByBrandIdAsync(id);
 
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
@@ -64,7 +64,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieModel>> GetAllByCountryId(int id)
         {
-            var bijouteries = await _bijouterieService.GetAllByCountryId(id);
+            var bijouteries = await _bijouterieService.GetAllByCountryIdAsync(id);
 
             return _mapper.Map<IList<BijouterieModel>>(bijouteries);
         }
@@ -77,7 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBijouterieDto = _mapper.Map<CreateBijouterieDto>(createBijouterie);
 
-            var bijouterieDto = await _bijouterieService.Create(createBijouterieDto);
+            var bijouterieDto = await _bijouterieService.CreateAsync(createBijouterieDto);
 
             var bijouterieModel = _mapper.Map<BijouterieModel>(bijouterieDto);
 
@@ -93,7 +93,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var bijouterie = _mapper.Map<UpdateBijouterieDto>(updateBijouterie);
 
-            await _bijouterieService.Update(id, bijouterie);
+            await _bijouterieService.UpdateAsync(id, bijouterie);
 
             return NoContent();
         }
@@ -105,7 +105,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveBijouterieModel removeBijouterie)
         {
-            await _bijouterieService.Delete(removeBijouterie.Id);
+            await _bijouterieService.DeleteAsync(removeBijouterie.Id);
 
             return NoContent();
         }

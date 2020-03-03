@@ -6,10 +6,10 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IBijouterieTypeService
     {
-        Task<BijouterieTypeDto> GetById(int id);
-        Task<IList<BijouterieTypeDto>> GetAll();
-        Task<BijouterieTypeDto> Create(CreateBijouterieTypeDto createBijouterieType);
-        Task Update(int id, UpdateBijouterieTypeDto updateBijouterieType);
-        Task Delete(int id);
+        Task<BijouterieTypeDto> GetByIdAsync(int id);
+        Task<IList<BijouterieTypeDto>> GetAllAsync();
+        Task<BijouterieTypeDto> CreateAsync(CreateBijouterieTypeDto createBijouterieType);
+        Task UpdateAsync(int id, UpdateBijouterieTypeDto updateBijouterieType);
+        Task DeleteAsync(int id);
     }
 }

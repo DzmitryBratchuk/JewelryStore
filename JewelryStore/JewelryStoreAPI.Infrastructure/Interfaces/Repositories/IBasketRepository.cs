@@ -5,7 +5,7 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Repositories
 {
     public interface IBasketRepository : IBaseRepository<Basket>
     {
-        Task<Basket> GetByUserLogin(string login);
-        Task<Basket> GetByUserId(int userId);
+        Task<Basket> GetByUserLoginAsync(string login);
+        Task<Basket> GetByUserIdAsync(int userId);
     }
 }

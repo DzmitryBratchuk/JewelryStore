@@ -20,31 +20,31 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<BrandDto>> GetAll()
+        public async Task<IList<BrandDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<BrandDto>>(entities);
         }
 
-        public async Task<BrandDto> GetById(int id)
+        public async Task<BrandDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<BrandDto>(entity);
         }
 
-        public async Task<BrandDto> Create(CreateBrandDto createBrand)
+        public async Task<BrandDto> CreateAsync(CreateBrandDto createBrand)
         {
             var entity = _mapper.Map<Brand>(createBrand);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             return _mapper.Map<BrandDto>(entity);
         }
 
-        public async Task Update(int id, UpdateBrandDto updateBrand)
+        public async Task UpdateAsync(int id, UpdateBrandDto updateBrand)
         {
             var entity = await GetEntityById(id);
 
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<Brand> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

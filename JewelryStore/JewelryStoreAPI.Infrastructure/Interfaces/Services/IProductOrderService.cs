@@ -7,8 +7,8 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IProductOrderService
     {
-        Task<IList<ProductOrderDto>> GetAllProductsInOrder(int orderId);
-        Task<IList<OrderDto>> GetAllUserOrders();
-        Task<IList<ProductOrderDto>> CreateOrder(CreateOrderDto createOrder);
+        Task<IList<ProductOrderDto>> GetAllProductsInOrderAsync(int orderId);
+        Task<IList<OrderDto>> GetAllUserOrdersAsync();
+        Task<IList<ProductOrderDto>> CreateOrderAsync(CreateOrderDto createOrder);
     }
 }

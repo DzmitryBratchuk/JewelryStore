@@ -20,31 +20,31 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<CountryDto>> GetAll()
+        public async Task<IList<CountryDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<CountryDto>>(entities);
         }
 
-        public async Task<CountryDto> GetById(int id)
+        public async Task<CountryDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<CountryDto>(entity);
         }
 
-        public async Task<CountryDto> Create(CreateCountryDto createCountry)
+        public async Task<CountryDto> CreateAsync(CreateCountryDto createCountry)
         {
             var entity = _mapper.Map<Country>(createCountry);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             return _mapper.Map<CountryDto>(entity);
         }
 
-        public async Task Update(int id, UpdateCountryDto updateCountry)
+        public async Task UpdateAsync(int id, UpdateCountryDto updateCountry)
         {
             var entity = await GetEntityById(id);
 
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<Country> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

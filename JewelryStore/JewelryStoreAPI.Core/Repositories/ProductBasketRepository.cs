@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public async Task<ProductBasket> GetById(int productId, int basketId)
+        public async Task<ProductBasket> GetByIdAsync(int productId, int basketId)
         {
             return await _context.ProductBaskets
                 .Include(x => x.Basket)
@@ -21,7 +21,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .FirstOrDefaultAsync(x => x.ProductId == productId && x.BasketId == basketId);
         }
 
-        public async Task<IList<ProductBasket>> GetAllByBasketId(int id)
+        public async Task<IList<ProductBasket>> GetAllByBasketIdAsync(int id)
         {
             return await _context.ProductBaskets
                 .Where(x => x.BasketId == id)
@@ -30,7 +30,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<ProductBasket>> GetAllByUserId(int id)
+        public async Task<IList<ProductBasket>> GetAllByUserIdAsync(int id)
         {
             return await _context.ProductBaskets
                 .Where(x => x.Basket.UserId == id)

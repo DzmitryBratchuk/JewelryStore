@@ -6,10 +6,10 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IBrandService
     {
-        Task<BrandDto> GetById(int id);
-        Task<IList<BrandDto>> GetAll();
-        Task<BrandDto> Create(CreateBrandDto createBrand);
-        Task Update(int id, UpdateBrandDto updateBrand);
-        Task Delete(int id);
+        Task<BrandDto> GetByIdAsync(int id);
+        Task<IList<BrandDto>> GetAllAsync();
+        Task<BrandDto> CreateAsync(CreateBrandDto createBrand);
+        Task UpdateAsync(int id, UpdateBrandDto updateBrand);
+        Task DeleteAsync(int id);
     }
 }

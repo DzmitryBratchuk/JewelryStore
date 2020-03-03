@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAll()
         {
-            var watches = await _watchService.GetAll();
+            var watches = await _watchService.GetAllAsync();
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<WatchModel> GetById(int id)
         {
-            var watch = await _watchService.GetById(id);
+            var watch = await _watchService.GetByIdAsync(id);
 
             return _mapper.Map<WatchModel>(watch);
         }
@@ -46,7 +46,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByDiameter(int diameterInMillimeters)
         {
-            var watches = await _watchService.GetAllByDiameter(diameterInMillimeters);
+            var watches = await _watchService.GetAllByDiameterAsync(diameterInMillimeters);
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -55,7 +55,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByBrandId(int id)
         {
-            var watches = await _watchService.GetAllByBrandId(id);
+            var watches = await _watchService.GetAllByBrandIdAsync(id);
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -64,7 +64,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAllByCountryId(int id)
         {
-            var watches = await _watchService.GetAllByCountryId(id);
+            var watches = await _watchService.GetAllByCountryIdAsync(id);
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -77,7 +77,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
 
-            var watchDto = await _watchService.Create(createWatchDto);
+            var watchDto = await _watchService.CreateAsync(createWatchDto);
 
             var watchModel = _mapper.Map<WatchModel>(watchDto);
 
@@ -93,7 +93,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var watch = _mapper.Map<UpdateWatchDto>(updateWatch);
 
-            await _watchService.Update(id, watch);
+            await _watchService.UpdateAsync(id, watch);
 
             return NoContent();
         }
@@ -105,7 +105,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveWatchModel removeWatch)
         {
-            await _watchService.Delete(removeWatch.Id);
+            await _watchService.DeleteAsync(removeWatch.Id);
 
             return NoContent();
         }

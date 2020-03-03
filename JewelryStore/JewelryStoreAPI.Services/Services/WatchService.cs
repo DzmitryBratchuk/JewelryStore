@@ -20,46 +20,46 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<WatchDto>> GetAll()
+        public async Task<IList<WatchDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<WatchDto> GetById(int id)
+        public async Task<WatchDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<WatchDto>(entity);
         }
 
-        public async Task<IList<WatchDto>> GetAllByBrandId(int brandId)
+        public async Task<IList<WatchDto>> GetAllByBrandIdAsync(int brandId)
         {
-            var entities = await _repository.GetAllByBrandId(brandId);
+            var entities = await _repository.GetAllByBrandIdAsync(brandId);
 
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<IList<WatchDto>> GetAllByCountryId(int countryId)
+        public async Task<IList<WatchDto>> GetAllByCountryIdAsync(int countryId)
         {
-            var entities = await _repository.GetAllByCountryId(countryId);
+            var entities = await _repository.GetAllByCountryIdAsync(countryId);
 
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<IList<WatchDto>> GetAllByDiameter(int diameterInMillimeters)
+        public async Task<IList<WatchDto>> GetAllByDiameterAsync(int diameterInMillimeters)
         {
-            var entities = await _repository.GetAllByDiameter(diameterInMillimeters);
+            var entities = await _repository.GetAllByDiameterAsync(diameterInMillimeters);
 
             return _mapper.Map<IList<WatchDto>>(entities);
         }
 
-        public async Task<WatchDto> Create(CreateWatchDto createWatch)
+        public async Task<WatchDto> CreateAsync(CreateWatchDto createWatch)
         {
             var entity = _mapper.Map<Watch>(createWatch);
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             var createdEntity = await GetEntityById(entity.Id);
@@ -67,7 +67,7 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<WatchDto>(createdEntity);
         }
 
-        public async Task Update(int id, UpdateWatchDto updateWatch)
+        public async Task UpdateAsync(int id, UpdateWatchDto updateWatch)
         {
             var entity = await GetEntityById(id);
 
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -89,7 +89,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<Watch> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

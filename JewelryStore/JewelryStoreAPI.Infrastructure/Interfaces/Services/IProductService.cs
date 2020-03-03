@@ -6,8 +6,8 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IProductService
     {
-        Task<IList<ProductDto>> GetAllByName(string name);
-        Task<IList<ProductDto>> GetAllByBrandName(string brandName);
-        Task<IList<ProductDto>> GetAllByCountryName(string countryName);
+        Task<IList<ProductDto>> GetAllByNameAsync(string name);
+        Task<IList<ProductDto>> GetAllByBrandNameAsync(string brandName);
+        Task<IList<ProductDto>> GetAllByCountryNameAsync(string countryName);
     }
 }

@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public async Task<IList<ProductOrder>> GetAllByOrderId(int orderId)
+        public async Task<IList<ProductOrder>> GetAllByOrderIdAsync(int orderId)
         {
             return await _context.ProductOrders
                 .Where(x => x.OrderId == orderId)
@@ -22,7 +22,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<ProductOrder>> GetAllByOrderId(int userId, int orderId)
+        public async Task<IList<ProductOrder>> GetAllByOrderIdAsync(int userId, int orderId)
         {
             return await _context.ProductOrders
                 .Where(x => x.Order.UserId == userId && x.OrderId == orderId)

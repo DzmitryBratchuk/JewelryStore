@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public override async Task<IList<Watch>> GetAll()
+        public override async Task<IList<Watch>> GetAllAsync()
         {
             return await _context.Watches
                 .Include(x => x.Brand)
@@ -21,7 +21,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public override async Task<Watch> GetById(int id)
+        public override async Task<Watch> GetByIdAsync(int id)
         {
             return await _context.Watches
                 .Include(x => x.Brand)
@@ -29,7 +29,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Watch>> GetAllByBrandId(int id)
+        public async Task<IList<Watch>> GetAllByBrandIdAsync(int id)
         {
             return await _context.Watches
                 .Where(x => x.BrandId == id)
@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Watch>> GetAllByCountryId(int id)
+        public async Task<IList<Watch>> GetAllByCountryIdAsync(int id)
         {
             return await _context.Watches
                 .Where(x => x.CountryId == id)
@@ -47,7 +47,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Watch>> GetAllByDiameter(int diameterInMillimeters)
+        public async Task<IList<Watch>> GetAllByDiameterAsync(int diameterInMillimeters)
         {
             return await _context.Watches
                 .Where(x => x.DiameterMM == diameterInMillimeters)

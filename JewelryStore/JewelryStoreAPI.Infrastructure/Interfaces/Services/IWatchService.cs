@@ -6,13 +6,13 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IWatchService
     {
-        Task<WatchDto> GetById(int id);
-        Task<IList<WatchDto>> GetAll();
-        Task<IList<WatchDto>> GetAllByCountryId(int countryId);
-        Task<IList<WatchDto>> GetAllByBrandId(int brandId);
-        Task<IList<WatchDto>> GetAllByDiameter(int diameterInMillimeters);
-        Task<WatchDto> Create(CreateWatchDto createWatch);
-        Task Update(int id, UpdateWatchDto updateWatch);
-        Task Delete(int id);
+        Task<WatchDto> GetByIdAsync(int id);
+        Task<IList<WatchDto>> GetAllAsync();
+        Task<IList<WatchDto>> GetAllByCountryIdAsync(int countryId);
+        Task<IList<WatchDto>> GetAllByBrandIdAsync(int brandId);
+        Task<IList<WatchDto>> GetAllByDiameterAsync(int diameterInMillimeters);
+        Task<WatchDto> CreateAsync(CreateWatchDto createWatch);
+        Task UpdateAsync(int id, UpdateWatchDto updateWatch);
+        Task DeleteAsync(int id);
     }
 }

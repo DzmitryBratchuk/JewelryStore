@@ -20,23 +20,23 @@ namespace JewelryStoreAPI.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<IList<ProductDto>> GetAllByName(string name)
+        public async Task<IList<ProductDto>> GetAllByNameAsync(string name)
         {
-            var entities = await _repository.GetAllByName(name);
+            var entities = await _repository.GetAllByNameAsync(name);
 
             return _mapper.Map<IList<ProductDto>>(entities);
         }
 
-        public async Task<IList<ProductDto>> GetAllByBrandName(string brandName)
+        public async Task<IList<ProductDto>> GetAllByBrandNameAsync(string brandName)
         {
-            var entities = await _repository.GetAllByBrandName(brandName);
+            var entities = await _repository.GetAllByBrandNameAsync(brandName);
 
             return _mapper.Map<IList<ProductDto>>(entities);
         }
 
-        public async Task<IList<ProductDto>> GetAllByCountryName(string countryName)
+        public async Task<IList<ProductDto>> GetAllByCountryNameAsync(string countryName)
         {
-            var entities = await _repository.GetAllByCountryName(countryName);
+            var entities = await _repository.GetAllByCountryNameAsync(countryName);
 
             return _mapper.Map<IList<ProductDto>>(entities);
         }

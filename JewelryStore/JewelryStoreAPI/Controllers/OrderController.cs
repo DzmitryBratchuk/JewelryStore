@@ -30,7 +30,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<OrderModel>> GetAllUserOrders()
         {
-            var orders = await _productOrderService.GetAllUserOrders();
+            var orders = await _productOrderService.GetAllUserOrdersAsync();
 
             return _mapper.Map<IList<OrderModel>>(orders);
         }
@@ -40,7 +40,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IList<ProductOrderModel>> GetAllProductsInOrder(int id)
         {
-            var productOrder = await _productOrderService.GetAllProductsInOrder(id);
+            var productOrder = await _productOrderService.GetAllProductsInOrderAsync(id);
 
             return _mapper.Map<IList<ProductOrderModel>>(productOrder);
         }
@@ -52,7 +52,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createOrderDto = _mapper.Map<CreateOrderDto>(createOrder);
 
-            var productOrderDto = await _productOrderService.CreateOrder(createOrderDto);
+            var productOrderDto = await _productOrderService.CreateOrderAsync(createOrderDto);
 
             var productOrderModel = _mapper.Map<IList<ProductOrderModel>>(productOrderDto);
 

@@ -29,9 +29,9 @@ namespace JewelryStoreAPI.Services.Services
             _claimsPrincipal = claimsPrincipal;
         }
 
-        public async Task<UserDto> Authenticate(AuthenticateDto authenticate)
+        public async Task<UserDto> AuthenticateAsync(AuthenticateDto authenticate)
         {
-            var entity = await _repository.GetByLogin(authenticate.Login);
+            var entity = await _repository.GetByLoginAsync(authenticate.Login);
 
             if (entity == null)
             {
@@ -51,16 +51,16 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<UserDto> GetById(int id)
+        public async Task<UserDto> GetByIdAsync(int id)
         {
             var entity = await GetEntityById(id);
 
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<UserDto> GetByLogin(string login)
+        public async Task<UserDto> GetByLoginAsync(string login)
         {
-            var entity = await _repository.GetByLogin(login);
+            var entity = await _repository.GetByLoginAsync(login);
 
             if (entity == null)
             {
@@ -70,21 +70,21 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<IList<UserDto>> GetAll()
+        public async Task<IList<UserDto>> GetAllAsync()
         {
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
 
             return _mapper.Map<IList<UserDto>>(entities);
         }
 
-        public async Task<IList<UserDto>> GetAllByRoleId(int roleId)
+        public async Task<IList<UserDto>> GetAllByRoleIdAsync(int roleId)
         {
-            var entities = await _repository.GetAllByRoleId(roleId);
+            var entities = await _repository.GetAllByRoleIdAsync(roleId);
 
             return _mapper.Map<IList<UserDto>>(entities);
         }
 
-        public async Task ChangePassword(ChangeUserPasswordDto changeUserPassword)
+        public async Task ChangePasswordAsync(ChangeUserPasswordDto changeUserPassword)
         {
             var userId = GetUserId();
 
@@ -110,7 +110,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task ChangeRole(ChangeUserRoleDto changeUserRole)
+        public async Task ChangeRoleAsync(ChangeUserRoleDto changeUserRole)
         {
             var userId = GetUserId();
 
@@ -123,7 +123,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<UserDto> Create(CreateUserDto createUser)
+        public async Task<UserDto> CreateAsync(CreateUserDto createUser)
         {
             var entity = _mapper.Map<User>(createUser);
 
@@ -135,7 +135,7 @@ namespace JewelryStoreAPI.Services.Services
 
             entity.Baskets.Add(new Basket());
 
-            await _repository.Create(entity);
+            await _repository.CreateAsync(entity);
             await _repository.SaveChangesAsync();
 
             var createdEntity = await GetEntityById(entity.Id);
@@ -143,7 +143,7 @@ namespace JewelryStoreAPI.Services.Services
             return _mapper.Map<UserDto>(createdEntity);
         }
 
-        public async Task Update(UpdateUserDto updateUser)
+        public async Task UpdateAsync(UpdateUserDto updateUser)
         {
             var userId = GetUserId();
 
@@ -157,7 +157,7 @@ namespace JewelryStoreAPI.Services.Services
             await _repository.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetEntityById(id);
 
@@ -168,7 +168,7 @@ namespace JewelryStoreAPI.Services.Services
 
         private async Task<User> GetEntityById(int id)
         {
-            var entity = await _repository.GetById(id);
+            var entity = await _repository.GetByIdAsync(id);
 
             if (entity == null)
             {

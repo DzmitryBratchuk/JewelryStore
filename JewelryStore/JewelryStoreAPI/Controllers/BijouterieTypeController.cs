@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<BijouterieTypeModel>> GetAll()
         {
-            var bijouterieTypes = await _bijouterieTypeService.GetAll();
+            var bijouterieTypes = await _bijouterieTypeService.GetAllAsync();
 
             return _mapper.Map<IList<BijouterieTypeModel>>(bijouterieTypes);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<BijouterieTypeModel> GetById(int id)
         {
-            var bijouterieType = await _bijouterieTypeService.GetById(id);
+            var bijouterieType = await _bijouterieTypeService.GetByIdAsync(id);
 
             return _mapper.Map<BijouterieTypeModel>(bijouterieType);
         }
@@ -50,7 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createBijouterieTypeDto = _mapper.Map<CreateBijouterieTypeDto>(createBijouterieType);
 
-            var bijouterieTypeDto = await _bijouterieTypeService.Create(createBijouterieTypeDto);
+            var bijouterieTypeDto = await _bijouterieTypeService.CreateAsync(createBijouterieTypeDto);
 
             var bijouterieTypeModel = _mapper.Map<BijouterieTypeModel>(bijouterieTypeDto);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var bijouterieType = _mapper.Map<UpdateBijouterieTypeDto>(updateBijouterieType);
 
-            await _bijouterieTypeService.Update(id, bijouterieType);
+            await _bijouterieTypeService.UpdateAsync(id, bijouterieType);
 
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveBijouterieTypeModel removeBijouterieType)
         {
-            await _bijouterieTypeService.Delete(removeBijouterieType.Id);
+            await _bijouterieTypeService.DeleteAsync(removeBijouterieType.Id);
 
             return NoContent();
         }

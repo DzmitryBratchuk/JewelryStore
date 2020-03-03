@@ -7,11 +7,11 @@ namespace JewelryStoreAPI.Infrastructure.Interfaces.Services
 {
     public interface IPreciousItemTypeService
     {
-        Task<PreciousItemTypeDto> GetById(int id);
-        Task<IList<PreciousItemTypeDto>> GetAllByMetalType(MetalType metalType);
-        Task<IList<PreciousItemTypeDto>> GetAll();
-        Task<PreciousItemTypeDto> Create(CreatePreciousItemTypeDto createPreciousItemType);
-        Task Update(int id, UpdatePreciousItemTypeDto updatePreciousItemType);
-        Task Delete(int id);
+        Task<PreciousItemTypeDto> GetByIdAsync(int id);
+        Task<IList<PreciousItemTypeDto>> GetAllByMetalTypeAsync(MetalType metalType);
+        Task<IList<PreciousItemTypeDto>> GetAllAsync();
+        Task<PreciousItemTypeDto> CreateAsync(CreatePreciousItemTypeDto createPreciousItemType);
+        Task UpdateAsync(int id, UpdatePreciousItemTypeDto updatePreciousItemType);
+        Task DeleteAsync(int id);
     }
 }

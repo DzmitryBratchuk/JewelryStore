@@ -27,7 +27,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<CountryModel>> GetAll()
         {
-            var countries = await _countryService.GetAll();
+            var countries = await _countryService.GetAllAsync();
 
             return _mapper.Map<IList<CountryModel>>(countries);
         }
@@ -37,7 +37,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<CountryModel> GetById(int id)
         {
-            var country = await _countryService.GetById(id);
+            var country = await _countryService.GetByIdAsync(id);
 
             return _mapper.Map<CountryModel>(country);
         }
@@ -50,7 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createCountryDto = _mapper.Map<CreateCountryDto>(createCountry);
 
-            var countryDto = await _countryService.Create(createCountryDto);
+            var countryDto = await _countryService.CreateAsync(createCountryDto);
 
             var countryModel = _mapper.Map<CountryModel>(countryDto);
 
@@ -66,7 +66,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var country = _mapper.Map<UpdateCountryDto>(updateCountry);
 
-            await _countryService.Update(id, country);
+            await _countryService.UpdateAsync(id, country);
 
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveCountryModel removeCountry)
         {
-            await _countryService.Delete(removeCountry.Id);
+            await _countryService.DeleteAsync(removeCountry.Id);
 
             return NoContent();
         }

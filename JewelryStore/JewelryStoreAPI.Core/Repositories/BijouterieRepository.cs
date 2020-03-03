@@ -13,7 +13,7 @@ namespace JewelryStoreAPI.Core.Repositories
         {
         }
 
-        public override async Task<IList<Bijouterie>> GetAll()
+        public override async Task<IList<Bijouterie>> GetAllAsync()
         {
             return await _context.Bijouteries
                 .Include(x => x.Brand)
@@ -22,7 +22,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public override async Task<Bijouterie> GetById(int id)
+        public override async Task<Bijouterie> GetByIdAsync(int id)
         {
             return await _context.Bijouteries
                 .Include(x => x.Brand)
@@ -31,7 +31,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Bijouterie>> GetAllByBijouterieTypeId(int id)
+        public async Task<IList<Bijouterie>> GetAllByBijouterieTypeIdAsync(int id)
         {
             return await _context.Bijouteries
                 .Where(x => x.BijouterieTypeId == id)
@@ -41,7 +41,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Bijouterie>> GetAllByBrandId(int id)
+        public async Task<IList<Bijouterie>> GetAllByBrandIdAsync(int id)
         {
             return await _context.Bijouteries
                 .Where(x => x.BrandId == id)
@@ -51,7 +51,7 @@ namespace JewelryStoreAPI.Core.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IList<Bijouterie>> GetAllByCountryId(int id)
+        public async Task<IList<Bijouterie>> GetAllByCountryIdAsync(int id)
         {
             return await _context.Bijouteries
                 .Where(x => x.Country.Id == id)

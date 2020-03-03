@@ -28,7 +28,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<RoleModel>> GetAll()
         {
-            var roles = await _roleService.GetAll();
+            var roles = await _roleService.GetAllAsync();
 
             return _mapper.Map<IList<RoleModel>>(roles);
         }
@@ -38,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<RoleModel> GetById(int id)
         {
-            var role = await _roleService.GetById(id);
+            var role = await _roleService.GetByIdAsync(id);
 
             return _mapper.Map<RoleModel>(role);
         }
@@ -50,7 +50,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var createRoleDto = _mapper.Map<CreateRoleDto>(createRole);
 
-            var roleDto = await _roleService.Create(createRoleDto);
+            var roleDto = await _roleService.CreateAsync(createRoleDto);
 
             var roleModel = _mapper.Map<RoleModel>(roleDto);
 
@@ -65,7 +65,7 @@ namespace JewelryStoreAPI.Controllers
         {
             var role = _mapper.Map<UpdateRoleDto>(updateRole);
 
-            await _roleService.Update(id, role);
+            await _roleService.UpdateAsync(id, role);
 
             return NoContent();
         }
@@ -76,7 +76,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] RemoveRoleModel removeRole)
         {
-            await _roleService.Delete(removeRole.Id);
+            await _roleService.DeleteAsync(removeRole.Id);
 
             return NoContent();
         }
