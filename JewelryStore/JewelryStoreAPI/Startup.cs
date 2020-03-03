@@ -121,11 +121,14 @@ namespace JewelryStoreAPI
 
         private void AddAuthentication(IServiceCollection services)
         {
-            var jwtSettingsSection = Configuration.GetSection("JwtSettings");
+            var jwtSettings = Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
-            services.Configure<JwtSettings>(jwtSettingsSection);
+            services.Configure<JwtSettings>(opt =>
+            {
+                opt.Lifetime = jwtSettings.Lifetime;
+                opt.Secret = jwtSettings.Secret;
+            });
 
-            var jwtSettings = jwtSettingsSection.Get<JwtSettings>();
             var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
 
             services.AddAuthentication(options =>
