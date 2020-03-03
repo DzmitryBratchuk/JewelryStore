@@ -154,11 +154,14 @@ namespace JewelryStoreAPI
 
         private void AddKafka(IServiceCollection services)
         {
-            var kafkaConfigurationSection = Configuration.GetSection("KafkaConfiguration");
+            var kafkaConfiguration = Configuration.GetSection("KafkaConfiguration").Get<KafkaConfiguration>();
 
-            services.Configure<KafkaConfiguration>(kafkaConfigurationSection);
-
-            var kafkaConfiguration = kafkaConfigurationSection.Get<KafkaConfiguration>();
+            services.Configure<KafkaConfiguration>(options =>
+            {
+                options.ServerUrl = kafkaConfiguration.ServerUrl;
+                options.GroupId = kafkaConfiguration.GroupId;
+                options.Topics = new Topics { CreateWatch = kafkaConfiguration.Topics.CreateWatch };
+            });
 
             services.AddSingleton(c => new ProducerBuilder<Null, string>(
                 new ProducerConfig() { BootstrapServers = kafkaConfiguration.ServerUrl }).Build()
@@ -171,11 +174,14 @@ namespace JewelryStoreAPI
 
         private void AddRedisCache(IServiceCollection services)
         {
-            var redisConfigurationSection = Configuration.GetSection("RedisConfiguration");
+            var redisConfiguration = Configuration.GetSection("RedisConfiguration").Get<RedisConfiguration>();
 
-            services.Configure<RedisConfiguration>(redisConfigurationSection);
-
-            var redisConfiguration = redisConfigurationSection.Get<RedisConfiguration>();
+            services.Configure<RedisConfiguration>(options =>
+            {
+                options.ServerUrl = redisConfiguration.ServerUrl;
+                options.CacheExpirationInSeconds = redisConfiguration.CacheExpirationInSeconds;
+                options.CacheKeys = new CacheKeys { GetAllWatches = redisConfiguration.CacheKeys.GetAllWatches };
+            });
 
             services.AddStackExchangeRedisCache(options =>
             {
