@@ -4,12 +4,14 @@ using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.DTO.BijouterieType;
 using JewelryStoreAPI.Infrastructure.DTO.Brand;
 using JewelryStoreAPI.Infrastructure.DTO.Country;
+using JewelryStoreAPI.Infrastructure.DTO.Kafka.Watch;
 using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.DTO.Product;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
+using JewelryStoreAPI.Infrastructure.DTO.Redis;
 using JewelryStoreAPI.Infrastructure.DTO.Report;
 using JewelryStoreAPI.Infrastructure.DTO.Role;
 using JewelryStoreAPI.Infrastructure.DTO.User;
@@ -132,6 +134,20 @@ namespace JewelryStoreAPI.Infrastructure
                 .ForMember(d => d.TypeName, opt => opt.MapFrom(s => s.GetType().BaseType.Name))
                 .ForMember(d => d.BrandName, opt => opt.MapFrom(s => s.Brand != null ? s.Brand.Name : null))
                 .ForMember(d => d.CountryName, opt => opt.MapFrom(s => s.Country != null ? s.Country.Name : null));
+
+            CreateMap<ConsumeWatchDto, Watch>()
+                .ForMember(d => d.DiameterMM, opt => opt.MapFrom(s => s.DiameterInMillimeters))
+                .ForMember(d => d.CaseColorId, opt => opt.MapFrom(s => s.CaseColor))
+                .ForMember(d => d.DialColorId, opt => opt.MapFrom(s => s.DialColor))
+                .ForMember(d => d.StrapColorId, opt => opt.MapFrom(s => s.StrapColor));
+
+            CreateMap<Watch, WatchCacheDto>()
+                .ForMember(d => d.BrandName, opt => opt.MapFrom(s => s.Brand != null ? s.Brand.Name : null))
+                .ForMember(d => d.CountryName, opt => opt.MapFrom(s => s.Country != null ? s.Country.Name : null))
+                .ForMember(d => d.DiameterInMillimeters, opt => opt.MapFrom(s => s.DiameterMM))
+                .ForMember(d => d.CaseColor, opt => opt.MapFrom(s => s.CaseColorId))
+                .ForMember(d => d.DialColor, opt => opt.MapFrom(s => s.DialColorId))
+                .ForMember(d => d.StrapColor, opt => opt.MapFrom(s => s.StrapColorId));
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using JewelryStoreAPI.Infrastructure.DTO.Kafka.Watch;
 using JewelryStoreAPI.Infrastructure.DTO.Watch;
 using JewelryStoreAPI.Infrastructure.Interfaces.Services;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services.Kafka;
+using JewelryStoreAPI.Infrastructure.Interfaces.Services.Redis;
 using JewelryStoreAPI.Models.Watch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,11 +18,19 @@ namespace JewelryStoreAPI.Controllers
     public class WatchController : ControllerBase
     {
         private readonly IWatchService _watchService;
+        private readonly IWatchProducerService _watchProducerService;
+        private readonly IWatchCacheService _watchCacheService;
         private readonly IMapper _mapper;
 
-        public WatchController(IWatchService watchService, IMapper mapper)
+        public WatchController(
+            IWatchService watchService,
+            IWatchProducerService watchProducerService,
+            IWatchCacheService watchCacheService,
+            IMapper mapper)
         {
             _watchService = watchService;
+            _watchProducerService = watchProducerService;
+            _watchCacheService = watchCacheService;
             _mapper = mapper;
         }
 
@@ -27,7 +38,7 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IList<WatchModel>> GetAll()
         {
-            var watches = await _watchService.GetAll();
+            var watches = await _watchCacheService.GetAllAsync();
 
             return _mapper.Map<IList<WatchModel>>(watches);
         }
@@ -75,13 +86,11 @@ namespace JewelryStoreAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateWatchModel createWatch)
         {
-            var createWatchDto = _mapper.Map<CreateWatchDto>(createWatch);
+            var produceWatchDto = _mapper.Map<ProduceWatchDto>(createWatch);
 
-            var watchDto = await _watchService.Create(createWatchDto);
+            await _watchProducerService.ProduceAsync(produceWatchDto);
 
-            var watchModel = _mapper.Map<WatchModel>(watchDto);
-
-            return CreatedAtAction(nameof(GetById), new { id = watchModel.Id }, watchModel);
+            return Created("Id", "Watch creation is in progress");
         }
 
         [Authorize(Roles = "Admin")]

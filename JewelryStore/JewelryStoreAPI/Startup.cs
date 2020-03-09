@@ -1,5 +1,6 @@
 using Autofac;
 using AutoMapper;
+using Confluent.Kafka;
 using FluentValidation.AspNetCore;
 using JewelryStoreAPI.Common;
 using JewelryStoreAPI.Core;
@@ -55,7 +56,11 @@ namespace JewelryStoreAPI
 
             services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
 
+            services.AddCors();
+
             AddAuthentication(services);
+            AddKafka(services);
+            AddRedisCache(services);
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -109,6 +114,10 @@ namespace JewelryStoreAPI
 
             app.UseRouting();
 
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+            );
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -145,6 +154,43 @@ namespace JewelryStoreAPI
                         ValidateLifetime = true
                     };
                 });
+        }
+
+        private void AddKafka(IServiceCollection services)
+        {
+            var kafkaConfiguration = Configuration.GetSection("KafkaConfiguration").Get<KafkaConfiguration>();
+
+            services.Configure<KafkaConfiguration>(options =>
+            {
+                options.ServerUrl = kafkaConfiguration.ServerUrl;
+                options.GroupId = kafkaConfiguration.GroupId;
+                options.Topics = new Topics { CreateWatch = kafkaConfiguration.Topics.CreateWatch };
+            });
+
+            services.AddSingleton(c => new ProducerBuilder<Null, string>(
+                new ProducerConfig() { BootstrapServers = kafkaConfiguration.ServerUrl }).Build()
+            );
+
+            services.AddSingleton(c => new ConsumerBuilder<Ignore, string>(
+                new ConsumerConfig() { BootstrapServers = kafkaConfiguration.ServerUrl, GroupId = kafkaConfiguration.GroupId }).Build()
+            );
+        }
+
+        private void AddRedisCache(IServiceCollection services)
+        {
+            var redisConfiguration = Configuration.GetSection("RedisConfiguration").Get<RedisConfiguration>();
+
+            services.Configure<RedisConfiguration>(options =>
+            {
+                options.ServerUrl = redisConfiguration.ServerUrl;
+                options.CacheExpirationInSeconds = redisConfiguration.CacheExpirationInSeconds;
+                options.CacheKeys = new CacheKeys { GetAllWatches = redisConfiguration.CacheKeys.GetAllWatches };
+            });
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redisConfiguration.ServerUrl;
+            });
         }
     }
 }

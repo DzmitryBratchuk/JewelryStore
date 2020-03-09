@@ -3,12 +3,14 @@ using JewelryStoreAPI.Infrastructure.DTO.Bijouterie;
 using JewelryStoreAPI.Infrastructure.DTO.BijouterieType;
 using JewelryStoreAPI.Infrastructure.DTO.Brand;
 using JewelryStoreAPI.Infrastructure.DTO.Country;
+using JewelryStoreAPI.Infrastructure.DTO.Kafka.Watch;
 using JewelryStoreAPI.Infrastructure.DTO.Order;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItem;
 using JewelryStoreAPI.Infrastructure.DTO.PreciousItemType;
 using JewelryStoreAPI.Infrastructure.DTO.Product;
 using JewelryStoreAPI.Infrastructure.DTO.ProductBasket;
 using JewelryStoreAPI.Infrastructure.DTO.ProductOrder;
+using JewelryStoreAPI.Infrastructure.DTO.Redis;
 using JewelryStoreAPI.Infrastructure.DTO.Report;
 using JewelryStoreAPI.Infrastructure.DTO.Role;
 using JewelryStoreAPI.Infrastructure.DTO.User;
@@ -115,6 +117,10 @@ namespace JewelryStoreAPI.Presentations
             CreateMap<ReportBijouterieDto, ReportModel>();
 
             CreateMap<ProductDto, ProductModel>();
+
+            CreateMap<CreateWatchModel, ProduceWatchDto>();
+
+            CreateMap<WatchCacheDto, WatchModel>();
         }
     }
 }
