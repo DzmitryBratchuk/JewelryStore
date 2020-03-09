@@ -14,14 +14,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Reflection;
 using System.Text;
 
@@ -57,6 +55,8 @@ namespace JewelryStoreAPI
             });
 
             services.AddAutoMapper(typeof(BijouterieDto), typeof(BijouterieModel));
+
+            services.AddCors();
 
             AddAuthentication(services);
             AddKafka(services);
@@ -113,6 +113,10 @@ namespace JewelryStoreAPI
             });
 
             app.UseRouting();
+
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+            );
 
             app.UseAuthentication();
 
